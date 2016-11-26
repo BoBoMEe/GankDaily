@@ -5,7 +5,7 @@ apply plugin: 'me.tatarka.retrolambda'
 
 android {
   packagingOptions {
-    exclude 'META-INF/services/javax.annotation.processing.Processor'// fixed butternife dagger2
+    exclude 'META-INF/services/javax.annotation.processing.Processor' // fixed butternife dagger2
   }
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
@@ -77,13 +77,22 @@ dependencies {
   compile uiWidgetDependencies.circleImageView
   compile uiWidgetDependencies.ultraPtr
 
+  androidTestCompile domainTestDependencies.testRunner
+  androidTestCompile domainTestDependencies.testRules
+  androidTestCompile domainTestDependencies.uiautomator
+
   testCompile domainTestDependencies.junit
   testCompile domainTestDependencies.mockito
   testCompile domainTestDependencies.robolectric
 
+
   debugCompile utilDependencies.debugleakcanary
   releaseCompile utilDependencies.relaseleakcanary
-
-
-
 }
+
+configurations.all {
+  resolutionStrategy {
+    force 'com.android.support:support-annotations:23.1.1'
+  }
+}
+

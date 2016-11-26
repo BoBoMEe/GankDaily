@@ -52,8 +52,9 @@ android {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
   }
-
 }
+
+
 
 dependencies {
   compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -61,7 +62,23 @@ dependencies {
   compile injectDependencies.dagger
   apt injectDependencies.butterknifeCompiler
   apt injectDependencies.daggerCompiler
+
+  androidTestCompile domainTestDependencies.testRunner
+  androidTestCompile domainTestDependencies.testRules
+  androidTestCompile domainTestDependencies.uiautomator
+
+  testCompile domainTestDependencies.junit
+  testCompile domainTestDependencies.mockito
+  testCompile domainTestDependencies.robolectric
+
   compile 'com.zhy:base-rvadapter:3.0.3'
   compile project(':http')
   compile project(':data')
+}
+
+
+configurations.all {
+  resolutionStrategy {
+    force 'com.android.support:support-annotations:23.1.1'
+  }
 }
