@@ -1,0 +1,24 @@
+apply plugin: 'java'
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+configurations {
+  provided
+}
+
+sourceSets {
+  main {
+    compileClasspath += configurations.provided
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  provided injectDependencies.jsr250
+
+  compile injectDependencies.javaxInject
+  compile rxDependencies.rxjava
+}
+

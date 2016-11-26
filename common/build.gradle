@@ -1,0 +1,89 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
+
+android {
+  packagingOptions {
+    exclude 'META-INF/services/javax.annotation.processing.Processor'// fixed butternife dagger2
+  }
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  defaultConfig {
+    minSdkVersion rootProject.ext.minSdk
+    targetSdkVersion rootProject.ext.targetSdk
+    versionCode rootProject.ext.versionCode
+    versionName rootProject.ext.versionName
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+  compile supportDependencies.appcompat
+  compile supportDependencies.design
+  compile supportDependencies.recyclerview
+  compile supportDependencies.cardView
+  compile supportDependencies.multidex
+
+  compile httpDependencies.retrofit
+  compile httpDependencies.converterGson
+  compile httpDependencies.adapterRxjava
+  compile httpDependencies.glide
+  compile httpDependencies.glidetransformations
+  compile httpDependencies.okhttp
+  compile httpDependencies.loggingInterceptor
+  compile httpDependencies.okhttputils
+  compile httpDependencies.okio
+
+  compile injectDependencies.butterknife
+  compile injectDependencies.dagger
+  apt injectDependencies.butterknifeCompiler
+  apt injectDependencies.daggerCompiler
+  provided injectDependencies.jsr250
+  provided injectDependencies.javaxAnnotation
+
+  compile rxDependencies.rxjava
+  compile rxDependencies.rxandroid
+  compile rxDependencies.rxPreferences
+  compile rxDependencies.rxBinding
+
+  compile utilDependencies.sqlbrite
+  compile utilDependencies.stetho
+  compile utilDependencies.timber
+  compile utilDependencies.logger
+  compile utilDependencies.eventbus
+  compile utilDependencies.databinding
+  compile utilDependencies.lombok
+  compile utilDependencies.stetho
+  compile utilDependencies.stethohttp
+
+  compile uiWidgetDependencies.overscroll
+  compile uiWidgetDependencies.circleImageView
+  compile uiWidgetDependencies.ultraPtr
+
+  testCompile domainTestDependencies.junit
+  testCompile domainTestDependencies.mockito
+  testCompile domainTestDependencies.robolectric
+
+  debugCompile utilDependencies.debugleakcanary
+  releaseCompile utilDependencies.relaseleakcanary
+
+
+
+}

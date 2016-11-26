@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.antfortune.freeline'
+
+android {
+  packagingOptions {
+    exclude 'META-INF/services/javax.annotation.processing.Processor' // fixed butternife dagger2
+  }
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+  defaultConfig {
+    applicationId rootProject.ext.applicationId
+    minSdkVersion rootProject.ext.minSdk
+    targetSdkVersion rootProject.ext.targetSdk
+    versionCode rootProject.ext.versionCode
+    versionName rootProject.ext.versionName
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  lintOptions {
+    checkReleaseBuilds false
+    abortOnError false
+    disable 'MissingTranslation'
+  }
+  dexOptions {
+    javaMaxHeapSize "8g"
+    jumboMode = true
+    preDexLibraries = false
+    threadCount = 8
+  }
+  signingConfigs {
+    debug {}
+    relealse {
+      storeFile rootProject.ext.storeFile
+      storePassword rootProject.ext.storePassword
+      keyAlias rootProject.ext.keyAlias
+      keyPassword rootProject.ext.keyPassword
+    }
+  }
+  buildTypes {
+    release {
+      minifyEnabled true
+      zipAlignEnabled true
+      //instant run is not compatible with shrinkResources
+      shrinkResources false
+      signingConfig signingConfigs.relealse
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+}
+
+dependencies {
+  compile fileTree(include: ['*.jar'], dir: 'libs')
+  compile injectDependencies.butterknife
+  compile injectDependencies.dagger
+  apt injectDependencies.butterknifeCompiler
+  apt injectDependencies.daggerCompiler
+  compile 'com.zhy:base-rvadapter:3.0.3'
+  compile project(':http')
+  compile project(':data')
+}
