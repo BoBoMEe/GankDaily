@@ -9,6 +9,7 @@ def rxDependencies = rootProject.ext.rxDependencies
 def utilDependencies = rootProject.ext.utilDependencies
 def uiWidgetDependencies = rootProject.ext.uiWidgetDependencies
 def domainTestDependencies = rootProject.ext.domainTestDependencies
+def annoDependencies = rootProject.ext.annoDependencies
 
 buildscript {
   repositories {

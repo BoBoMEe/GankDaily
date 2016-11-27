@@ -74,6 +74,11 @@ ext {
   //event
   eventbusVersion = '3.0.0'
 
+
+  //annotations
+  autoService = '1.0-rc2'
+  javapoet = '1.6.1'
+
   //dependencies
   supportDependencies = [appcompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
                          design      : "com.android.support:design:${supportLibVersion}",
@@ -128,6 +133,12 @@ ext {
                             testRunner : "com.android.support.test:runner:${androidTesVersion}",
                             testRules  : "com.android.support.test:rules:${androidTesVersion}",
                             uiautomator: "com.android.support.test.uiautomator:uiautomator-v18:${uiautomatorVersion}"]
+
+
+  annoDependencies = [
+      autoService : "com.google.auto.service:auto-service:${autoService}",
+      javapoet : "com.squareup:javapoet:${javapoet}"
+  ]
 }
 
 afterEvaluate {

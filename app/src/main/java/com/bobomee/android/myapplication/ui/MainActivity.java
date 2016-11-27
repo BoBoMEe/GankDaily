@@ -23,6 +23,8 @@ import com.bobomee.android.htttp.api.RestService;
 import com.bobomee.android.htttp.bean.UserEntity;
 import com.bobomee.android.htttp.clean.serializer.Wrapper;
 import com.bobomee.android.htttp.rx.Transformers;
+import com.bobomee.android.layout.Layout;
+import com.bobomee.android.layout.LayoutBinder;
 import com.bobomee.android.myapplication.R;
 import com.bobomee.android.myapplication.base.BaseActivity;
 import com.bumptech.glide.Glide;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import rx.Subscription;
 
+@Layout(R.layout.activity_main)
 public class MainActivity extends BaseActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -48,7 +51,7 @@ public class MainActivity extends BaseActivity
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    LayoutBinder.bind(this);
     ButterKnife.bind(this);
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
