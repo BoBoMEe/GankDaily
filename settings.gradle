@@ -1,1 +1,1 @@
-include ':app', ':common', ':http', ':domain', ':data', ':layout_annotations:annotations', ':layout_annotations:compiler', ':layout_annotations:stub', ':layout_annotations:api'
+include ':app', ':component:common', 'component:http', ':clean:domain', ':clean:data', ':apt:annotations', ':apt:compiler', ':apt:stub', ':apt:api'

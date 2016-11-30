@@ -1,6 +1,12 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
 
 android {
+  packagingOptions {
+    exclude 'META-INF/services/javax.annotation.processing.Processor' // fixed butternife dagger2
+  }
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
 
@@ -18,6 +24,10 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 }
 
 dependencies {
@@ -25,7 +35,11 @@ dependencies {
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compile supportDependencies.appcompat
+  compile injectDependencies.butterknife
+  compile injectDependencies.dagger
+  apt injectDependencies.butterknifeCompiler
+  apt injectDependencies.daggerCompiler
+
   androidTestCompile domainTestDependencies.testRunner
   androidTestCompile domainTestDependencies.testRules
   androidTestCompile domainTestDependencies.uiautomator
@@ -33,8 +47,9 @@ dependencies {
   testCompile domainTestDependencies.junit
   testCompile domainTestDependencies.mockito
   testCompile domainTestDependencies.robolectric
-  compile project(':layout_annotations:annotations')
-  provided project(':layout_annotations:stub')
+
+  compile project(':component:common')
+  compile project(':clean:domain')
 }
 
 configurations.all {
@@ -42,5 +57,3 @@ configurations.all {
     force 'com.android.support:support-annotations:23.1.1'
   }
 }
-
-
