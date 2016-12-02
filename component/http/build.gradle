@@ -60,7 +60,7 @@ dependencies {
   testCompile domainTestDependencies.mockito
   testCompile domainTestDependencies.robolectric
 
-  compile project(':component:commonlib')
+  compile project(':component:common')
   compile project(':clean:domain')
 }
 

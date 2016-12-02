@@ -1,1 +1,1 @@
-include ':app', ':component:commonlib', 'component:http', ':clean:domain', ':clean:data'
+include ':app', ':component:common', 'component:http', ':clean:domain', ':clean:data'

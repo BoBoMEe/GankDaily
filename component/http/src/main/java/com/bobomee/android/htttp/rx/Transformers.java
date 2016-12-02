@@ -1,7 +1,7 @@
 package com.bobomee.android.htttp.rx;
 
-import com.bobomee.android.htttp.api.ApiException;
-import com.bobomee.android.htttp.bean.BaseData;
+import com.bobomee.android.domain.exception.ApiException;
+import com.bobomee.android.domain.bean.BaseData;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

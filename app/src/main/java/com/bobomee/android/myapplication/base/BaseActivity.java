@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.bobomee.android.common.util.UIUtil;
-import com.bobomee.android.htttp.clean.di.Dagger2Activity;
+import com.bobomee.android.data.di.Dagger2Activity;
 import com.bobomee.android.htttp.receiver.NetWorkReceiver;
 import com.bobomee.android.htttp.util.HttpNetUtil;
 import com.bobomee.android.myapplication.R;
