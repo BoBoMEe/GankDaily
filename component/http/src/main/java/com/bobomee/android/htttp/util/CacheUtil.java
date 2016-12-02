@@ -2,9 +2,7 @@ package com.bobomee.android.htttp.util;
 
 import com.bobomee.android.common.util.StorageUtil;
 import com.bobomee.android.common.util.UIUtil;
-
 import java.io.File;
-
 import okhttp3.Cache;
 
 /**

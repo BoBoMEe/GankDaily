@@ -35,10 +35,23 @@ dependencies {
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
+  compile injectDependencies.flow
+  compile injectDependencies.mortar
+  compile injectDependencies.flowPath
+
+  provided injectDependencies.jsr250
+  provided injectDependencies.javaxAnnotation
+
   compile injectDependencies.butterknife
   compile injectDependencies.dagger
   apt injectDependencies.butterknifeCompiler
   apt injectDependencies.daggerCompiler
+
+  compile injectDependencies.autodagger2
+  apt injectDependencies.autodagger2Compiler
+//  compile injectDependencies.automortar
+//  apt injectDependencies.automortarCompiler
+
 
   androidTestCompile domainTestDependencies.testRunner
   androidTestCompile domainTestDependencies.testRules
@@ -47,7 +60,7 @@ dependencies {
   testCompile domainTestDependencies.mockito
   testCompile domainTestDependencies.robolectric
 
-  compile project(':component:common')
+  compile project(':component:commonlib')
   compile project(':clean:domain')
 }
 

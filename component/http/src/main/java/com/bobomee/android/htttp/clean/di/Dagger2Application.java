@@ -1,6 +1,7 @@
 package com.bobomee.android.htttp.clean.di;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatDelegate;
 import com.bobomee.android.common.app.BaseApplication;
 import com.bobomee.android.htttp.clean.di.internal.components.ApplicationComponent;
 import com.facebook.stetho.Stetho;
@@ -14,6 +15,12 @@ import com.squareup.leakcanary.LeakCanary;
  */
 
 public class Dagger2Application extends BaseApplication {
+
+
+  static {
+    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+  }
+
 
   private ApplicationComponent mApplicationComponent;
 

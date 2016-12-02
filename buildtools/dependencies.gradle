@@ -34,6 +34,16 @@ ext {
   jsr250Version = '1.0'
   javaxInjectVersion = '1'
 
+
+
+
+  //auto dagger2
+  mortarVersion = '0.17'
+  flowVersion = '0.10'
+
+  autoDagger2Version = '1.1'
+  automortarVersion = '1.1'
+
   //net
   retrofitVersion = '2.0.2'
   okhttpVersion = '3.2.0'
@@ -79,6 +89,10 @@ ext {
   autoService = '1.0-rc2'
   javapoet = '1.6.1'
 
+  //
+  commonVersion = '1.3.8'
+  layoutVersion = '1.0.1'
+
   //dependencies
   supportDependencies = [appcompat   : "com.android.support:appcompat-v7:${supportLibVersion}",
                          design      : "com.android.support:design:${supportLibVersion}",
@@ -105,7 +119,18 @@ ext {
                         daggerCompiler     : "com.google.dagger:dagger-compiler:${dagger2Version}",
                         javaxAnnotation    : "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}",
                         jsr250             : "javax.annotation:jsr250-api:${jsr250Version}",
-                        javaxInject        : "javax.inject:javax.inject:${javaxInjectVersion}",]
+                        javaxInject        : "javax.inject:javax.inject:${javaxInjectVersion}",
+
+                        autodagger2        : "com.github.lukaspili.autodagger2:autodagger2:${autoDagger2Version}",
+                        autodagger2Compiler: "com.github.lukaspili.autodagger2:autodagger2-compiler:${autoDagger2Version}",
+                        automortar         : "com.github.lukaspili.automortar:automortar:${automortarVersion}",
+                        automortarCompiler : "com.github.lukaspili.automortar:automortar-compiler:${automortarVersion}",
+
+                        flow               : "com.squareup.flow:flow:${flowVersion}",
+                        flowPath           : "com.squareup.flow:flow-path:${flowVersion}",
+                        mortar             : "com.squareup.mortar:mortar:${mortarVersion}"
+
+  ]
 
   rxDependencies = [rxjava       : "io.reactivex:rxjava:${rxjavaVersion}",
                     rxandroid    : "io.reactivex:rxandroid:${rxjavaVersion}",
@@ -132,12 +157,20 @@ ext {
                             robolectric: "org.robolectric:robolectric:${robolectricVersion}",
                             testRunner : "com.android.support.test:runner:${androidTesVersion}",
                             testRules  : "com.android.support.test:rules:${androidTesVersion}",
-                            uiautomator: "com.android.support.test.uiautomator:uiautomator-v18:${uiautomatorVersion}"]
+                            uiautomator: "com.android.support.test.uiautomator:uiautomator-v18:${uiautomatorVersion}",
+                            common     : "com.bobomee.android:common:${commonVersion}",]
 
 
-  annoDependencies = [
-      autoService : "com.google.auto.service:auto-service:${autoService}",
-      javapoet : "com.squareup:javapoet:${javapoet}"
+
+  annoDependencies = [autoService: "com.google.auto.service:auto-service:${autoService}",
+                      javapoet   : "com.squareup:javapoet:${javapoet}",
+
+  ]
+
+  mineDependencies = [
+      layoutbinder :"com.bobomee.android:layout-api:${layoutVersion}",
+      layoutbindercompiler: "com.bobomee.android:layout-compiler:${layoutVersion}",
+      common: "com.bobomee.android:common:${commonVersion}"
   ]
 }
 

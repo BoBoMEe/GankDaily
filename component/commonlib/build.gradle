@@ -31,26 +31,61 @@ android {
 }
 
 dependencies {
-  compile fileTree(include: ['*.jar'], dir: 'libs')
+  compile fileTree(dir: 'libs', include: ['*.jar'])
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
+  compile supportDependencies.appcompat
+  compile supportDependencies.design
+  compile supportDependencies.recyclerview
+  compile supportDependencies.cardView
+  compile supportDependencies.multidex
+
+  compile httpDependencies.retrofit
+  compile httpDependencies.converterGson
+  compile httpDependencies.adapterRxjava
+  compile httpDependencies.glide
+  compile httpDependencies.glidetransformations
+  compile httpDependencies.okhttp
+  compile httpDependencies.loggingInterceptor
+  compile httpDependencies.okhttputils
+  compile httpDependencies.okio
+
   compile injectDependencies.flow
   compile injectDependencies.mortar
   compile injectDependencies.flowPath
 
   provided injectDependencies.jsr250
   provided injectDependencies.javaxAnnotation
+
   compile injectDependencies.butterknife
   compile injectDependencies.dagger
   apt injectDependencies.butterknifeCompiler
   apt injectDependencies.daggerCompiler
-
   compile injectDependencies.autodagger2
   apt injectDependencies.autodagger2Compiler
 //  compile injectDependencies.automortar
 //  apt injectDependencies.automortarCompiler
 
+  compile rxDependencies.rxjava
+  compile rxDependencies.rxandroid
+  compile rxDependencies.rxPreferences
+  compile rxDependencies.rxBinding
+
+  compile utilDependencies.sqlbrite
+  compile utilDependencies.stetho
+  compile utilDependencies.timber
+  compile utilDependencies.logger
+  compile utilDependencies.eventbus
+  compile utilDependencies.databinding
+  compile utilDependencies.lombok
+  compile utilDependencies.stetho
+  compile utilDependencies.stethohttp
+
+  compile uiWidgetDependencies.overscroll
+  compile uiWidgetDependencies.circleImageView
+  compile mineDependencies.common
+  compile uiWidgetDependencies.ultraPtr
 
   androidTestCompile domainTestDependencies.testRunner
   androidTestCompile domainTestDependencies.testRules
@@ -60,8 +95,11 @@ dependencies {
   testCompile domainTestDependencies.mockito
   testCompile domainTestDependencies.robolectric
 
-  compile project(':component:commonlib')
-  compile project(':clean:domain')
+
+  debugCompile utilDependencies.debugleakcanary
+  releaseCompile utilDependencies.relaseleakcanary
+
+
 }
 
 configurations.all {
@@ -69,3 +107,4 @@ configurations.all {
     force 'com.android.support:support-annotations:23.1.1'
   }
 }
+
