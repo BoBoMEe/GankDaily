@@ -86,6 +86,8 @@ public final class Wrapper<T> {
 
     private String methodName;
 
+    private Wrapper<T> mTWrapper;
+
     public Builder<T> T(T _t) {
       t = _t;
       return this;
@@ -107,7 +109,10 @@ public final class Wrapper<T> {
     }
 
     public Wrapper<T> build() {
-      return new Wrapper<T>(refresh, t, params, methodName, this);
+      if (null == mTWrapper) {
+        mTWrapper = new Wrapper<T>(refresh, t, params, methodName, this);
+      }
+      return mTWrapper;
     }
   }
 }

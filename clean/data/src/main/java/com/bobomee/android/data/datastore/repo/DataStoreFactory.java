@@ -12,14 +12,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bobomee.android.data.datastore;
+package com.bobomee.android.data.datastore.repo;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
-import com.bobomee.android.htttp.api.RestService;
-import com.bobomee.android.data.datastore.repo.Repository;
+import com.bobomee.android.data.datastore.DataStore;
+import com.bobomee.android.data.datastore.DataStoreDisk;
+import com.bobomee.android.data.datastore.datastore.DataStoreDispatcher;
 import com.bobomee.android.data.di.core.ApplicationContext;
 import com.bobomee.android.data.serializer.UserCache;
 import com.bobomee.android.data.serializer.Wrapper;
@@ -33,6 +34,7 @@ import javax.inject.Singleton;
 
   private final UserCache userCache;
   private final Context context;
+  @Inject DataStoreDispatcher mDataStoreDispatcher;
 
   @Inject
   public DataStoreFactory(@ApplicationContext Context _context, @NonNull UserCache userCache) {
@@ -43,20 +45,20 @@ import javax.inject.Singleton;
   /**
    * Create {@link Repository} from a user id.
    */
-  public <T> Repository create(Wrapper<T> _wrapper) {
-    Repository dataStore;
+  public <T> DataStore<T> create(Wrapper<T> _wrapper) {
+    DataStore<T> dataStore;
 
     if (!isThereInternetConnection()) {
       if (cacheExpired(_wrapper)) {
-        dataStore = new DiskDataStore(this.userCache);
+        dataStore = new DataStoreDisk<T>(this.userCache);
       } else {
-        dataStore = createCloudDataStore();
+        dataStore = createCloudDataStore(_wrapper);
       }
     } else {
       if (!_wrapper.isRefresh() && cacheExpired(_wrapper)) {
-        dataStore = new DiskDataStore(this.userCache);
+        dataStore = new DataStoreDisk<T>(this.userCache);
       } else {
-        dataStore = createCloudDataStore();
+        dataStore = createCloudDataStore(_wrapper);
       }
     }
 
@@ -70,9 +72,9 @@ import javax.inject.Singleton;
   /**
    * Create {@link Repository} to retrieve data from the Cloud.
    */
-  public Repository createCloudDataStore() {
+  public <T> DataStore<T> createCloudDataStore(Wrapper<T> _wrapper) {
 
-    return new CloudDataStore(RestService.INSTANCE.getRestApi(), this.userCache);
+    return mDataStoreDispatcher.setWrapper(_wrapper).getDataStoreCloud();
   }
 
   /**

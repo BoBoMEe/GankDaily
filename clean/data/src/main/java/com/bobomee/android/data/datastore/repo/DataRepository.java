@@ -14,7 +14,7 @@
  */
 package com.bobomee.android.data.datastore.repo;
 
-import com.bobomee.android.data.datastore.DataStoreFactory;
+import com.bobomee.android.data.datastore.DataStore;
 import com.bobomee.android.data.serializer.Wrapper;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -37,7 +37,7 @@ import rx.Observable;
   }
 
   @Override public <T> Observable<T> request(Wrapper<T> _wrapper) {
-    final Repository userDataStore =
+    final DataStore<T> userDataStore =
         this.userDataStoreFactory.create(_wrapper);
 
     return userDataStore.request(_wrapper);

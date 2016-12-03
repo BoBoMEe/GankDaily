@@ -17,23 +17,22 @@ import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.bobomee.android.common.util.DayNightUtil;
 import com.bobomee.android.common.util.UIUtil;
-import com.bobomee.android.htttp.api.RestService;
+import com.bobomee.android.data.serializer.Wrapper;
+import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.domain.bean.GankCategory;
 import com.bobomee.android.domain.bean.Results;
 import com.bobomee.android.domain.bean.UserEntity;
-import com.bobomee.android.data.serializer.Wrapper;
+import com.bobomee.android.domain.interactor.DefaultSubscriber;
 import com.bobomee.android.htttp.rx.Transformers;
 import com.bobomee.android.layout.Layout;
 import com.bobomee.android.layout.LayoutBinder;
 import com.bobomee.android.myapplication.R;
 import com.bobomee.android.myapplication.base.BaseActivity;
 import com.bumptech.glide.Glide;
-import com.bobomee.android.domain.DomainConstants;
-import com.bobomee.android.domain.interactor.DefaultSubscriber;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
-import com.bobomee.android.common.util.DayNightUtil;
 import java.util.ArrayList;
 import java.util.List;
 import rx.Subscription;
@@ -131,8 +130,12 @@ public class MainActivity extends BaseActivity
   private CommonAdapter<Results> mGankItemBeanCommonAdapter;
 
   @OnClick(R.id.btn_3) public void showImage() {
-    Subscription rxSubscription = RestService.INSTANCE.getRestApi()
-        .getGirlList(DomainConstants.PAGE_SIZE, DomainConstants.FIRST_PAGE)
+
+    Wrapper<GankCategory> gankCategoryWrapper =
+        Wrapper.<GankCategory>builder().method("getGirlList")
+            .params(new Integer[] { DomainConstants.PAGE_SIZE, DomainConstants.FIRST_PAGE })
+            .build();
+    Subscription subscribe = mRepository.request(gankCategoryWrapper)
         .compose(Transformers.<GankCategory>switchSchedulers())
         .compose(Transformers.<List<Results>>handleGankResult())
         .subscribe(gankItemBeen -> {
@@ -141,7 +144,8 @@ public class MainActivity extends BaseActivity
         }, throwable -> {
           UIUtil.showToastSafe("数据加载失败ヽ(≧Д≦)ノ");
         });
-    addSubscription(rxSubscription);
+    addSubscription(subscribe);
+
   }
 
   @OnClick(R.id.btn_4) public void setBtn4()

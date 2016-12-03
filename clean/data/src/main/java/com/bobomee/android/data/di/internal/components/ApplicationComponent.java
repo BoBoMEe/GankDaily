@@ -20,9 +20,11 @@ import android.content.Context;
 import com.bobomee.android.data.datastore.repo.Repository;
 import com.bobomee.android.data.di.Dagger2Application;
 import com.bobomee.android.data.di.core.ApplicationContext;
+import com.bobomee.android.data.di.internal.modules.ApiModule;
 import com.bobomee.android.data.di.internal.modules.ApplicationModule;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
+import com.bobomee.android.htttp.api.RestApi;
 import dagger.Component;
 import javax.inject.Singleton;
 
@@ -30,7 +32,9 @@ import javax.inject.Singleton;
  * A component whose lifetime is the life of the application.
  */
 @Singleton // Constraints this component to one-per-application or unscoped bindings.
-@Component(modules = ApplicationModule.class) public interface ApplicationComponent {
+@Component(modules = {
+    ApplicationModule.class, ApiModule.class
+}) public interface ApplicationComponent {
   void inject(Dagger2Application _myApplication);
 
   @ApplicationContext Context applicationContext();
@@ -42,6 +46,8 @@ import javax.inject.Singleton;
 
   PostExecutionThread postExecutionThread();
 
+  RestApi restApi();
+
   Repository userRepository();
 
   class Init {
@@ -51,6 +57,7 @@ import javax.inject.Singleton;
     public static ApplicationComponent initialize(Dagger2Application _myApplication) {
       return DaggerApplicationComponent.builder()
           .applicationModule(new ApplicationModule(_myApplication))
+          .apiModule(new ApiModule())
           .build();
     }
   }

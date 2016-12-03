@@ -15,12 +15,10 @@
  */
 package com.bobomee.android.domain.executor;
 
-import com.bobomee.android.domain.interactor.UseCase;
 import java.util.concurrent.Executor;
 
 /**
  * Executor implementation can be based on different frameworks or techniques of asynchronous
- * execution, but every implementation will execute the
- * {@link UseCase} out of the UI thread.
+ * execution, but every implementation will execute out of the UI thread.
  */
 public interface ThreadExecutor extends Executor {}

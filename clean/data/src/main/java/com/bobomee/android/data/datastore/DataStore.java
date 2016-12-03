@@ -14,28 +14,15 @@
  */
 package com.bobomee.android.data.datastore;
 
-import com.bobomee.android.data.datastore.repo.Repository;
-import com.bobomee.android.data.serializer.UserCache;
 import com.bobomee.android.data.serializer.Wrapper;
 import rx.Observable;
 
 /**
- * {@link Repository} implementation based on file system data store.
+ * Interface that represents a Repository for getting {@link Wrapper} related data.
  */
-class DiskDataStore implements Repository {
-
-  private final UserCache userCache;
-
+public interface DataStore<T> {
   /**
-   * Construct a {@link Repository} based file system data store.
-   *
-   * @param userCache A {@link UserCache} to cache data retrieved from the api.
+   * Get an {@link Observable} which will emit a {@link T}.
    */
-  DiskDataStore(UserCache userCache) {
-    this.userCache = userCache;
-  }
-
-  @Override public <T> Observable<T> request(Wrapper<T> _wrapper) {
-    return this.userCache.<T>get(_wrapper);
-  }
+  Observable<T> request(final Wrapper<T> _wrapper);
 }
