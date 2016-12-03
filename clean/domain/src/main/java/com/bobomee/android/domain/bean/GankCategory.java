@@ -1,6 +1,5 @@
-package com.bobomee.android.data.bean;
+package com.bobomee.android.domain.bean;
 
-import com.bobomee.android.domain.bean.BaseData;
 import java.util.List;
 
 /**

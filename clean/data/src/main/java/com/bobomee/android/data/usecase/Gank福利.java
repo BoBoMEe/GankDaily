@@ -1,7 +1,7 @@
 package com.bobomee.android.data.usecase;
 
-import com.bobomee.android.data.api.RestApi;
-import com.bobomee.android.data.bean.GankCategory;
+import com.bobomee.android.htttp.api.RestApi;
+import com.bobomee.android.domain.bean.GankCategory;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
 import com.bobomee.android.domain.interactor.UseCase;
@@ -14,7 +14,7 @@ import rx.Observable;
  * @description
  */
 
-public class Gank福利 extends UseCase<com.bobomee.android.data.bean.GankCategory> {
+public class Gank福利 extends UseCase<GankCategory> {
 
   private final RestApi mRestApi;
   private int mNum;

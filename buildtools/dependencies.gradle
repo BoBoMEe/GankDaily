@@ -49,6 +49,7 @@ ext {
   okhttpVersion = '3.2.0'
   okhttpUtils = '2.5.2'
   okioVersion = '1.6.0'
+  gsonVersion = '2.6.1'
 
   //pic
   glideVersion = '3.7.0'
@@ -111,7 +112,10 @@ ext {
                       loggingInterceptor  : "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}",
                       okhttputils         : "com.zhy:okhttputils:${okhttpUtils}",
 
-                      okio                : "com.squareup.okio:okio:${okioVersion}",]
+                      okio                : "com.squareup.okio:okio:${okioVersion}",
+gson:"com.google.code.gson:gson:${gsonVersion}"
+  ]
+
 
   injectDependencies = [butterknife        : "com.jakewharton:butterknife:${butterknifeVersion}",
                         butterknifeCompiler: "com.jakewharton:butterknife-compiler:${butterknifeCompilerVersion}",

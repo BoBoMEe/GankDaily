@@ -1,4 +1,4 @@
-package com.bobomee.android.data.bean;
+package com.bobomee.android.domain.bean;
 
 import java.util.List;
 

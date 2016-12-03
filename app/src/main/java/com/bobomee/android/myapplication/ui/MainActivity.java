@@ -18,10 +18,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.bobomee.android.common.util.UIUtil;
-import com.bobomee.android.data.api.RestService;
-import com.bobomee.android.data.bean.GankCategory;
-import com.bobomee.android.data.bean.Results;
-import com.bobomee.android.data.bean.UserEntity;
+import com.bobomee.android.htttp.api.RestService;
+import com.bobomee.android.domain.bean.GankCategory;
+import com.bobomee.android.domain.bean.Results;
+import com.bobomee.android.domain.bean.UserEntity;
 import com.bobomee.android.data.serializer.Wrapper;
 import com.bobomee.android.htttp.rx.Transformers;
 import com.bobomee.android.layout.Layout;
@@ -147,21 +147,6 @@ public class MainActivity extends BaseActivity
   @OnClick(R.id.btn_4) public void setBtn4()
 
   {
-    //Wrapper<GankCategory> wrapper =
-    //    Wrapper.<GankCategory>builder().method("getGirlList").params(new Object[] {
-    //        DomainConstants.PAGE_SIZE, DomainConstants.FIRST_PAGE
-    //    }).build();
-    //
-    //
-    //Subscription subscribe = mRepository.request(wrapper)
-    //    .compose(Transformers.switchSchedulers())
-    //    .subscribe(new DefaultSubscriber<GankCategory>() {
-    //      @Override public void onNext(GankCategory _gankCategory) {
-    //        super.onNext(_gankCategory);
-    //        Log.e(TAG, "onNext: ----->" + _gankCategory);
-    //      }
-    //    });
-
     Wrapper<List<UserEntity>> userEntityList =
         Wrapper.<List<UserEntity>>builder().method("userEntityList").build();
 

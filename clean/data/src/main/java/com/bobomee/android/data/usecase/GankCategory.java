@@ -12,12 +12,12 @@ import rx.Observable;
  * @description
  */
 
-public class GankCategory extends UseCase<com.bobomee.android.data.bean.GankCategory> {
+public class GankCategory extends UseCase<com.bobomee.android.domain.bean.GankCategory> {
   protected GankCategory(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
   }
 
-  @Override protected Observable<com.bobomee.android.data.bean.GankCategory> buildUseCaseObservable() {
+  @Override protected Observable<com.bobomee.android.domain.bean.GankCategory> buildUseCaseObservable() {
     return null;
   }
 }

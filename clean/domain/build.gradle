@@ -20,5 +20,6 @@ dependencies {
 
   compile injectDependencies.javaxInject
   compile rxDependencies.rxjava
+  compile httpDependencies.gson
 }
 

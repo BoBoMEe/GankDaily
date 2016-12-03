@@ -83,7 +83,6 @@ dependencies {
   apt mineDependencies.layoutbindercompiler
 
   compile 'com.zhy:base-rvadapter:3.0.3'
-  compile project(':component:http')
   compile project(':clean:data')
 
 }

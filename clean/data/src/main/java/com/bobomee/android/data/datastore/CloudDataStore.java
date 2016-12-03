@@ -16,7 +16,7 @@ package com.bobomee.android.data.datastore;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import com.bobomee.android.data.api.RestApi;
+import com.bobomee.android.htttp.api.RestApi;
 import com.bobomee.android.data.datastore.repo.Repository;
 import com.bobomee.android.data.serializer.UserCache;
 import com.bobomee.android.data.serializer.Wrapper;

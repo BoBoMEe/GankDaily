@@ -1,4 +1,4 @@
-package com.bobomee.android.data.api;
+package com.bobomee.android.htttp.api;
 
 import com.bobomee.android.htttp.retrofit2.client.Retrofit2Client;
 

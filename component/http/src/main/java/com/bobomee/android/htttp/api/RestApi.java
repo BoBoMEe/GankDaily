@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bobomee.android.data.api;
+package com.bobomee.android.htttp.api;
 
-import com.bobomee.android.data.bean.GankCategory;
-import com.bobomee.android.data.bean.GankDay;
-import com.bobomee.android.data.bean.GankQuery;
-import com.bobomee.android.data.bean.UserEntity;
+import com.bobomee.android.domain.bean.GankCategory;
+import com.bobomee.android.domain.bean.GankDay;
+import com.bobomee.android.domain.bean.GankQuery;
+import com.bobomee.android.domain.bean.UserEntity;
 import java.util.List;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

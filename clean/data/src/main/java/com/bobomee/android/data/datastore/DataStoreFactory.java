@@ -18,7 +18,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
-import com.bobomee.android.data.api.RestService;
+import com.bobomee.android.htttp.api.RestService;
 import com.bobomee.android.data.datastore.repo.Repository;
 import com.bobomee.android.data.di.core.ApplicationContext;
 import com.bobomee.android.data.serializer.UserCache;
