@@ -35,7 +35,7 @@ public class DataStoreDispatcher {
   @SuppressWarnings("unchecked") public <T> DataStoreCloud<T> getDataStoreCloud() {
     String methodName = wrapper.getMethodName();
 
-    DataStoreCloud dataStoreCloud;
+    DataStoreCloud dataStoreCloud = new DataStoreCloudDefault(restApi, userCache);
 
     switch (methodName) {
       case "userEntityList":
@@ -45,7 +45,6 @@ public class DataStoreDispatcher {
         dataStoreCloud = new GirlListCloud(restApi, userCache);
         break;
       default:
-        dataStoreCloud = new DataStoreCloudDefault(restApi, userCache);
         break;
     }
 

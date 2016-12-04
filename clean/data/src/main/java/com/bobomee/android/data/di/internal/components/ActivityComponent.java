@@ -16,8 +16,6 @@ package com.bobomee.android.data.di.internal.components;
 
 import android.app.Activity;
 import android.content.Context;
-import com.bobomee.android.data.di.Dagger2Activity;
-import com.bobomee.android.data.di.Dagger2Application;
 import com.bobomee.android.data.di.core.ActivityContext;
 import com.bobomee.android.data.di.core.PerActivity;
 import com.bobomee.android.data.di.internal.modules.ActivityModule;
@@ -38,17 +36,4 @@ public interface ActivityComponent {
 
   @ActivityContext Context activityContext();
 
-  void inject(Dagger2Activity activity);
-
-  class Init {
-    private Init() {
-    }
-
-    public static <T extends Dagger2Activity> ActivityComponent initialize(Dagger2Activity activity) {
-      return DaggerActivityComponent.builder()
-          .applicationComponent(Dagger2Application.get(activity).getApplicationComponent())
-          .activityModule(new ActivityModule(activity))
-          .build();
-    }
-  }
 }

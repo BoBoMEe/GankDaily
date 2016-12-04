@@ -66,7 +66,7 @@ import javax.inject.Singleton;
   }
 
   private <T> boolean cacheExpired(Wrapper<T> _wrapper) {
-    return !this.userCache.isExpired() && this.userCache.isCached(_wrapper.getUnique());
+    return !this.userCache.isExpired() && this.userCache.isCached(_wrapper.getKey());
   }
 
   /**

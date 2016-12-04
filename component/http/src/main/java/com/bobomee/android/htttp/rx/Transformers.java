@@ -1,7 +1,7 @@
 package com.bobomee.android.htttp.rx;
 
-import com.bobomee.android.domain.exception.ApiException;
 import com.bobomee.android.domain.bean.BaseData;
+import com.bobomee.android.domain.exception.NotFoundException;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -23,21 +23,16 @@ public class Transformers {
   }
 
   public static <T> Observable.Transformer<BaseData<T>, T> handleGankResult() {   //compose判断结果
-    return new Observable.Transformer<BaseData<T>, T>() {
-      @Override
-      public Observable<T> call(Observable<BaseData<T>> httpResponseObservable) {
-        return httpResponseObservable.flatMap(new Func1<BaseData<T>, Observable<T>>() {
-          @Override
-          public Observable<T> call(BaseData<T> tGankHttpResponse) {
-            if(!tGankHttpResponse.getError()) {
+    return httpResponseObservable -> httpResponseObservable.flatMap(
+        new Func1<BaseData<T>, Observable<T>>() {
+          @Override public Observable<T> call(BaseData<T> tGankHttpResponse) {
+            if (!tGankHttpResponse.getError()) {
               return createData(tGankHttpResponse.getResults());
             } else {
-              return Observable.error(new ApiException("服务器返回error"));
+              return Observable.error(new NotFoundException("服务器返回error"));
             }
-          }
-        });
       }
-    };
+        });
   }
 
   public static <T> Observable<T> createData(final T t) {

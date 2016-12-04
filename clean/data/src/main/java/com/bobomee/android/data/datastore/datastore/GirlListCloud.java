@@ -30,7 +30,7 @@ public class GirlListCloud<GankCategory>
     Integer params2 = Integer.valueOf(params[1].toString());
 
     Observable<com.bobomee.android.domain.bean.GankCategory> girlList =
-        getRestApi().getGirlList(params1, params2);
+        getRestApi().getGirlList(params1,params2);
 
     girlList.doOnNext(getAction1());
 

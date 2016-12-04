@@ -1,5 +1,6 @@
 package com.bobomee.android.myapplication.ui;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -8,17 +9,16 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.bobomee.android.common.util.DayNightUtil;
+import com.bobomee.android.common.util.ToastUtil;
 import com.bobomee.android.common.util.UIUtil;
+import com.bobomee.android.data.datastore.repo.Repository;
+import com.bobomee.android.data.di.internal.HasComponent;
+import com.bobomee.android.data.repo.GetRepos;
 import com.bobomee.android.data.serializer.Wrapper;
 import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.domain.bean.GankCategory;
@@ -26,32 +26,54 @@ import com.bobomee.android.domain.bean.Results;
 import com.bobomee.android.domain.bean.UserEntity;
 import com.bobomee.android.domain.interactor.DefaultSubscriber;
 import com.bobomee.android.htttp.rx.Transformers;
-import com.bobomee.android.layout.Layout;
-import com.bobomee.android.layout.LayoutBinder;
 import com.bobomee.android.myapplication.R;
 import com.bobomee.android.myapplication.base.BaseActivity;
+import com.bobomee.android.myapplication.base.ReposListPresenter;
+import com.bobomee.android.myapplication.base.ReposListView;
+import com.bobomee.android.myapplication.databinding.ActivityMainBinding;
+import com.bobomee.android.myapplication.di.ReposComponent;
+import com.bobomee.android.myapplication.model.ReposModel;
 import com.bumptech.glide.Glide;
+import com.jakewharton.rxbinding.view.RxView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import javax.inject.Inject;
 import rx.Subscription;
+import rx.functions.Action1;
 
-@Layout(R.layout.activity_main)
-public class MainActivity extends BaseActivity
-    implements NavigationView.OnNavigationItemSelectedListener {
-
-  @BindView(R.id.btn_3) Button mBtn3;
-  @BindView(R.id.recycler) RecyclerView mRecycler;
-
-  @BindView(R.id.btn_4) Button mBtn4;
+public class MainActivity extends BaseActivity<ReposListView, ReposListPresenter>
+    implements NavigationView.OnNavigationItemSelectedListener, ReposListView,
+    HasComponent<ReposComponent> {
 
   private static final String TAG = "MainActivity";
 
+  private rx.functions.Action1<Void> mLoginAction = aVoid -> login();
+
+  @Inject protected Repository mRepository;
+
+  ReposComponent mInitialize;
+  @Inject ReposListPresenter mReposListPresenter;
+
+  @Inject GetRepos mGetRepos;
+  private ActivityMainBinding mMainBinding;
+
+  @Override public ReposListPresenter getPresenter() {
+    return mReposListPresenter;
+  }
+
+
   @Override protected void onCreate(Bundle savedInstanceState) {
+
+    mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+    mInitialize = ReposComponent.Init.initialize(this);
+    if (null != mInitialize) mInitialize.inject(this);
+
     super.onCreate(savedInstanceState);
-    LayoutBinder.bind(this);
-    ButterKnife.bind(this);
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +95,39 @@ public class MainActivity extends BaseActivity
     navigationView.setNavigationItemSelectedListener(this);
 
     initRecycler();
+    initView();
+  }
+
+  private void initView() {
+    RxView.clicks(mMainBinding.appBarMainLayout.contentLayout.btn5)
+        .throttleFirst(DomainConstants.ON_CLICK_DURATION, TimeUnit.MILLISECONDS)
+        .subscribe(mLoginAction);
+
+    RxView.clicks(mMainBinding.appBarMainLayout.contentLayout.btn3)
+        .throttleFirst(DomainConstants.ON_CLICK_DURATION, TimeUnit.MILLISECONDS)
+        .subscribe(new Action1<Void>() {
+          @Override public void call(Void _void) {
+            showImage();
+          }
+        });
+
+    RxView.clicks(mMainBinding.appBarMainLayout.contentLayout.btn4)
+        .throttleFirst(DomainConstants.ON_CLICK_DURATION, TimeUnit.MILLISECONDS)
+        .subscribe(new Action1<Void>() {
+          @Override public void call(Void _void) {
+            setBtn4();
+          }
+        });
+  }
+
+  private void login() {
+
+    mReposListPresenter.initialize();
+  }
+
+  @Override public void userList(List<ReposModel> userModels) {
+    // TODO navigate to main page
+    ToastUtil.show(this, Arrays.toString(userModels.toArray()));
   }
 
   @Override public void onBackPressed() {
@@ -110,9 +165,10 @@ public class MainActivity extends BaseActivity
   }
 
   public void initRecycler() {
-    mRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+    mMainBinding.appBarMainLayout.contentLayout.recycler.setLayoutManager(
+        new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
 
-    mRecycler.setAdapter(mGankItemBeanCommonAdapter =
+    mMainBinding.appBarMainLayout.contentLayout.recycler.setAdapter(mGankItemBeanCommonAdapter =
         new CommonAdapter<Results>(MainActivity.this, R.layout.recycler_item_image,
             mGankItemBeanList) {
 
@@ -129,11 +185,10 @@ public class MainActivity extends BaseActivity
 
   private CommonAdapter<Results> mGankItemBeanCommonAdapter;
 
-  @OnClick(R.id.btn_3) public void showImage() {
+  public void showImage() {
 
-    Wrapper<GankCategory> gankCategoryWrapper =
-        Wrapper.<GankCategory>builder().method("getGirlList")
-            .params(new Integer[] { DomainConstants.PAGE_SIZE, DomainConstants.FIRST_PAGE })
+    Wrapper<GankCategory> gankCategoryWrapper = Wrapper.<GankCategory>builder("getGirlList",
+        new Integer[] { DomainConstants.PAGE_SIZE, DomainConstants.FIRST_PAGE })
             .build();
     Subscription subscribe = mRepository.request(gankCategoryWrapper)
         .compose(Transformers.<GankCategory>switchSchedulers())
@@ -148,11 +203,11 @@ public class MainActivity extends BaseActivity
 
   }
 
-  @OnClick(R.id.btn_4) public void setBtn4()
+  public void setBtn4()
 
   {
     Wrapper<List<UserEntity>> userEntityList =
-        Wrapper.<List<UserEntity>>builder().method("userEntityList").build();
+        Wrapper.<List<UserEntity>>builder("userEntityList", new String[] {}).build();
 
     Subscription subscribe = mRepository.request(userEntityList)
         .compose(Transformers.switchSchedulers())
@@ -164,5 +219,9 @@ public class MainActivity extends BaseActivity
         });
 
     addSubscription(subscribe);
+  }
+
+  @Override public ReposComponent getComponent() {
+    return mInitialize;
   }
 }

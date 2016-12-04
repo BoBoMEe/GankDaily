@@ -64,10 +64,10 @@ public class UserCacheImpl implements UserCache {
   @Override public <T> Observable<T> get(final Wrapper<T> _tWrapper) {
     return Observable.create(new Observable.OnSubscribe<T>() {
       @Override public void call(Subscriber<? super T> _subscriber) {
-        File userEntityFile = UserCacheImpl.this.buildFile(_tWrapper.getUnique());
+        File userEntityFile = UserCacheImpl.this.buildFile(_tWrapper.getKey());
         String fileContent = UserCacheImpl.this.fileManager.readFileContent(userEntityFile);
         T userEntity =
-            UserCacheImpl.this.serializer.deserialize(fileContent, _tWrapper.getT().getClass());
+            UserCacheImpl.this.serializer.deserialize(fileContent, _tWrapper.getTypeOfT());
 
         if (userEntity != null) {
           _subscriber.onNext(userEntity);
@@ -81,8 +81,8 @@ public class UserCacheImpl implements UserCache {
 
   @Override public <T> void put(Wrapper<T> userEntity) {
     if (userEntity != null) {
-      File userEntityFile = this.buildFile(userEntity.getUnique());
-      if (!isCached(userEntity.getUnique())) {
+      File userEntityFile = this.buildFile(userEntity.getKey());
+      if (!isCached(userEntity.getKey())) {
         String jsonString = this.serializer.serialize(userEntity.getT());
         this.executeAsynchronously(new CacheWriter(this.fileManager, userEntityFile,
             jsonString));

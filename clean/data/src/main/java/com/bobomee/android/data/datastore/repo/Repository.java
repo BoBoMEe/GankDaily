@@ -25,4 +25,5 @@ public interface Repository {
    * Get an {@link Observable} which will emit a {@link T}.
    */
   <T> Observable<T> request(final Wrapper<T> _wrapper);
+
 }

@@ -7,6 +7,9 @@ android {
   packagingOptions {
     exclude 'META-INF/services/javax.annotation.processing.Processor' // fixed butternife dagger2
   }
+  dataBinding {
+    enabled = true
+  }
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
   defaultConfig {

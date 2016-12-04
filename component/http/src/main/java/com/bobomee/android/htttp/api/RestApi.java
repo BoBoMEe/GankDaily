@@ -18,6 +18,7 @@ package com.bobomee.android.htttp.api;
 import com.bobomee.android.domain.bean.GankCategory;
 import com.bobomee.android.domain.bean.GankDay;
 import com.bobomee.android.domain.bean.GankQuery;
+import com.bobomee.android.domain.bean.ReposEntity;
 import com.bobomee.android.domain.bean.UserEntity;
 import java.util.List;
 import retrofit2.http.GET;
@@ -51,5 +52,8 @@ public interface RestApi {
 
   @GET("http://www.android10.org/myapi/users.json")
   Observable<List<UserEntity>> userEntityList();
+
+  @GET("https://api.github.com/users/{user}/repos") Observable<List<ReposEntity>> login(@Path("user") String user);
+
 
 }

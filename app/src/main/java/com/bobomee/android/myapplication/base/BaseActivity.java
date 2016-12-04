@@ -13,9 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import com.bobomee.android.common.mvp.MvpPresenter;
+import com.bobomee.android.common.mvp.MvpView;
 import com.bobomee.android.common.util.UIUtil;
-import com.bobomee.android.data.di.Dagger2Activity;
 import com.bobomee.android.htttp.receiver.NetWorkReceiver;
 import com.bobomee.android.htttp.util.HttpNetUtil;
 import com.bobomee.android.myapplication.R;
@@ -29,11 +29,10 @@ import rx.subscriptions.CompositeSubscription;
  * @description
  */
 
-public class BaseActivity extends Dagger2Activity implements HttpNetUtil.Networkreceiver{
+public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>> extends MvpActivity<V,P> implements HttpNetUtil.Networkreceiver{
 
   protected Toolbar mToolbar;
   private CompositeSubscription mCompositeSubscription;
-  private Unbinder mBind;
   private BroadcastReceiver mReceiver;
 
   public void addSubscription(Subscription s) {
@@ -79,28 +78,21 @@ public class BaseActivity extends Dagger2Activity implements HttpNetUtil.Network
 
     HttpNetUtil.INSTANCE.removeNetWorkListener(this);
 
-    if (null != mBind) {
-      mBind.unbind();
-    }
-
     unsubscribe();
   }
 
   @Override public void setContentView(@LayoutRes int layoutResID) {
     super.setContentView(layoutResID);
-    mBind = ButterKnife.bind(this);
     setupToolbar();
   }
 
   @Override public void setContentView(View view) {
     super.setContentView(view);
-    mBind = ButterKnife.bind(this);
     setupToolbar();
   }
 
   @Override public void setContentView(View view, ViewGroup.LayoutParams params) {
     super.setContentView(view, params);
-    mBind = ButterKnife.bind(this);
     setupToolbar();
   }
 

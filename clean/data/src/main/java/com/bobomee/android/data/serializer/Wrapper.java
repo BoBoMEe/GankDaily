@@ -15,6 +15,8 @@
 
 package com.bobomee.android.data.serializer;
 
+import java.lang.reflect.Type;
+
 /**
  * Created on 16/9/25.下午8:56.
  *
@@ -24,27 +26,30 @@ package com.bobomee.android.data.serializer;
 
 public final class Wrapper<T> {
 
-  private boolean refresh = true;//是否请求最新数据
-  private final T t;//请求数据的类型,和返回的Observable<T>中的T一样
-  private final Object[] params;//请求的参数
-  private final String methodName;// Retrofit接口中定义的方法名,供请求调用
+  private boolean isRefresh = true;
+  private T t;//请求数据的类型,和返回的Observable<T>中的T一样
+  private Type typeOfT;
+  private String methodName;
+  private Object[] params;
+
   private final Builder<T> mBuilder;// Wrapper的构建起builder
 
-  public Wrapper(boolean _refresh, T _t, Object[] _params,
-      String _methodName, Builder<T> _builder) {
-    this.refresh = _refresh;
+  public Wrapper(boolean isRefresh, Type _typeOfT, T _t, String _methodName, Object[] _params,
+      Builder<T> _builder) {
+    this.isRefresh = isRefresh;
+    this.typeOfT = _typeOfT;
     this.t = _t;
-    this.params = _params;
     this.methodName = _methodName;
+    this.params = _params;
     this.mBuilder = _builder;
+  }
+
+  public final boolean isRefresh() {
+    return isRefresh;
   }
 
   public final Builder<T> getBuilder() {
     return mBuilder;
-  }
-
-  public final boolean isRefresh() {
-    return refresh;
   }
 
   public final T getT() {
@@ -55,64 +60,91 @@ public final class Wrapper<T> {
     return methodName;
   }
 
+  public final Type getTypeOfT() {
+    return typeOfT;
+  }
+
   public final Object[] getParams() {
     return params;
   }
 
-  public final String getUnique() {
-    Object[] params = getParams();
+  public final String getKey() {
 
-    String result = getMethodName();
+    String result = methodName;
 
     if (null != params && params.length > 0) {
-      for (Object o : params) {
-        result += o.toString();
+      for (Object obj : params) {
+        result += obj.toString();
       }
     }
+
     return result;
   }
 
-  public static<T> Builder<T> builder() {
-    return new Builder<T>();
+  public static <T> Builder<T> builder(String _methodName, Object[] _params) {
+    return new Builder<T>(_methodName, _params);
   }
 
   public static class Builder<T> {
 
-    private boolean refresh = true;
+    private boolean isRefresh = true;
 
     private T t;
 
-    private Object[] params;
+    private Type mType;
 
     private String methodName;
 
+    private Object[] params;
+
     private Wrapper<T> mTWrapper;
+
+    public Builder(String _methodName, Object[] _params) {
+      this.methodName = _methodName;
+      this.params = _params;
+
+      mTWrapper = WrapperManager.INSTANCE.get(getKey());
+    }
+
+    public Builder<T> isRefresh(boolean _isRefresh) {
+      isRefresh = _isRefresh;
+      if (null != mTWrapper) mTWrapper.isRefresh = _isRefresh;
+      return this;
+    }
 
     public Builder<T> T(T _t) {
       t = _t;
+      if (null != mTWrapper) mTWrapper.t = _t;
       return this;
     }
 
-    public Builder<T> method(String method) {
-      methodName = method;
-      return this;
-    }
-
-    public Builder<T> params(Object[] params) {
-      this.params = params;
-      return this;
-    }
-
-    public Builder<T> isRefresh(boolean isRefresh) {
-      this.refresh = isRefresh;
+    public Builder<T> typeOfT(Type _type) {
+      this.mType = _type;
+      if (null != mTWrapper) mTWrapper.typeOfT = _type;
       return this;
     }
 
     public Wrapper<T> build() {
+
       if (null == mTWrapper) {
-        mTWrapper = new Wrapper<T>(refresh, t, params, methodName, this);
+        mTWrapper = new Wrapper<T>(isRefresh, mType, t, methodName, params, this);
+        WrapperManager.INSTANCE.put(getKey(), mTWrapper);
       }
+
       return mTWrapper;
+    }
+
+    public final String getKey() {
+
+      String result = methodName;
+
+      if (null != params && params.length > 0) {
+        for (Object obj : params) {
+          result += obj.toString();
+        }
+      }
+
+      return result;
     }
   }
 }

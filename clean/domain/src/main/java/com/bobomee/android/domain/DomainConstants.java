@@ -18,4 +18,6 @@ public class DomainConstants {
    * page size
    */
   public static final int PAGE_SIZE = 20;
+
+  public static int ON_CLICK_DURATION = 500;
 }
