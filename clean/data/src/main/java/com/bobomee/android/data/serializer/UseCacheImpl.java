@@ -1,16 +1,17 @@
 /*
- * Copyright (c) 2016. BoBoMEe(wbwjx115@gmail.com)
+ * Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 package com.bobomee.android.data.serializer;
 
@@ -24,10 +25,10 @@ import rx.Observable;
 import rx.Subscriber;
 
 /**
- * {@link UserCache} implementation.
+ * {@link UseCache} implementation.
  */
 @Singleton
-public class UserCacheImpl implements UserCache {
+public class UseCacheImpl implements UseCache {
 
   private static final String SETTINGS_FILE_NAME = "com.android.http.cache.serializer.UseCacheImpl";
   private static final String SETTINGS_KEY_LAST_CACHE_UPDATE = "last_cache_update";
@@ -42,14 +43,14 @@ public class UserCacheImpl implements UserCache {
   private final ThreadExecutor threadExecutor;
 
   /**
-   * Constructor of the class {@link UserCacheImpl}.
+   * Constructor of the class {@link UseCacheImpl}.
    *
    * @param context A
    * @param userCacheSerializer {@link JsonSerializer} for object serialization.
    * @param fileManager {@link FileManager} for saving serialized objects to the file system.
    */
   @Inject
-  public UserCacheImpl(@ApplicationContext Context context, JsonSerializer userCacheSerializer,
+  public UseCacheImpl(@ApplicationContext Context context, JsonSerializer userCacheSerializer,
       FileManager fileManager, ThreadExecutor executor) {
     if (context == null || userCacheSerializer == null || fileManager == null || executor == null) {
       throw new IllegalArgumentException("Invalid null parameter");
@@ -64,10 +65,10 @@ public class UserCacheImpl implements UserCache {
   @Override public <T> Observable<T> get(final Wrapper<T> _tWrapper) {
     return Observable.create(new Observable.OnSubscribe<T>() {
       @Override public void call(Subscriber<? super T> _subscriber) {
-        File userEntityFile = UserCacheImpl.this.buildFile(_tWrapper.getKey());
-        String fileContent = UserCacheImpl.this.fileManager.readFileContent(userEntityFile);
+        File userEntityFile = UseCacheImpl.this.buildFile(_tWrapper.getKey());
+        String fileContent = UseCacheImpl.this.fileManager.readFileContent(userEntityFile);
         T userEntity =
-            UserCacheImpl.this.serializer.deserialize(fileContent, _tWrapper.getTypeOfT());
+            UseCacheImpl.this.serializer.deserialize(fileContent, _tWrapper.getTypeOfT());
 
         if (userEntity != null) {
           _subscriber.onNext(userEntity);
@@ -79,11 +80,11 @@ public class UserCacheImpl implements UserCache {
     });
   }
 
-  @Override public <T> void put(Wrapper<T> userEntity) {
-    if (userEntity != null) {
-      File userEntityFile = this.buildFile(userEntity.getKey());
-      if (!isCached(userEntity.getKey())) {
-        String jsonString = this.serializer.serialize(userEntity.getT());
+  @Override public <T> void put(Wrapper<T> _tWrapper) {
+    if (_tWrapper != null) {
+      File userEntityFile = this.buildFile(_tWrapper.getKey());
+      if (!isCached(_tWrapper.getKey())) {
+        String jsonString = this.serializer.serialize(_tWrapper.getT());
         this.executeAsynchronously(new CacheWriter(this.fileManager, userEntityFile,
             jsonString));
         setLastCacheUpdateTimeMillis();

@@ -1,13 +1,26 @@
+/*
+ * Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package com.bobomee.android.data.repository;
 
-import com.bobomee.android.data.serializer.UserCache;
+import com.bobomee.android.data.serializer.UseCache;
 import com.bobomee.android.data.serializer.Wrapper;
 import com.bobomee.android.domain.bean.GankCategory;
 import com.bobomee.android.domain.bean.GankDay;
 import com.bobomee.android.domain.bean.GankQuery;
-import com.bobomee.android.domain.bean.ReposEntity;
-import com.bobomee.android.domain.bean.UserEntity;
-import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import rx.Observable;
@@ -20,9 +33,9 @@ import rx.Observable;
  */
 @Singleton public class ReposDiskDataRepository implements ReposRepository {
 
-  private final UserCache mUserCache;
+  private final UseCache mUserCache;
 
-  @Inject public ReposDiskDataRepository(UserCache _userCache) {
+  @Inject public ReposDiskDataRepository(UseCache _userCache) {
     mUserCache = _userCache;
   }
 
@@ -54,30 +67,6 @@ import rx.Observable;
         });
 
     return mUserCache.<GankCategory>get(getCategoryData);
-  }
-
-  @Override public Observable<GankCategory> getGirlList(Integer num, Integer page) {
-
-    Wrapper<GankCategory> getGirlList =
-        this.<GankCategory>getWrapper("getGirlList", new Integer[] { num, page });
-
-    return mUserCache.<GankCategory>get(getGirlList);
-  }
-
-  @Override public Observable<List<UserEntity>> userEntityList() {
-
-    Wrapper<List<UserEntity>> userEntityList =
-        this.<List<UserEntity>>getWrapper("userEntityList", new String[] {});
-
-    return mUserCache.<List<UserEntity>>get(userEntityList);
-  }
-
-  @Override public Observable<List<ReposEntity>> login(String user) {
-
-    Wrapper<List<ReposEntity>> login =
-        this.<List<ReposEntity>>getWrapper("login", new String[] { user });
-
-    return mUserCache.<List<ReposEntity>>get(login);
   }
 
   private <T> Wrapper<T> getWrapper(String method, Object[] params) {

@@ -1,16 +1,17 @@
 /*
- * Copyright (c) 2016. BoBoMEe(wbwjx115@gmail.com)
+ * Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package com.bobomee.android.data.serializer;
@@ -18,10 +19,9 @@ package com.bobomee.android.data.serializer;
 import java.lang.reflect.Type;
 
 /**
- * Created on 16/9/25.下午8:56.
+ * Created on 16/9/25.&#x4e0b;&#x5348;8:56.
  *
  * @author bobomee.
- * @description
  */
 
 public final class Wrapper<T> {
@@ -82,7 +82,7 @@ public final class Wrapper<T> {
   }
 
   public static <T> Builder<T> builder(String _methodName, Object[] _params) {
-    return new Builder<T>(_methodName, _params);
+    return new Builder<>(_methodName, _params);
   }
 
   public static class Builder<T> {
@@ -99,7 +99,7 @@ public final class Wrapper<T> {
 
     private Wrapper<T> mTWrapper;
 
-    public Builder(String _methodName, Object[] _params) {
+    Builder(String _methodName, Object[] _params) {
       this.methodName = _methodName;
       this.params = _params;
 
@@ -127,14 +127,14 @@ public final class Wrapper<T> {
     public Wrapper<T> build() {
 
       if (null == mTWrapper) {
-        mTWrapper = new Wrapper<T>(isRefresh, mType, t, methodName, params, this);
+        mTWrapper = new Wrapper<>(isRefresh, mType, t, methodName, params, this);
         WrapperManager.INSTANCE.put(getKey(), mTWrapper);
       }
 
       return mTWrapper;
     }
 
-    public final String getKey() {
+    final String getKey() {
 
       String result = methodName;
 

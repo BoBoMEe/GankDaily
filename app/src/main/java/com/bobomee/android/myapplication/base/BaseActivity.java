@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package com.bobomee.android.myapplication.base;
 
 import android.app.FragmentManager;
@@ -19,6 +35,7 @@ import com.bobomee.android.common.util.UIUtil;
 import com.bobomee.android.htttp.receiver.NetWorkReceiver;
 import com.bobomee.android.htttp.util.HttpNetUtil;
 import com.bobomee.android.myapplication.R;
+import com.bobomee.android.myapplication.mvp.view.MvpActivity;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -29,7 +46,8 @@ import rx.subscriptions.CompositeSubscription;
  * @description
  */
 
-public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>> extends MvpActivity<V,P> implements HttpNetUtil.Networkreceiver{
+public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>> extends MvpActivity<V,P>
+    implements HttpNetUtil.Networkreceiver{
 
   protected Toolbar mToolbar;
   private CompositeSubscription mCompositeSubscription;

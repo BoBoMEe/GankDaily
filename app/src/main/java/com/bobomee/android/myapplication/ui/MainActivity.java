@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package com.bobomee.android.myapplication.ui;
 
 import android.databinding.DataBindingUtil;
@@ -9,30 +25,25 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import com.bobomee.android.common.util.DayNightUtil;
 import com.bobomee.android.common.util.ToastUtil;
 import com.bobomee.android.common.util.UIUtil;
 import com.bobomee.android.data.datastore.repo.Repository;
 import com.bobomee.android.data.di.internal.HasComponent;
-import com.bobomee.android.data.repo.GetRepos;
 import com.bobomee.android.data.serializer.Wrapper;
 import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.domain.bean.GankCategory;
 import com.bobomee.android.domain.bean.Results;
-import com.bobomee.android.domain.bean.UserEntity;
-import com.bobomee.android.domain.interactor.DefaultSubscriber;
 import com.bobomee.android.htttp.rx.Transformers;
 import com.bobomee.android.myapplication.R;
 import com.bobomee.android.myapplication.base.BaseActivity;
-import com.bobomee.android.myapplication.base.ReposListPresenter;
-import com.bobomee.android.myapplication.base.ReposListView;
 import com.bobomee.android.myapplication.databinding.ActivityMainBinding;
 import com.bobomee.android.myapplication.di.ReposComponent;
-import com.bobomee.android.myapplication.model.ReposModel;
+import com.bobomee.android.myapplication.model.GankCategoryModel;
+import com.bobomee.android.myapplication.mvp.presenter.CategoryListPresenter;
+import com.bobomee.android.myapplication.mvp.view.ReposListView;
 import com.bumptech.glide.Glide;
 import com.jakewharton.rxbinding.view.RxView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
@@ -43,28 +54,24 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.Subscription;
-import rx.functions.Action1;
 
-public class MainActivity extends BaseActivity<ReposListView, ReposListPresenter>
+public class MainActivity extends BaseActivity<ReposListView, CategoryListPresenter>
     implements NavigationView.OnNavigationItemSelectedListener, ReposListView,
     HasComponent<ReposComponent> {
-
-  private static final String TAG = "MainActivity";
 
   private rx.functions.Action1<Void> mLoginAction = aVoid -> login();
 
   @Inject protected Repository mRepository;
 
   ReposComponent mInitialize;
-  @Inject ReposListPresenter mReposListPresenter;
 
-  @Inject GetRepos mGetRepos;
+  @Inject CategoryListPresenter mReposListPresenter;
+
   private ActivityMainBinding mMainBinding;
 
-  @Override public ReposListPresenter getPresenter() {
+  @Override public CategoryListPresenter getPresenter() {
     return mReposListPresenter;
   }
-
 
   @Override protected void onCreate(Bundle savedInstanceState) {
 
@@ -76,13 +83,9 @@ public class MainActivity extends BaseActivity<ReposListView, ReposListPresenter
     super.onCreate(savedInstanceState);
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null)
-            .show();
-      }
-    });
+    fab.setOnClickListener(
+        view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show());
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     ActionBarDrawerToggle toggle =
@@ -99,25 +102,16 @@ public class MainActivity extends BaseActivity<ReposListView, ReposListPresenter
   }
 
   private void initView() {
-    RxView.clicks(mMainBinding.appBarMainLayout.contentLayout.btn5)
+    RxView.clicks(mMainBinding.appBarMainLayout.contentLayout.showImage)
+        .throttleFirst(DomainConstants.ON_CLICK_DURATION, TimeUnit.MILLISECONDS)
+        .subscribe(_void -> {
+          showImage();
+        });
+
+    RxView.clicks(mMainBinding.appBarMainLayout.contentLayout.showImageTost)
         .throttleFirst(DomainConstants.ON_CLICK_DURATION, TimeUnit.MILLISECONDS)
         .subscribe(mLoginAction);
 
-    RxView.clicks(mMainBinding.appBarMainLayout.contentLayout.btn3)
-        .throttleFirst(DomainConstants.ON_CLICK_DURATION, TimeUnit.MILLISECONDS)
-        .subscribe(new Action1<Void>() {
-          @Override public void call(Void _void) {
-            showImage();
-          }
-        });
-
-    RxView.clicks(mMainBinding.appBarMainLayout.contentLayout.btn4)
-        .throttleFirst(DomainConstants.ON_CLICK_DURATION, TimeUnit.MILLISECONDS)
-        .subscribe(new Action1<Void>() {
-          @Override public void call(Void _void) {
-            setBtn4();
-          }
-        });
   }
 
   private void login() {
@@ -125,7 +119,7 @@ public class MainActivity extends BaseActivity<ReposListView, ReposListPresenter
     mReposListPresenter.initialize();
   }
 
-  @Override public void userList(List<ReposModel> userModels) {
+  @Override public void userList(List<GankCategoryModel> userModels) {
     // TODO navigate to main page
     ToastUtil.show(this, Arrays.toString(userModels.toArray()));
   }
@@ -187,8 +181,8 @@ public class MainActivity extends BaseActivity<ReposListView, ReposListPresenter
 
   public void showImage() {
 
-    Wrapper<GankCategory> gankCategoryWrapper = Wrapper.<GankCategory>builder("getGirlList",
-        new Integer[] { DomainConstants.PAGE_SIZE, DomainConstants.FIRST_PAGE })
+    Wrapper<GankCategory> gankCategoryWrapper = Wrapper.<GankCategory>builder("getCategoryData",
+        new Object[] { DomainConstants.福利, DomainConstants.PAGE_SIZE, DomainConstants.FIRST_PAGE })
             .build();
     Subscription subscribe = mRepository.request(gankCategoryWrapper)
         .compose(Transformers.<GankCategory>switchSchedulers())
@@ -201,24 +195,6 @@ public class MainActivity extends BaseActivity<ReposListView, ReposListPresenter
         });
     addSubscription(subscribe);
 
-  }
-
-  public void setBtn4()
-
-  {
-    Wrapper<List<UserEntity>> userEntityList =
-        Wrapper.<List<UserEntity>>builder("userEntityList", new String[] {}).build();
-
-    Subscription subscribe = mRepository.request(userEntityList)
-        .compose(Transformers.switchSchedulers())
-        .subscribe(new DefaultSubscriber<List<UserEntity>>() {
-          @Override public void onNext(List<UserEntity> _userEntities) {
-            super.onNext(_userEntities);
-            Log.e(TAG, "onNext: ---->" + _userEntities);
-          }
-        });
-
-    addSubscription(subscribe);
   }
 
   @Override public ReposComponent getComponent() {
