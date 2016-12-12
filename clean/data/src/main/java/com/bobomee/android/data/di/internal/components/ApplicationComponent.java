@@ -17,13 +17,11 @@ package com.bobomee.android.data.di.internal.components;
 
 import android.app.Application;
 import android.content.Context;
-import com.bobomee.android.data.datastore.repo.Repository;
+import com.bobomee.android.data.CacheRepository;
 import com.bobomee.android.data.di.Dagger2Application;
-import com.bobomee.android.data.di.core.ApplicationContext;
+import com.bobomee.android.data.di.scope.ApplicationContext;
 import com.bobomee.android.data.di.internal.modules.ApiModule;
 import com.bobomee.android.data.di.internal.modules.ApplicationModule;
-import com.bobomee.android.data.di.internal.modules.RepositoryModule;
-import com.bobomee.android.data.repository.ReposRepository;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
 import dagger.Component;
@@ -34,7 +32,7 @@ import javax.inject.Singleton;
  */
 @Singleton // Constraints this component to one-per-application or unscoped bindings.
 @Component(modules = {
-    ApplicationModule.class, ApiModule.class, RepositoryModule.class
+    ApplicationModule.class, ApiModule.class
 }) public interface ApplicationComponent {
   void inject(Dagger2Application _myApplication);
 
@@ -47,9 +45,7 @@ import javax.inject.Singleton;
 
   PostExecutionThread postExecutionThread();
 
-  Repository userRepository();
-
-  ReposRepository reposRepository();
+  CacheRepository cacheRepository();
 
   class Init {
     private Init() {
@@ -59,7 +55,6 @@ import javax.inject.Singleton;
       return DaggerApplicationComponent.builder()
           .applicationModule(new ApplicationModule(_myApplication))
           .apiModule(new ApiModule())
-          .repositoryModule(new RepositoryModule())
           .build();
     }
   }

@@ -16,11 +16,9 @@
 
 package com.bobomee.android.myapplication.mapper;
 
-import com.bobomee.android.data.di.core.PerActivity;
-import com.bobomee.android.domain.bean.GankCategory;
-import com.bobomee.android.domain.bean.Results;
-import com.bobomee.android.myapplication.model.GankCategoryModel;
-import java.util.ArrayList;
+import com.bobomee.android.data.di.scope.PerActivity;
+import com.bobomee.android.htttp.bean.GankCategory;
+import com.bobomee.android.htttp.bean.Results;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -34,22 +32,11 @@ import javax.inject.Inject;
   @Inject public ReposDataMapper() {
   }
 
-  public List<GankCategoryModel> transform(GankCategory _category) {
+  public List<Results> transform(GankCategory _category) {
     if (_category == null) {
       throw new IllegalArgumentException("Cannot transform a null value");
     }
 
-    List<GankCategoryModel> gankCategoryModels = new ArrayList<>();
-
-    List<Results> results = _category.getResults();
-
-    for (int i = 0; i < results.size(); ++i) {
-      GankCategoryModel categoryModel = new GankCategoryModel();
-      categoryModel.setId(i);
-      categoryModel.setReposName(results.get(i).source);
-      gankCategoryModels.add(categoryModel);
-    }
-
-    return gankCategoryModels;
+    return _category.getResults();
   }
 }

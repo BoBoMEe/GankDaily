@@ -14,25 +14,26 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.data.di.internal.modules;
+package com.bobomee.android.myapplication.di;
 
-import com.bobomee.android.data.di.core.PerActivity;
+import com.bobomee.android.data.CacheRepository;
+import com.bobomee.android.data.di.scope.PerActivity;
 import com.bobomee.android.data.repo.Category;
-import com.bobomee.android.data.repository.ReposRepository;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
 import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Abner on 16/5/27.
- * Email nimengbo@gmail.com
- * github https://github.com/nimengbo
+ * Created on 2016/12/7.下午11:08.
+ *
+ * @author bobomee.
+ *         https://github.com/BoBoMEe
  */
 @Module
 public class ReposModule {
 
-    @Provides @PerActivity Category provideCategory(ReposRepository reposRepository,
+    @Provides @PerActivity Category provideCategory(CacheRepository reposRepository,
         ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new Category(reposRepository, threadExecutor, postExecutionThread);
     }

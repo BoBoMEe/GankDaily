@@ -17,7 +17,6 @@
 package com.bobomee.android.htttp.retrofit2.converfactory;
 
 import java.io.IOException;
-
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 

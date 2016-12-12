@@ -32,7 +32,7 @@ import javax.inject.Singleton;
 @Module
 public class ApiModule {
 
-  @Provides @Singleton RestApi provideRestApi(){
-    return RestService.INSTANCE.getRestApi();
+  @Provides @Singleton RestApi provideRestApi(RestService _restService){
+    return _restService.getRestApi();
   }
 }

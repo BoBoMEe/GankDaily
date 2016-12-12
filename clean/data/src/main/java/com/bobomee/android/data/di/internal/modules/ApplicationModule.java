@@ -17,11 +17,9 @@ package com.bobomee.android.data.di.internal.modules;
 
 import android.app.Application;
 import android.content.Context;
-import com.bobomee.android.data.di.core.ApplicationContext;
+import com.bobomee.android.data.di.scope.ApplicationContext;
 import com.bobomee.android.data.executor.JobExecutor;
 import com.bobomee.android.data.executor.UIThread;
-import com.bobomee.android.data.serializer.UseCache;
-import com.bobomee.android.data.serializer.UseCacheImpl;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
 import dagger.Module;
@@ -52,10 +50,6 @@ import javax.inject.Singleton;
 
   @Provides @Singleton PostExecutionThread providePostExecutionThread(UIThread uiThread) {
     return uiThread;
-  }
-
-  @Provides @Singleton UseCache provideUserCache(UseCacheImpl userCache) {
-    return userCache;
   }
 
 }

@@ -24,46 +24,31 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import com.bobomee.android.common.util.DayNightUtil;
-import com.bobomee.android.common.util.ToastUtil;
-import com.bobomee.android.common.util.UIUtil;
-import com.bobomee.android.data.datastore.repo.Repository;
-import com.bobomee.android.data.di.internal.HasComponent;
-import com.bobomee.android.data.serializer.Wrapper;
-import com.bobomee.android.domain.DomainConstants;
-import com.bobomee.android.domain.bean.GankCategory;
-import com.bobomee.android.domain.bean.Results;
-import com.bobomee.android.htttp.rx.Transformers;
+import com.bobomee.android.data.CacheRepository;
+import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.myapplication.R;
 import com.bobomee.android.myapplication.base.BaseActivity;
 import com.bobomee.android.myapplication.databinding.ActivityMainBinding;
-import com.bobomee.android.myapplication.di.ReposComponent;
-import com.bobomee.android.myapplication.model.GankCategoryModel;
 import com.bobomee.android.myapplication.mvp.presenter.CategoryListPresenter;
 import com.bobomee.android.myapplication.mvp.view.ReposListView;
-import com.bumptech.glide.Glide;
-import com.jakewharton.rxbinding.view.RxView;
+import com.bobomee.android.myapplication.service.DataService;
+import com.bobomee.android.myapplication.util.GlideUtil;
+import com.bobomee.android.myapplication.widget.ScaleImageView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import rx.Subscription;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends BaseActivity<ReposListView, CategoryListPresenter>
-    implements NavigationView.OnNavigationItemSelectedListener, ReposListView,
-    HasComponent<ReposComponent> {
-
-  private rx.functions.Action1<Void> mLoginAction = aVoid -> login();
-
-  @Inject protected Repository mRepository;
-
-  ReposComponent mInitialize;
+    implements NavigationView.OnNavigationItemSelectedListener, ReposListView {
 
   @Inject CategoryListPresenter mReposListPresenter;
 
@@ -73,14 +58,15 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
     return mReposListPresenter;
   }
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Inject CacheRepository mCacheRepository;
 
+  private MainActivity mMainActivity;
+
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
     mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-    mInitialize = ReposComponent.Init.initialize(this);
-    if (null != mInitialize) mInitialize.inject(this);
-
-    super.onCreate(savedInstanceState);
+    if (null != getComponent()) getComponent().inject(this);
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(
@@ -97,31 +83,23 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
 
+    mMainActivity = this;
+    EventBus.getDefault().register(this);
+
     initRecycler();
     initView();
   }
 
   private void initView() {
-    RxView.clicks(mMainBinding.appBarMainLayout.contentLayout.showImage)
-        .throttleFirst(DomainConstants.ON_CLICK_DURATION, TimeUnit.MILLISECONDS)
-        .subscribe(_void -> {
-          showImage();
-        });
 
-    RxView.clicks(mMainBinding.appBarMainLayout.contentLayout.showImageTost)
-        .throttleFirst(DomainConstants.ON_CLICK_DURATION, TimeUnit.MILLISECONDS)
-        .subscribe(mLoginAction);
-
+    mReposListPresenter.initialize(true);
   }
 
-  private void login() {
-
-    mReposListPresenter.initialize();
-  }
-
-  @Override public void userList(List<GankCategoryModel> userModels) {
+  @Override public void userList(List<Results> userModels) {
     // TODO navigate to main page
-    ToastUtil.show(this, Arrays.toString(userModels.toArray()));
+    //ToastUtil.show(this, Arrays.toString(userModels.toArray()));
+    DataService.startService(mMainActivity, userModels);
+
   }
 
   @Override public void onBackPressed() {
@@ -159,8 +137,11 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
   }
 
   public void initRecycler() {
+
+    StaggeredGridLayoutManager staggeredGridLayoutManager =
+        new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL);
     mMainBinding.appBarMainLayout.contentLayout.recycler.setLayoutManager(
-        new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        staggeredGridLayoutManager);
 
     mMainBinding.appBarMainLayout.contentLayout.recycler.setAdapter(mGankItemBeanCommonAdapter =
         new CommonAdapter<Results>(MainActivity.this, R.layout.recycler_item_image,
@@ -168,9 +149,11 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
 
           @Override protected void convert(ViewHolder holder, Results _gankItemBean, int position) {
 
-            ImageView image = holder.getView(R.id.image);
+            ScaleImageView image = holder.getView(R.id.image);
+            image.setInitSize(_gankItemBean.width, _gankItemBean.height);
 
-            Glide.with(MainActivity.this).load(_gankItemBean.url).into(image);
+            GlideUtil.load(MainActivity.this, _gankItemBean.url, image);
+
           }
         });
   }
@@ -179,25 +162,11 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
 
   private CommonAdapter<Results> mGankItemBeanCommonAdapter;
 
-  public void showImage() {
+  @Subscribe(threadMode = ThreadMode.MAIN) public void dataEvent(List<Results> data) {
 
-    Wrapper<GankCategory> gankCategoryWrapper = Wrapper.<GankCategory>builder("getCategoryData",
-        new Object[] { DomainConstants.福利, DomainConstants.PAGE_SIZE, DomainConstants.FIRST_PAGE })
-            .build();
-    Subscription subscribe = mRepository.request(gankCategoryWrapper)
-        .compose(Transformers.<GankCategory>switchSchedulers())
-        .compose(Transformers.<List<Results>>handleGankResult())
-        .subscribe(gankItemBeen -> {
-          mGankItemBeanList.addAll(gankItemBeen);
-          mGankItemBeanCommonAdapter.notifyDataSetChanged();
-        }, throwable -> {
-          UIUtil.showToastSafe("数据加载失败ヽ(≧Д≦)ノ");
-        });
-    addSubscription(subscribe);
+    mGankItemBeanList.addAll(data);
+    mGankItemBeanCommonAdapter.notifyDataSetChanged();
 
   }
 
-  @Override public ReposComponent getComponent() {
-    return mInitialize;
-  }
 }

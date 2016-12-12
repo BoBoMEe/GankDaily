@@ -18,6 +18,7 @@ package com.bobomee.android.myapplication.mvp.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import com.bobomee.android.common.mvp.MvpPresenter;
 import com.bobomee.android.common.mvp.MvpView;
@@ -31,10 +32,8 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
 
     public abstract P getPresenter();
 
-    @SuppressWarnings("unchecked")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @Override protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
         getPresenter().attachView((V) this);
     }
 

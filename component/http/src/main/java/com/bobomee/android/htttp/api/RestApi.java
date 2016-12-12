@@ -15,9 +15,9 @@
  */
 package com.bobomee.android.htttp.api;
 
-import com.bobomee.android.domain.bean.GankCategory;
-import com.bobomee.android.domain.bean.GankDay;
-import com.bobomee.android.domain.bean.GankQuery;
+import com.bobomee.android.htttp.bean.GankCategory;
+import com.bobomee.android.htttp.bean.GankDay;
+import com.bobomee.android.htttp.bean.GankQuery;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -28,16 +28,16 @@ import rx.Observable;
 public interface RestApi {
   String API_GANK_URL = "http://gank.io/api/";
 
-  String API_URL_SEARCH_DATA = "search/query/{query}/category/{category}/count/{count}/page/{page}";
+  String API_URL_QUERY_DATA = "search/query/{query}/category/{category}/count/{count}/page/{page}";
 
   String API_URL_DAY_DATA = "day/{year}/{month}/{day}";
 
   String API_URL_CATEGORY_DATA = "data/{category}/{count}/{page}";
 
-  @GET(API_URL_SEARCH_DATA) Observable<GankQuery> getQueryData(@Path("query") String query,
+  @GET(API_URL_QUERY_DATA) Observable<GankQuery> getQueryData(@Path("query") String query,
       @Path("category") String category, @Path("count") Integer count, @Path("page") Integer page);
 
-  @GET(API_URL_DAY_DATA) Observable<GankDay> getGankData(@Path("year") Integer year,
+  @GET(API_URL_DAY_DATA) Observable<GankDay> getGankDayData(@Path("year") Integer year,
       @Path("month") Integer month, @Path("day") Integer day);
 
   @GET(API_URL_CATEGORY_DATA) Observable<GankCategory> getCategoryData(

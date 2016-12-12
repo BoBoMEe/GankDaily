@@ -14,27 +14,34 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.data.datastore.datastore;
-
-import com.bobomee.android.data.datastore.DataStoreCloud;
-import com.bobomee.android.data.serializer.UseCache;
-import com.bobomee.android.data.serializer.Wrapper;
-import com.bobomee.android.htttp.api.RestApi;
-import rx.Observable;
+package com.bobomee.android.htttp.bean;
 
 /**
- * Created on 2016/12/3.下午1:41.
+ * Created on 2016/11/20.下午11:59.
  *
  * @author bobomee.
  * @description
  */
 
-public class DataStoreCloudDefault extends DataStoreCloud<Object> {
-  public DataStoreCloudDefault(RestApi _restApi, UseCache _userCache) {
-    super(_restApi, _userCache);
+public class BaseData<T> {
+
+  private boolean error;
+  private T results;
+
+  public T getResults() {
+    return results;
   }
 
-  @Override public Observable<Object> request(Wrapper<Object> _wrapper) {
-    return Observable.empty();
+  public void setResults(T results) {
+    this.results = results;
+  }
+
+  public boolean getError() {
+    return error;
+  }
+
+  public void setError(boolean error) {
+
+    this.error = error;
   }
 }

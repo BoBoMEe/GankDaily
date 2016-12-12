@@ -17,7 +17,7 @@
 package com.bobomee.android.myapplication.mvp.view;
 
 import com.bobomee.android.common.mvp.MvpView;
-import com.bobomee.android.myapplication.model.GankCategoryModel;
+import com.bobomee.android.htttp.bean.Results;
 import java.util.List;
 
 /**
@@ -27,6 +27,6 @@ import java.util.List;
  */
 public interface ReposListView extends MvpView {
 
-    void userList(List<GankCategoryModel> userModels);
+    void userList(List<Results> userModels);
 
 }

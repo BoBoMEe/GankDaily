@@ -13,18 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.bobomee.android.data.datastore.repo;
 
-import com.bobomee.android.data.serializer.Wrapper;
-import rx.Observable;
+package com.bobomee.android.data.di.scope;
 
-/**
- * Interface that represents a Repository for getting {@link Wrapper} related data.
- */
-public interface Repository {
-  /**
-   * Get an {@link Observable} which will emit a {@link T}.
-   */
-  <T> Observable<T> request(final Wrapper<T> _wrapper);
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.inject.Qualifier;
 
+@Qualifier @Retention(RetentionPolicy.RUNTIME) public @interface ActivityContext {
 }

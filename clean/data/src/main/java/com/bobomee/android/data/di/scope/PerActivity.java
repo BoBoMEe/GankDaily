@@ -14,18 +14,16 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.data.di.core;
+package com.bobomee.android.data.di.scope;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import javax.inject.Scope;
 
 /**
- * Created on 16/9/25.下午1:36.
- *
- * @author bobomee.
- * @description
+ * A scoping annotation to permit objects whose lifetime should
+ * conform to the life of the DataManager to be memorised in the
+ * correct component.
  */
-
-@Scope @Retention(RetentionPolicy.RUNTIME) public @interface PerFragment {
+@Scope @Retention(RetentionPolicy.RUNTIME) public @interface PerActivity {
 }

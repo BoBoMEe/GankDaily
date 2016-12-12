@@ -17,11 +17,10 @@
 package com.bobomee.android.myapplication.di;
 
 import com.bobomee.android.data.di.Dagger2Application;
-import com.bobomee.android.data.di.core.PerActivity;
+import com.bobomee.android.data.di.scope.PerActivity;
 import com.bobomee.android.data.di.internal.components.ActivityComponent;
 import com.bobomee.android.data.di.internal.components.ApplicationComponent;
 import com.bobomee.android.data.di.internal.modules.ActivityModule;
-import com.bobomee.android.data.di.internal.modules.ReposModule;
 import com.bobomee.android.myapplication.mvp.view.MvpActivity;
 import com.bobomee.android.myapplication.ui.MainActivity;
 import dagger.Component;

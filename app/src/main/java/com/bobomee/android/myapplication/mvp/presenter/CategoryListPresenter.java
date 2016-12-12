@@ -19,10 +19,10 @@ package com.bobomee.android.myapplication.mvp.presenter;
 import com.bobomee.android.common.mvp.MvpBasePresenter;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.DomainConstants;
-import com.bobomee.android.domain.bean.GankCategory;
+import com.bobomee.android.htttp.bean.GankCategory;
+import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.domain.interactor.DefaultSubscriber;
 import com.bobomee.android.myapplication.mapper.ReposDataMapper;
-import com.bobomee.android.myapplication.model.GankCategoryModel;
 import com.bobomee.android.myapplication.mvp.view.ReposListView;
 import java.util.List;
 import javax.inject.Inject;
@@ -52,20 +52,19 @@ public class CategoryListPresenter extends MvpBasePresenter<ReposListView> {
     /**
      * Initializes the presenter by start retrieving the user
      */
-    @Override
-    public void initialize() {
-        getUserList();
+    @Override public void initialize(boolean update) {
+        getUserList(update);
     }
 
     private void processUserList(GankCategory reposEntity) {
-        final List<GankCategoryModel> reposModels = mUserModelDataMapper.transform(reposEntity);
+        final List<Results> reposModels = mUserModelDataMapper.transform(reposEntity);
         getView().userList(reposModels);
     }
 
-    private void getUserList() {
+    private void getUserList(boolean update) {
         mGetRepos.setParam(DomainConstants.福利, DomainConstants.PAGE_SIZE,
             DomainConstants.FIRST_PAGE);
-        mGetRepos.execute(new UserSubscriber());
+        mGetRepos.execute(new UserSubscriber(),update);
     }
 
     private class UserSubscriber extends DefaultSubscriber<GankCategory> {

@@ -17,6 +17,8 @@
 package com.bobomee.android.htttp.api;
 
 import com.bobomee.android.htttp.retrofit2.client.Retrofit2Client;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Created on 16/10/2.下午6:43.
@@ -25,14 +27,12 @@ import com.bobomee.android.htttp.retrofit2.client.Retrofit2Client;
  * @description
  */
 
-public enum RestService {
-
-  INSTANCE;
+@Singleton public class RestService {
 
   private RestApi mRestApi;
 
-  RestService() {
-    mRestApi = Retrofit2Client.INSTANCE.getRetrofitBuilder().baseUrl(RestApi.API_GANK_URL)
+  @Inject RestService(Retrofit2Client _retrofit2Client) {
+    mRestApi = _retrofit2Client.getRetrofitBuilder().baseUrl(RestApi.API_GANK_URL)
         .build()
         .create(RestApi.class);
   }

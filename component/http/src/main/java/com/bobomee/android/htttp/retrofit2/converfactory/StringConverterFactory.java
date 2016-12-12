@@ -18,7 +18,6 @@ package com.bobomee.android.htttp.retrofit2.converfactory;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;

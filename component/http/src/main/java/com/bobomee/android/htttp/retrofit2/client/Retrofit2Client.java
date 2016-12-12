@@ -18,6 +18,8 @@ package com.bobomee.android.htttp.retrofit2.client;
 
 import com.bobomee.android.htttp.okhttp.client.okHttp;
 import com.bobomee.android.htttp.retrofit2.converfactory.StringConverterFactory;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,16 +27,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by bobomee on 2016/5/19.
  */
-public enum Retrofit2Client {
-
-  INSTANCE;
+@Singleton public class Retrofit2Client {
 
   private final Retrofit.Builder retrofitBuilder;
 
-  Retrofit2Client() {
+  @Inject
+  Retrofit2Client(okHttp _okHttp) {
     retrofitBuilder = new Retrofit.Builder()
         //设置OKHttpClient
-        .client(okHttp.INSTANCE.getOkHttpClient())
+        .client(_okHttp.getOkHttpClient())
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .addConverterFactory(StringConverterFactory.create())
         .addConverterFactory(GsonConverterFactory.create());

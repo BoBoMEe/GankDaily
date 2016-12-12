@@ -14,11 +14,11 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.domain.bean;
+package com.bobomee.android.data.di.scope;
 
-import java.util.List;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.inject.Qualifier;
 
-public class GankQuery extends BaseData<List<Results>> {
-
-  public int count;
+@Qualifier @Retention(RetentionPolicy.RUNTIME) public @interface ApplicationContext {
 }

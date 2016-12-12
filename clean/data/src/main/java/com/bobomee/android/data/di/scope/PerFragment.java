@@ -14,34 +14,18 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.model;
+package com.bobomee.android.data.di.scope;
 
-import android.databinding.BaseObservable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.inject.Scope;
 
 /**
- * Created by Abner on 16/6/16.
- * Email nimengbo@gmail.com
- * github https://github.com/nimengbo
+ * Created on 16/9/25.下午1:36.
+ *
+ * @author bobomee.
+ * @description
  */
-public class GankCategoryModel extends BaseObservable {
 
-    private int mId;
-
-    private String mReposName;
-
-    public int getId() {
-        return mId;
-    }
-
-    public void setId(int id) {
-        mId = id;
-    }
-
-    public String getReposName() {
-        return mReposName;
-    }
-
-    public void setReposName(String reposName) {
-        mReposName = reposName;
-    }
+@Scope @Retention(RetentionPolicy.RUNTIME) public @interface PerFragment {
 }

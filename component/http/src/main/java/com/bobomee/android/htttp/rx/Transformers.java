@@ -16,8 +16,8 @@
 
 package com.bobomee.android.htttp.rx;
 
-import com.bobomee.android.domain.bean.BaseData;
 import com.bobomee.android.domain.exception.NotFoundException;
+import com.bobomee.android.htttp.bean.BaseData;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

@@ -16,23 +16,22 @@
 
 package com.bobomee.android.htttp.okhttp.client;
 
-import com.bobomee.android.htttp.BuildConfig;
 import com.bobomee.android.htttp.okhttp.interceptor.MockInterceptor;
 import com.bobomee.android.htttp.okhttp.interceptor.OfflineCacheControlInterceptor;
 import com.bobomee.android.htttp.okhttp.interceptor.UserAgentInterceptor;
 import com.bobomee.android.htttp.util.CacheUtil;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import java.util.concurrent.TimeUnit;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Created by bobomee on 16/5/19.
  */
-public enum okHttp {
-
-  INSTANCE;
+@Singleton
+public class okHttp {
 
   private final OkHttpClient okHttpClient;
 
@@ -41,19 +40,10 @@ public enum okHttp {
 
   private Interceptor cacheInterceptor = new OfflineCacheControlInterceptor();
 
+  @Inject
   okHttp() {
 
-    HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(/*message -> {
-          if (BuildConfig.debug)
-          Logger.t("OkHttp").d(message);
-        }*/);
-    interceptor.setLevel(
-        BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
-
-
     okHttpClient = new OkHttpClient.Builder()
-        //打印请求log
-        .addInterceptor(interceptor)
 
         //添加UA
         .addInterceptor(new UserAgentInterceptor(UserAgentInterceptor.UAHelper.INSTANCE.getUserAgent()))

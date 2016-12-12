@@ -28,14 +28,16 @@ public class DomainConstants {
   /**
    * page start
    */
-  public static final int FIRST_PAGE = 1;
+  public static final Integer FIRST_PAGE = 1;
 
   /**
    * page size
    */
-  public static final int PAGE_SIZE = 20;
-
-  public static int ON_CLICK_DURATION = 500;
+  public static final Integer PAGE_SIZE = 20;
+  /**
+   * click debonce
+   */
+  public static Integer ON_CLICK_DURATION = 500;
 
   public static final String all = "all";
   public static final String 福利 = "福利";

@@ -27,7 +27,7 @@ public interface MvpPresenter<V extends MvpView> {
 
   V getView();
 
-  void initialize();
+  void initialize(boolean update);
 
   /**
    * Method that control the lifecycle of the view. It should be called in the view's

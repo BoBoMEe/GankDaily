@@ -18,8 +18,8 @@ package com.bobomee.android.data.di.internal.modules;
 
 import android.app.Activity;
 import android.content.Context;
-import com.bobomee.android.data.di.core.ActivityContext;
-import com.bobomee.android.data.di.core.PerActivity;
+import com.bobomee.android.data.di.scope.ActivityContext;
+import com.bobomee.android.data.di.scope.PerActivity;
 import dagger.Module;
 import dagger.Provides;
 

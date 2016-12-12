@@ -47,16 +47,16 @@ public abstract class UseCase<T> {
     /**
      * Builds an {@link rx.Observable} which will be used when executing the current {@link UseCase}.
      */
-    protected abstract Observable<T> buildUseCaseObservable();
+    protected abstract Observable<T> buildUseCaseObservable(boolean update);
 
     /**
      * Executes the current use case.
      *
      * @param UseCaseSubscriber The guy who will be listen to the observable build
-     *                          with {@link #buildUseCaseObservable()}.
+     *                          with {@link #UseCase#buildUseCaseObservable(boolean)}.
      */
-    public void execute(Subscriber<T> UseCaseSubscriber) {
-        subscription = buildUseCaseObservable()
+    public void execute(Subscriber<T> UseCaseSubscriber,boolean update) {
+        subscription = buildUseCaseObservable(update)
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .observeOn(postExecutionThread.getScheduler())
                 .subscribe(UseCaseSubscriber);

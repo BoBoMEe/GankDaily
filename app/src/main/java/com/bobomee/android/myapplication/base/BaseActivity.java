@@ -32,9 +32,11 @@ import butterknife.ButterKnife;
 import com.bobomee.android.common.mvp.MvpPresenter;
 import com.bobomee.android.common.mvp.MvpView;
 import com.bobomee.android.common.util.UIUtil;
+import com.bobomee.android.data.di.internal.HasComponent;
 import com.bobomee.android.htttp.receiver.NetWorkReceiver;
 import com.bobomee.android.htttp.util.HttpNetUtil;
 import com.bobomee.android.myapplication.R;
+import com.bobomee.android.myapplication.di.ReposComponent;
 import com.bobomee.android.myapplication.mvp.view.MvpActivity;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -47,11 +49,12 @@ import rx.subscriptions.CompositeSubscription;
  */
 
 public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>> extends MvpActivity<V,P>
-    implements HttpNetUtil.Networkreceiver{
+    implements HttpNetUtil.Networkreceiver,HasComponent<ReposComponent> {
 
   protected Toolbar mToolbar;
   private CompositeSubscription mCompositeSubscription;
   private BroadcastReceiver mReceiver;
+  protected ReposComponent mInitialize;
 
   public void addSubscription(Subscription s) {
     if (this.mCompositeSubscription == null) {
@@ -74,6 +77,8 @@ public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>>
     registerReceiver();
 
     HttpNetUtil.INSTANCE.addNetWorkListener(this);
+
+    mInitialize = ReposComponent.Init.initialize(this);
   }
 
   private void registerReceiver() {
@@ -151,5 +156,9 @@ public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>>
       // start load ,if not loaded
     }
 
+  }
+
+  @Override public ReposComponent getComponent() {
+    return mInitialize;
   }
 }

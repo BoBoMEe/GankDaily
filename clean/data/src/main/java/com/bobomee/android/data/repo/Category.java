@@ -16,11 +16,12 @@
 
 package com.bobomee.android.data.repo;
 
-import com.bobomee.android.data.repository.ReposRepository;
-import com.bobomee.android.domain.bean.GankCategory;
+import com.bobomee.android.data.CacheRepository;
+import com.bobomee.android.htttp.bean.GankCategory;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
 import com.bobomee.android.domain.interactor.UseCase;
+import io.rx_cache.Reply;
 import rx.Observable;
 
 /**
@@ -29,12 +30,13 @@ import rx.Observable;
  */
 public class Category extends UseCase<GankCategory> {
 
-  private final ReposRepository mReposRepository;
+  private final CacheRepository mReposRepository;
   private String category;
   private Integer count;
   private Integer page;
+  private boolean update;
 
-  public Category(ReposRepository reposRepository, ThreadExecutor threadExecutor,
+  public Category(CacheRepository reposRepository, ThreadExecutor threadExecutor,
       PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
     this.mReposRepository = reposRepository;
@@ -46,7 +48,7 @@ public class Category extends UseCase<GankCategory> {
     this.page = page;
   }
 
-  @Override public Observable<GankCategory> buildUseCaseObservable() {
-    return this.mReposRepository.getCategoryData(category, count, page);
+  @Override public Observable<GankCategory> buildUseCaseObservable(boolean update) {
+    return this.mReposRepository.getCategoryData(category, count, page, update).map(Reply::getData);
   }
 }

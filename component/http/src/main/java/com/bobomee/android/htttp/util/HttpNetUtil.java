@@ -52,7 +52,6 @@ public enum HttpNetUtil {
                 }
                 if (reference.get() == listener) {
                     networkreceivers.remove(i);
-                    //i--;
                     break;
                 }
             }

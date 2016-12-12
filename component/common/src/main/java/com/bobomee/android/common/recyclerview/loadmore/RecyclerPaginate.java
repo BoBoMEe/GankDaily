@@ -43,7 +43,13 @@ public final class RecyclerPaginate extends Paginate {
 
         if (addLoadingListItem) {
             // Wrap existing adapter with new adapter that will add loading row
-            wrapperAdapter = (WrapperAdapter) recyclerView.getAdapter();
+          RecyclerView.Adapter adapter = recyclerView.getAdapter();
+          if (adapter instanceof WrapperAdapter) {
+            wrapperAdapter = (WrapperAdapter) adapter;
+          } else {
+            throw new IllegalStateException("must set WrapperAdapter to paginate the recyclerview");
+          }
+
             wrapperAdapter.getWrappedAdapter().registerAdapterDataObserver(mDataObserver);
 
             // For GridLayoutManager use separate/customisable span lookup for loading row

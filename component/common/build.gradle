@@ -63,7 +63,6 @@ dependencies {
   compile httpDependencies.glide
   compile httpDependencies.glidetransformations
   compile httpDependencies.okhttp
-  compile httpDependencies.loggingInterceptor
   compile httpDependencies.okhttputils
   compile httpDependencies.okio
 
@@ -87,6 +86,9 @@ dependencies {
   compile rxDependencies.rxandroid
   compile rxDependencies.rxPreferences
   compile rxDependencies.rxBinding
+  compile rxDependencies.rxCache
+  compile rxDependencies.Jolyglotgson
+  compile rxDependencies.RxCacheCompiler
 
   compile utilDependencies.sqlbrite
   compile utilDependencies.stetho
