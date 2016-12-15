@@ -102,8 +102,10 @@ dependencies {
 
   compile uiWidgetDependencies.overscroll
   compile uiWidgetDependencies.circleImageView
-  compile mineDependencies.common
   compile uiWidgetDependencies.ultraPtr
+
+  compile mineDependencies.common
+  compile mineDependencies.recyclerviewhelper
 
   androidTestCompile domainTestDependencies.testRunner
   androidTestCompile domainTestDependencies.testRules

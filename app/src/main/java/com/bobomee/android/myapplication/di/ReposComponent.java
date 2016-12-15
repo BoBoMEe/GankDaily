@@ -24,11 +24,11 @@ import com.bobomee.android.data.di.internal.modules.ActivityModule;
 import com.bobomee.android.myapplication.mvp.view.MvpActivity;
 import com.bobomee.android.myapplication.ui.MainActivity;
 import dagger.Component;
-
 /**
- * Created by Abner on 16/5/27.
- * Email nimengbo@gmail.com
- * github https://github.com/nimengbo
+ * Created on 2016/12/7.下午11:08.
+ *
+ * @author bobomee.
+ *         https://github.com/BoBoMEe
  */
 @PerActivity
 @Component(dependencies = {ApplicationComponent.class},

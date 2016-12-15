@@ -14,11 +14,27 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.common.recyclerview.loadmore;
+package com.bobomee.android.myapplication.binding;
 
-/** SpanSizeLookup that will be used to determine the span of loading list item. */
-public interface LoadingListItemSpanLookup {
+import android.databinding.ViewDataBinding;
+import android.support.v7.widget.RecyclerView;
 
-    /** @return the span of loading list item. */
-    int getSpanSize();
+/**
+ * Created on 2016/12/13.下午7:16.
+ *
+ * @author bobomee.
+ */
+
+public class BindingViewHolder<T extends ViewDataBinding> extends RecyclerView.ViewHolder {
+
+  protected final T mBinding;
+
+  public BindingViewHolder(T binding) {
+    super(binding.getRoot());
+    mBinding = binding;
+  }
+
+  public T getBinding() {
+    return mBinding;
+  }
 }

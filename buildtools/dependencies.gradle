@@ -112,6 +112,7 @@ ext {
   //
   commonVersion = '1.4.1'
   layoutVersion = '1.0.1'
+  recyclerVersion = '1.0'
 
   //dependencies
   supportDependencies = [
@@ -197,7 +198,8 @@ ext {
   mineDependencies = [
       layoutbinder :"com.bobomee.android:layout-api:${layoutVersion}",
       layoutbindercompiler: "com.bobomee.android:layout-compiler:${layoutVersion}",
-      common: "com.bobomee.android:common:${commonVersion}"
+      common: "com.bobomee.android:common:${commonVersion}",
+      recyclerviewhelper : "com.bobomee.android:recyclerviewhelper:${recyclerVersion}",
   ]
 }
 
