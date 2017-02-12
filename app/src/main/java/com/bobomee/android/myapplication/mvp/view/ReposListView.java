@@ -29,4 +29,5 @@ public interface ReposListView extends MvpView {
 
     void userList(List<Results> userModels);
 
+    void onItemClick(Results pResults);
 }

@@ -99,6 +99,8 @@ dependencies {
   testCompile domainTestDependencies.robolectric
 
   compile mineDependencies.layoutbinder
+  compile uiWidgetDependencies.photoview
+  compile mineDependencies.recyclerviewhelper
   apt mineDependencies.layoutbindercompiler
 
   compile 'com.zhy:base-rvadapter:3.0.3'

@@ -71,7 +71,7 @@ public class CategoryListPresenter extends MvpBasePresenter<ReposListView> {
         @Override
         public void onCompleted() {
         }
-
+                                
         @Override
         public void onError(Throwable e) {
         }

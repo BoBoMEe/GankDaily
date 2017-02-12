@@ -22,9 +22,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import com.bobomee.android.common.util.DayNightUtil;
 import com.bobomee.android.data.CacheRepository;
@@ -37,6 +39,8 @@ import com.bobomee.android.myapplication.mvp.view.ReposListView;
 import com.bobomee.android.myapplication.service.DataService;
 import com.bobomee.android.myapplication.util.GlideUtil;
 import com.bobomee.android.myapplication.widget.ScaleImageView;
+import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClick.OnItemClickListener;
+import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClickSupport;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 import java.util.ArrayList;
@@ -91,7 +95,9 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
     DataService.startService(mMainActivity, userModels);
   }
 
-  //DayNightUtil.switchDayNightMode(this);
+  @Override public void onItemClick(Results pResults) {
+    DetailImageActivity.start(this, pResults);
+  }
 
   public void initRecycler() {
 
@@ -111,6 +117,14 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
             GlideUtil.load(MainActivity.this, _gankItemBean.url, image);
           }
         });
+
+    ItemClickSupport lItemClickSupport =
+        ItemClickSupport.from(mMainBinding.contentLayout.recycler).add();
+    lItemClickSupport.addOnItemClickListener(new OnItemClickListener() {
+      @Override public void onItemClick(RecyclerView parent, View view, int position, long id) {
+        MainActivity.this.onItemClick(mGankItemBeanList.get(position));
+      }
+    });
   }
 
   private List<Results> mGankItemBeanList = new ArrayList<>();
