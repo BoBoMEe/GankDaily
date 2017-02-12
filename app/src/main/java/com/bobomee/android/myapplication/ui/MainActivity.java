@@ -20,8 +20,13 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+import com.bobomee.android.common.util.DayNightUtil;
 import com.bobomee.android.data.CacheRepository;
 import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.myapplication.R;
@@ -116,5 +121,43 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
 
     mGankItemBeanList.addAll(data);
     mGankItemBeanCommonAdapter.notifyDataSetChanged();
+  }
+
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu, menu);
+    return true;
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.night:
+        DayNightUtil.switchDayNightMode(this);
+        break;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+  @Override public boolean onPrepareOptionsMenu(Menu menu) {
+
+    MenuItem lItem = menu.getItem(0);
+    int lNightMode = DayNightUtil.getNightMode(this);
+
+    if (lNightMode == AppCompatDelegate.MODE_NIGHT_NO) {
+      lItem.setTitle(R.string.night_mode);
+    } else {
+      lItem.setTitle(R.string.day_mode);
+    }
+
+    return super.onPrepareOptionsMenu(menu);
+  }
+
+  @Override public boolean onMenuOpened(int featureId, Menu menu) {
+    Toast.makeText(MainActivity.this, "选项菜单开启", Toast.LENGTH_SHORT).show();
+    return super.onMenuOpened(featureId, menu);
+  }
+
+  @Override public void onOptionsMenuClosed(Menu menu) {
+    super.onOptionsMenuClosed(menu);
+    Toast.makeText(MainActivity.this, "选项菜单关闭", Toast.LENGTH_SHORT).show();
   }
 }
