@@ -19,15 +19,9 @@ package com.bobomee.android.myapplication.ui;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.MenuItem;
-import com.bobomee.android.common.util.DayNightUtil;
 import com.bobomee.android.data.CacheRepository;
 import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.myapplication.R;
@@ -48,7 +42,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends BaseActivity<ReposListView, CategoryListPresenter>
-    implements NavigationView.OnNavigationItemSelectedListener, ReposListView {
+    implements ReposListView {
 
   @Inject CategoryListPresenter mReposListPresenter;
 
@@ -71,17 +65,8 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(
         view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show());
-
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-    ActionBarDrawerToggle toggle =
-        new ActionBarDrawerToggle(this, drawer, mToolbar, R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close);
-    drawer.setDrawerListener(toggle);
-    toggle.syncState();
-
-    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-    navigationView.setNavigationItemSelectedListener(this);
+            .setAction("Action", null)
+            .show());
 
     mMainActivity = this;
     EventBus.getDefault().register(this);
@@ -99,51 +84,17 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
     // TODO navigate to main page
     //ToastUtil.show(this, Arrays.toString(userModels.toArray()));
     DataService.startService(mMainActivity, userModels);
-
   }
 
-  @Override public void onBackPressed() {
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-    if (drawer.isDrawerOpen(GravityCompat.START)) {
-      drawer.closeDrawer(GravityCompat.START);
-    } else {
-      super.onBackPressed();
-    }
-  }
-
-  @SuppressWarnings("StatementWithEmptyBody") @Override
-  public boolean onNavigationItemSelected(MenuItem item) {
-    // Handle navigation view item clicks here.
-    int id = item.getItemId();
-
-    if (id == R.id.nav_camera) {
-      // Handle the camera action
-    } else if (id == R.id.nav_gallery) {
-
-    } else if (id == R.id.nav_slideshow) {
-
-    } else if (id == R.id.nav_manage) {
-
-    } else if (id == R.id.nav_share) {
-
-    } else if (id == R.id.nav_send) {
-
-      DayNightUtil.switchDayNightMode(this);
-    }
-
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-    drawer.closeDrawer(GravityCompat.START);
-    return true;
-  }
+  //DayNightUtil.switchDayNightMode(this);
 
   public void initRecycler() {
 
     StaggeredGridLayoutManager staggeredGridLayoutManager =
         new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL);
-    mMainBinding.appBarMainLayout.contentLayout.recycler.setLayoutManager(
-        staggeredGridLayoutManager);
+    mMainBinding.contentLayout.recycler.setLayoutManager(staggeredGridLayoutManager);
 
-    mMainBinding.appBarMainLayout.contentLayout.recycler.setAdapter(mGankItemBeanCommonAdapter =
+    mMainBinding.contentLayout.recycler.setAdapter(mGankItemBeanCommonAdapter =
         new CommonAdapter<Results>(MainActivity.this, R.layout.recycler_item_image,
             mGankItemBeanList) {
 
@@ -153,7 +104,6 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
             image.setInitSize(_gankItemBean.width, _gankItemBean.height);
 
             GlideUtil.load(MainActivity.this, _gankItemBean.url, image);
-
           }
         });
   }
@@ -166,7 +116,5 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
 
     mGankItemBeanList.addAll(data);
     mGankItemBeanCommonAdapter.notifyDataSetChanged();
-
   }
-
 }

@@ -38,8 +38,6 @@ import com.bobomee.android.htttp.util.HttpNetUtil;
 import com.bobomee.android.myapplication.R;
 import com.bobomee.android.myapplication.di.ReposComponent;
 import com.bobomee.android.myapplication.mvp.view.MvpActivity;
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created on 2016/10/27.下午5:27.
@@ -48,28 +46,12 @@ import rx.subscriptions.CompositeSubscription;
  * @description
  */
 
-public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>> extends MvpActivity<V,P>
-    implements HttpNetUtil.Networkreceiver,HasComponent<ReposComponent> {
+public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>>
+    extends MvpActivity<V, P> implements HttpNetUtil.Networkreceiver, HasComponent<ReposComponent> {
 
   protected Toolbar mToolbar;
-  private CompositeSubscription mCompositeSubscription;
   private BroadcastReceiver mReceiver;
   protected ReposComponent mInitialize;
-
-  public void addSubscription(Subscription s) {
-    if (this.mCompositeSubscription == null) {
-      this.mCompositeSubscription = new CompositeSubscription();
-    }
-    if (null != s) {
-      this.mCompositeSubscription.add(s);
-    }
-  }
-
-  private void unsubscribe() {
-    if (this.mCompositeSubscription != null) {
-      mCompositeSubscription.unsubscribe();
-    }
-  }
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -89,7 +71,6 @@ public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>>
     intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
 
     registerReceiver(mReceiver, intentFilter);
-
   }
 
   @Override protected void onDestroy() {
@@ -100,8 +81,6 @@ public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>>
     UIUtil.getMainThreadHandler().removeCallbacksAndMessages(null);
 
     HttpNetUtil.INSTANCE.removeNetWorkListener(this);
-
-    unsubscribe();
   }
 
   @Override public void setContentView(@LayoutRes int layoutResID) {
@@ -144,6 +123,9 @@ public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>>
       mToolbar = ButterKnife.findById(this, R.id.toolbar);
       if (null != mToolbar) setSupportActionBar(mToolbar);
     }
+  }
+
+  protected void showToolBarBack() {
     ActionBar actionBar = getSupportActionBar();
     if (null != actionBar) actionBar.setDisplayHomeAsUpEnabled(true);
   }
@@ -155,7 +137,6 @@ public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>>
     } else {
       // start load ,if not loaded
     }
-
   }
 
   @Override public ReposComponent getComponent() {

@@ -22,30 +22,28 @@
   <data>
 
   </data>
-<android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawer_layout"
+<android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="start"
     android:fitsSystemWindows="true"
+    android:id="@+id/coordinator_layout"
+    tools:context="com.bobomee.android.myapplication.ui.MainActivity"
     >
 
-  <include
-      android:id="@+id/app_bar_main_layout"
-      layout="@layout/app_bar_main"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      />
+  <include android:id="@+id/app_bar_layout"
+      layout="@layout/common_layout_appbar"/>
 
-  <android.support.design.widget.NavigationView
-      android:id="@+id/nav_view"
+  <include android:id="@+id/content_layout"
+      layout="@layout/content_main"/>
+
+  <android.support.design.widget.FloatingActionButton
+      android:id="@+id/fab"
       android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:layout_gravity="start"
-      app:headerLayout="@layout/nav_header_main"
-      android:fitsSystemWindows="true"
-      app:menu="@menu/activity_main_drawer"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|end"
+      android:layout_margin="@dimen/fab_margin"
+      app:srcCompat="@android:drawable/ic_dialog_email"
       />
 
-</android.support.v4.widget.DrawerLayout>
+</android.support.design.widget.CoordinatorLayout>
 </layout>
