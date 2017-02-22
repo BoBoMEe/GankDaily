@@ -17,7 +17,6 @@
 package com.bobomee.android.myapplication.mvp.presenter;
 
 import android.content.Context;
-import com.bobomee.android.common.mvp.MvpBasePresenter;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.domain.interactor.DefaultSubscriber;
@@ -35,8 +34,7 @@ import javax.inject.Inject;
  * Email nimengbo@gmail.com
  * github https://github.com/nimengbo
  */
-public class CategoryListPresenter extends MvpBasePresenter<ReposListView>
-    implements CategoryContract.ReposListPresenter<ReposListView> {
+public class CategoryListPresenter implements CategoryContract.ReposListPresenter {
 
     private final Category mGetRepos;
     private final ReposDataMapper mUserModelDataMapper;
@@ -54,17 +52,15 @@ public class CategoryListPresenter extends MvpBasePresenter<ReposListView>
         mResultsCategoryListPresenterReposListView.setPresenter(this);
     }
 
-    @Override
-    public void detachView(boolean retainInstance) {
-        mGetRepos.unsubscribe();
-        super.detachView(retainInstance);
-    }
-
     /**
      * Initializes the presenter by start retrieving the user
      */
-    @Override public void initialize(boolean update) {
+    @Override public void subscribe(boolean update) {
         getUserList(update);
+    }
+
+    @Override public void unsubscribe() {
+        mGetRepos.unsubscribe();
     }
 
     private void processUserList(GankCategory reposEntity) {

@@ -17,7 +17,7 @@
 package com.bobomee.android.myapplication.mvp;
 
 import android.content.Context;
-import com.bobomee.android.common.mvp.BaseContract.MvpPresenter;
+import com.bobomee.android.common.mvp.BaseContract.BasePresenter;
 import com.bobomee.android.common.mvp.BaseContract.MvpView;
 import com.bobomee.android.htttp.bean.Results;
 import java.util.List;
@@ -38,7 +38,7 @@ public class CategoryContract {
    * Email nimengbo@gmail.com
    * github https://github.com/nimengbo
    */
-  public interface ReposListView<M, T extends MvpPresenter> extends MvpView<T> {
+  public interface ReposListView<M, T extends BasePresenter> extends MvpView<T> {
 
     void userList(List<M> userModels);
 
@@ -47,9 +47,8 @@ public class CategoryContract {
   /**
    * the repos presenter
    *
-   * @param <V> the type of view
    */
-  public interface ReposListPresenter<V extends MvpView> extends MvpPresenter<V> {
+  public interface ReposListPresenter extends BasePresenter {
 
     void startDetail(Context pContext, Results pResults);
   }

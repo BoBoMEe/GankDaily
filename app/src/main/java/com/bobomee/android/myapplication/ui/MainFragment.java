@@ -67,7 +67,7 @@ public class MainFragment extends BaseFragment
     return fragment;
   }
   
-  private ReposListPresenter<ReposListView> mReposListPresenter;
+  private ReposListPresenter mReposListPresenter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -81,7 +81,7 @@ public class MainFragment extends BaseFragment
 
   @Override public void onResume() {
     super.onResume();
-    mReposListPresenter.initialize(true);
+    mReposListPresenter.subscribe(true);
   }
 
   private List<Results> mGankItemBeanList = new ArrayList<>();

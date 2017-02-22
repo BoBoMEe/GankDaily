@@ -25,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.myapplication.R;
+import com.bobomee.android.myapplication.base.BaseActivity;
 import com.bobomee.android.myapplication.util.GlideUtil;
 import uk.co.senab.photoview.PhotoView;
 
@@ -37,7 +38,7 @@ import uk.co.senab.photoview.PhotoView;
  * @see
  * @since 2017/2/12.汪波.
  */
-public class DetailImageActivity extends AppCompatActivity {
+public class DetailImageActivity extends BaseActivity {
   @BindView(R.id.detail_image) PhotoView mDetailImage;
   public static final String RESULT = "RESULT";
   private Results mResults;
