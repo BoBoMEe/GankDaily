@@ -21,7 +21,8 @@ import com.bobomee.android.data.di.scope.PerActivity;
 import com.bobomee.android.data.di.internal.components.ActivityComponent;
 import com.bobomee.android.data.di.internal.components.ApplicationComponent;
 import com.bobomee.android.data.di.internal.modules.ActivityModule;
-import com.bobomee.android.myapplication.ui.MvpActivity;
+import com.bobomee.android.myapplication.base.BaseActivity;
+import com.bobomee.android.myapplication.mvp.CategoryContract.ReposListView;
 import com.bobomee.android.myapplication.ui.MainActivity;
 import dagger.Component;
 /**
@@ -41,11 +42,11 @@ public interface ReposComponent extends ActivityComponent {
         private Init() {
         }
 
-        public static <T extends MvpActivity> ReposComponent initialize(T activity) {
+        public static <T extends BaseActivity> ReposComponent initialize(T activity,ReposListView pReposListView) {
             return DaggerReposComponent.builder()
                 .applicationComponent(Dagger2Application.get(activity).getComponent())
                 .activityModule(new ActivityModule(activity))
-                .reposModule(new ReposModule())
+                .reposModule(new ReposModule(pReposListView))
                 .build();
         }
     }

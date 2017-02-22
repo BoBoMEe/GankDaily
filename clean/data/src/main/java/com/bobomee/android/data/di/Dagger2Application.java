@@ -19,7 +19,6 @@ package com.bobomee.android.data.di;
 import android.content.Context;
 import android.support.v7.app.AppCompatDelegate;
 import com.bobomee.android.common.app.BaseApplication;
-import com.bobomee.android.data.di.internal.HasComponent;
 import com.bobomee.android.data.di.internal.components.ApplicationComponent;
 import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
@@ -31,8 +30,7 @@ import com.squareup.leakcanary.LeakCanary;
  * @description
  */
 
-public class Dagger2Application extends BaseApplication
-    implements HasComponent<ApplicationComponent> {
+public class Dagger2Application extends BaseApplication {
 
 
   static {
@@ -62,7 +60,7 @@ public class Dagger2Application extends BaseApplication
     return (Dagger2Application) _context.getApplicationContext();
   }
 
-  @Override public ApplicationComponent getComponent() {
+  public ApplicationComponent getComponent() {
     return mApplicationComponent;
   }
 }

@@ -24,20 +24,17 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
-import com.bobomee.android.common.mvp.BaseContract.MvpPresenter;
-import com.bobomee.android.common.mvp.BaseContract.MvpView;
 import com.bobomee.android.common.util.UIUtil;
-import com.bobomee.android.data.di.internal.HasComponent;
 import com.bobomee.android.htttp.receiver.NetWorkReceiver;
 import com.bobomee.android.htttp.util.HttpNetUtil;
 import com.bobomee.android.myapplication.R;
 import com.bobomee.android.myapplication.di.ReposComponent;
-import com.bobomee.android.myapplication.ui.MvpActivity;
 
 /**
  * Created on 2016/10/27.下午5:27.
@@ -46,12 +43,11 @@ import com.bobomee.android.myapplication.ui.MvpActivity;
  * @description
  */
 
-public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>>
-    extends MvpActivity<V, P> implements HttpNetUtil.Networkreceiver, HasComponent<ReposComponent> {
+public abstract class BaseActivity extends AppCompatActivity
+    implements HttpNetUtil.Networkreceiver {
 
   protected Toolbar mToolbar;
   private BroadcastReceiver mReceiver;
-  protected ReposComponent mInitialize;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -59,8 +55,6 @@ public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>>
     registerReceiver();
 
     HttpNetUtil.INSTANCE.addNetWorkListener(this);
-
-    mInitialize = ReposComponent.Init.initialize(this);
   }
 
   private void registerReceiver() {
@@ -139,7 +133,4 @@ public abstract class BaseActivity<V extends MvpView, P extends MvpPresenter<V>>
     }
   }
 
-  @Override public ReposComponent getComponent() {
-    return mInitialize;
-  }
 }

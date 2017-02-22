@@ -26,15 +26,13 @@ public interface BaseContract {
   /**
    * Interface representing a Presenter in a model view presenter (MVP) pattern.
    */
-  public interface MvpPresenter<V extends MvpView> {
+  public interface MvpPresenter<V extends MvpView> extends BasePresenter {
 
     void attachView(V view);
 
     void detachView(boolean retainInstance);
 
     V getView();
-
-    void initialize(boolean update);
 
     /**
      * Method that control the lifecycle of the view. It should be called in the view's
@@ -55,6 +53,11 @@ public interface BaseContract {
     void destroy();
   }
 
+  public interface BasePresenter {
+
+    void initialize(boolean update);
+  }
+
   /**
    * Created on 2016/12/3.下午4:04.
    *
@@ -62,11 +65,13 @@ public interface BaseContract {
    * @description
    */
 
-  public interface MvpView {
+  public interface MvpView<T extends BasePresenter> {
 
     /**
      * Get a {@link Context}.
      */
     Context context();
+
+    void setPresenter(T presenter);
   }
 }

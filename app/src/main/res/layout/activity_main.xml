@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2017.  BoBoMEe(wbwjx115@gmail.com)
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -15,31 +14,38 @@
   ~  limitations under the License.
   -->
 
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:id="@+id/coordinator_layout"
-    tools:context="com.bobomee.android.myapplication.ui.MainActivity"
+    android:orientation="vertical"
     >
 
   <include android:id="@+id/app_bar_layout"
       layout="@layout/common_layout_appbar"/>
 
-  <include android:id="@+id/content_layout"
-      layout="@layout/content_main"/>
+  <android.support.design.widget.CoordinatorLayout
+      android:id="@+id/coordinatorLayout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
 
-  <android.support.design.widget.FloatingActionButton
-      android:id="@+id/fab"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom|end"
-      app:layout_behavior="com.bobomee.android.myapplication.widget.ScrollAwareFABBehavior"
-      android:layout_margin="@dimen/fab_margin"
-      app:srcCompat="@drawable/ic_arrow_upward_black_24dp"
-      />
+    <FrameLayout
+        android:id="@+id/contentFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
-</android.support.design.widget.CoordinatorLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:layout_behavior="com.bobomee.android.myapplication.widget.ScrollAwareFABBehavior"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchorGravity="bottom|right|end"
+        app:srcCompat="@drawable/ic_arrow_upward_black_24dp"
+        />
+
+  </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

@@ -39,7 +39,7 @@
 
   <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
 
-  <style name="AppThemeDay.Night.NoActionBar" parent="AppTheme.DayNight">
+  <style name="AppTheme.DayNight.NoActionBar" parent="AppTheme.DayNight">
     <item name="windowNoTitle">true</item>
     <item name="windowActionBar">false</item>
   </style>
@@ -126,5 +126,7 @@
 
   <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
   </style>
+
+  <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 </resources>

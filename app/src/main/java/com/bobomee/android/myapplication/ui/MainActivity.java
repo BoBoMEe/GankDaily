@@ -19,57 +19,22 @@ package com.bobomee.android.myapplication.ui;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.bobomee.android.common.util.DayNightUtil;
-import com.bobomee.android.data.CacheRepository;
-import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.myapplication.R;
 import com.bobomee.android.myapplication.base.BaseActivity;
-import com.bobomee.android.myapplication.mvp.CategoryContract.ReposListView;
+import com.bobomee.android.myapplication.di.ReposComponent;
 import com.bobomee.android.myapplication.mvp.presenter.CategoryListPresenter;
-import com.bobomee.android.myapplication.service.DataService;
-import com.bobomee.android.myapplication.util.GlideUtil;
-import com.bobomee.android.myapplication.widget.ScaleImageView;
-import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClick.OnItemClickListener;
-import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClickSupport;
-import com.zhy.adapter.recyclerview.CommonAdapter;
-import com.zhy.adapter.recyclerview.base.ViewHolder;
-import java.util.ArrayList;
-import java.util.List;
+import com.bobomee.android.myapplication.util.ActivityUtils;
 import javax.inject.Inject;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
-public class MainActivity extends BaseActivity<ReposListView, CategoryListPresenter>
-    implements ReposListView {
+public class MainActivity extends BaseActivity {
 
   @Inject CategoryListPresenter mReposListPresenter;
-  @BindView(R.id.recycler) RecyclerView mRecycler;
-
-  @Override public CategoryListPresenter getPresenter() {
-    return mReposListPresenter;
-  }
-
-  @Inject CacheRepository mCacheRepository;
-
-  private MainActivity mMainActivity;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
-
-    if (null != getComponent()) getComponent().inject(this);
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(
@@ -77,100 +42,18 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
             .setAction("Action", null)
             .show());
 
-    mMainActivity = this;
-    EventBus.getDefault().register(this);
+    MainFragment lMainFragment =
+        (MainFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
-    initRecycler();
-    initView();
-  }
+    if (null == lMainFragment) {
+      lMainFragment = MainFragment.newInstance();
 
-  private void initView() {
-
-    mReposListPresenter.initialize(true);
-  }
-
-  @Override public void userList(List<Results> userModels) {
-    // TODO navigate to main page
-    //ToastUtil.show(this, Arrays.toString(userModels.toArray()));
-    DataService.startService(mMainActivity, userModels);
-  }
-
-  @Override public void onItemClick(Results pResults) {
-    mReposListPresenter.startDetail(this, pResults);
-  }
-
-  public void initRecycler() {
-
-    StaggeredGridLayoutManager staggeredGridLayoutManager =
-        new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL);
-    mRecycler.setLayoutManager(staggeredGridLayoutManager);
-
-    mRecycler.setAdapter(mGankItemBeanCommonAdapter =
-        new CommonAdapter<Results>(MainActivity.this, R.layout.recycler_item_image,
-            mGankItemBeanList) {
-
-          @Override protected void convert(ViewHolder holder, Results _gankItemBean, int position) {
-
-            ScaleImageView image = holder.getView(R.id.image);
-            image.setInitSize(_gankItemBean.width, _gankItemBean.height);
-
-            GlideUtil.load(MainActivity.this, _gankItemBean.url, image);
-          }
-        });
-
-    ItemClickSupport lItemClickSupport = ItemClickSupport.from(mRecycler).add();
-    lItemClickSupport.addOnItemClickListener(new OnItemClickListener() {
-      @Override public void onItemClick(RecyclerView parent, View view, int position, long id) {
-        MainActivity.this.onItemClick(mGankItemBeanList.get(position));
-      }
-    });
-  }
-
-  private List<Results> mGankItemBeanList = new ArrayList<>();
-
-  private CommonAdapter<Results> mGankItemBeanCommonAdapter;
-
-  @Subscribe(threadMode = ThreadMode.MAIN) public void dataEvent(List<Results> data) {
-
-    mGankItemBeanList.addAll(data);
-    mGankItemBeanCommonAdapter.notifyDataSetChanged();
-  }
-
-  @Override public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu, menu);
-    return true;
-  }
-
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.night:
-        DayNightUtil.switchDayNightMode(this);
-        break;
-    }
-    return super.onOptionsItemSelected(item);
-  }
-
-  @Override public boolean onPrepareOptionsMenu(Menu menu) {
-
-    MenuItem lItem = menu.getItem(0);
-    int lNightMode = DayNightUtil.getNightMode(this);
-
-    if (lNightMode == AppCompatDelegate.MODE_NIGHT_NO) {
-      lItem.setTitle(R.string.night_mode);
-    } else {
-      lItem.setTitle(R.string.day_mode);
+      ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+          lMainFragment, R.id.contentFrame);
     }
 
-    return super.onPrepareOptionsMenu(menu);
-  }
+    
 
-  @Override public boolean onMenuOpened(int featureId, Menu menu) {
-    Toast.makeText(MainActivity.this, "选项菜单开启", Toast.LENGTH_SHORT).show();
-    return super.onMenuOpened(featureId, menu);
-  }
-
-  @Override public void onOptionsMenuClosed(Menu menu) {
-    super.onOptionsMenuClosed(menu);
-    Toast.makeText(MainActivity.this, "选项菜单关闭", Toast.LENGTH_SHORT).show();
+    ReposComponent.Init.initialize(this, lMainFragment).inject(this);
   }
 }

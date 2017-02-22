@@ -21,6 +21,7 @@ import com.bobomee.android.data.di.scope.PerActivity;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
+import com.bobomee.android.myapplication.mvp.CategoryContract.ReposListView;
 import dagger.Module;
 import dagger.Provides;
 
@@ -36,6 +37,16 @@ public class ReposModule {
     @Provides @PerActivity Category provideCategory(CacheRepository reposRepository,
         ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new Category(reposRepository, threadExecutor, postExecutionThread);
+    }
+
+    private final ReposListView mReposListView;
+
+    public ReposModule(ReposListView pReposListView) {
+        mReposListView = pReposListView;
+    }
+
+    @Provides ReposListView provideReposListView() {
+        return mReposListView;
     }
 
 }

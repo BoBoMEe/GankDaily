@@ -38,11 +38,10 @@ public class CategoryContract {
    * Email nimengbo@gmail.com
    * github https://github.com/nimengbo
    */
-  public interface ReposListView extends MvpView {
+  public interface ReposListView<M, T extends MvpPresenter> extends MvpView<T> {
 
-    void userList(List<Results> userModels);
+    void userList(List<M> userModels);
 
-    void onItemClick(Results pResults);
   }
 
   /**

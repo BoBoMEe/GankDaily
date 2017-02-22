@@ -40,11 +40,18 @@ public class CategoryListPresenter extends MvpBasePresenter<ReposListView>
 
     private final Category mGetRepos;
     private final ReposDataMapper mUserModelDataMapper;
+    private final ReposListView<Results,CategoryListPresenter> mResultsCategoryListPresenterReposListView;
 
-    @Inject public CategoryListPresenter(Category getRepos,
+    @Inject public CategoryListPresenter(Category getRepos, ReposListView pReposListView,
                               ReposDataMapper userModelDataMapper) {
         mGetRepos = getRepos;
+        this.mResultsCategoryListPresenterReposListView  = pReposListView;
         mUserModelDataMapper = userModelDataMapper;
+    }
+
+    @Inject
+    void setupListeners() {
+        mResultsCategoryListPresenterReposListView.setPresenter(this);
     }
 
     @Override
@@ -62,7 +69,7 @@ public class CategoryListPresenter extends MvpBasePresenter<ReposListView>
 
     private void processUserList(GankCategory reposEntity) {
         final List<Results> reposModels = mUserModelDataMapper.transform(reposEntity);
-        getView().userList(reposModels);
+        mResultsCategoryListPresenterReposListView.userList(reposModels);
     }
 
     private void getUserList(boolean update) {
