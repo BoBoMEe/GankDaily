@@ -23,3 +23,20 @@ Data from the source code:http://gank.io
 
 [rakeet/Meizhi](https://github.com/drakeet/Meizhi)
 [gank.io](http://gank.io)
+
+## features
+
+- RxJava
+- Retrofit
+- Dagger2
+- RxCache
+- Clean architecture
+
+
+## links
+
+[Fernando Cejas](https://fernandocejas.com/)
+[googlesamples/android-architecture](https://github.com/googlesamples/android-architecture)
+[从零创建项目实践-魔都三帅](http://blog.csdn.net/marktheone/article/details/52047141)
+
+
