@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.base;
+package com.bobomee.android.gank.io.base;
 
 import android.app.FragmentManager;
 import android.content.BroadcastReceiver;
@@ -31,10 +31,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import com.bobomee.android.common.util.UIUtil;
+import com.bobomee.android.gank.io.R;
 import com.bobomee.android.htttp.receiver.NetWorkReceiver;
 import com.bobomee.android.htttp.util.HttpNetUtil;
-import com.bobomee.android.myapplication.R;
-import com.bobomee.android.myapplication.di.ReposComponent;
+import com.bobomee.android.gank.io.di.ReposComponent;
 
 /**
  * Created on 2016/10/27.下午5:27.

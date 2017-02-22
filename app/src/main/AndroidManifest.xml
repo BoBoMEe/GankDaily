@@ -16,7 +16,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bobomee.android.myapplication">
+    package="com.bobomee.android.gank.io">
 
   <application
       android:name=".App"

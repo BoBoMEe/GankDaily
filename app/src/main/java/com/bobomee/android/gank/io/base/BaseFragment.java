@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.base;
+package com.bobomee.android.gank.io.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

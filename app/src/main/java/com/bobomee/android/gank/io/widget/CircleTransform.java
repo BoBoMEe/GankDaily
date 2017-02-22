@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.widget;
+package com.bobomee.android.gank.io.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;

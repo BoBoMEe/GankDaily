@@ -14,19 +14,18 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.ui;
+package com.bobomee.android.gank.io.ui;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.bobomee.android.gank.io.R;
 import com.bobomee.android.htttp.bean.Results;
-import com.bobomee.android.myapplication.R;
-import com.bobomee.android.myapplication.base.BaseActivity;
-import com.bobomee.android.myapplication.util.GlideUtil;
+import com.bobomee.android.gank.io.base.BaseActivity;
+import com.bobomee.android.gank.io.util.GlideUtil;
 import uk.co.senab.photoview.PhotoView;
 
 /**
@@ -36,7 +35,7 @@ import uk.co.senab.photoview.PhotoView;
  * @author 汪波
  * @version 1.0
  * @see
- * @since 2017/2/12.汪波.
+ * @since 2016/12/12.汪波.
  */
 public class DetailImageActivity extends BaseActivity {
   @BindView(R.id.detail_image) PhotoView mDetailImage;

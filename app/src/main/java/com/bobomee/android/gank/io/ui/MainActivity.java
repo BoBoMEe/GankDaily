@@ -14,17 +14,17 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.ui;
+package com.bobomee.android.gank.io.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import butterknife.ButterKnife;
-import com.bobomee.android.myapplication.R;
-import com.bobomee.android.myapplication.base.BaseActivity;
-import com.bobomee.android.myapplication.di.ReposComponent;
-import com.bobomee.android.myapplication.mvp.presenter.CategoryListPresenter;
-import com.bobomee.android.myapplication.util.ActivityUtils;
+import com.bobomee.android.gank.io.R;
+import com.bobomee.android.gank.io.base.BaseActivity;
+import com.bobomee.android.gank.io.di.ReposComponent;
+import com.bobomee.android.gank.io.mvp.presenter.CategoryListPresenter;
+import com.bobomee.android.gank.io.util.ActivityUtils;
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {

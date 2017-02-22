@@ -14,12 +14,12 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.util;
+package com.bobomee.android.gank.io.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
-import com.bobomee.android.myapplication.widget.CircleTransform;
+import com.bobomee.android.gank.io.widget.CircleTransform;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.Target;

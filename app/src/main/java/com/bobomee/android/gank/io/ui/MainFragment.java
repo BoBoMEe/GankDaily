@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.ui;
+package com.bobomee.android.gank.io.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -30,14 +30,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import com.bobomee.android.common.util.DayNightUtil;
+import com.bobomee.android.gank.io.R;
 import com.bobomee.android.htttp.bean.Results;
-import com.bobomee.android.myapplication.R;
-import com.bobomee.android.myapplication.base.BaseFragment;
-import com.bobomee.android.myapplication.mvp.CategoryContract.ReposListPresenter;
-import com.bobomee.android.myapplication.mvp.CategoryContract.ReposListView;
-import com.bobomee.android.myapplication.service.DataService;
-import com.bobomee.android.myapplication.util.GlideUtil;
-import com.bobomee.android.myapplication.widget.ScaleImageView;
+import com.bobomee.android.gank.io.base.BaseFragment;
+import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListPresenter;
+import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListView;
+import com.bobomee.android.gank.io.service.DataService;
+import com.bobomee.android.gank.io.util.GlideUtil;
+import com.bobomee.android.gank.io.widget.ScaleImageView;
 import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClick.OnItemClickListener;
 import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClickSupport;
 import com.zhy.adapter.recyclerview.CommonAdapter;
@@ -55,7 +55,7 @@ import org.greenrobot.eventbus.ThreadMode;
  * @author 汪波
  * @version 1.0
  * @see
- * @since 2017/2/22.汪波.
+ * @since 2016/12/22.汪波.
  */
 public class MainFragment extends BaseFragment
     implements ReposListView<Results, ReposListPresenter> {

@@ -23,7 +23,7 @@
     app:cardUseCompatPadding="true"
     android:layout_height="wrap_content">
 
-  <com.bobomee.android.myapplication.widget.ScaleImageView
+  <com.bobomee.android.gank.io.widget.ScaleImageView
       android:id="@+id/image"
       android:layout_width="match_parent"
 

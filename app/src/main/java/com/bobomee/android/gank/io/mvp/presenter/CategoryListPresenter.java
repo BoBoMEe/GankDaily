@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.mvp.presenter;
+package com.bobomee.android.gank.io.mvp.presenter;
 
 import android.content.Context;
 import com.bobomee.android.data.repo.Category;
@@ -22,10 +22,10 @@ import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.domain.interactor.DefaultSubscriber;
 import com.bobomee.android.htttp.bean.GankCategory;
 import com.bobomee.android.htttp.bean.Results;
-import com.bobomee.android.myapplication.mapper.ReposDataMapper;
-import com.bobomee.android.myapplication.mvp.CategoryContract;
-import com.bobomee.android.myapplication.mvp.CategoryContract.ReposListView;
-import com.bobomee.android.myapplication.ui.DetailImageActivity;
+import com.bobomee.android.gank.io.mapper.ReposDataMapper;
+import com.bobomee.android.gank.io.mvp.CategoryContract;
+import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListView;
+import com.bobomee.android.gank.io.ui.DetailImageActivity;
 import java.util.List;
 import javax.inject.Inject;
 

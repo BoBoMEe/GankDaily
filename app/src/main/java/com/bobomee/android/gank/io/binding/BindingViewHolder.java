@@ -14,16 +14,27 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication;
+package com.bobomee.android.gank.io.binding;
 
-import com.bobomee.android.data.di.Dagger2Application;
+import android.databinding.ViewDataBinding;
+import android.support.v7.widget.RecyclerView;
 
 /**
- * Created on 2016/11/20.下午7:29.
+ * Created on 2016/12/13.下午7:16.
  *
  * @author bobomee.
- * @description
  */
 
-public class App extends Dagger2Application {
+public class BindingViewHolder<T extends ViewDataBinding> extends RecyclerView.ViewHolder {
+
+  protected final T mBinding;
+
+  public BindingViewHolder(T binding) {
+    super(binding.getRoot());
+    mBinding = binding;
+  }
+
+  public T getBinding() {
+    return mBinding;
+  }
 }

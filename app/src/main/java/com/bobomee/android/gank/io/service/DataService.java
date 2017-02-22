@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.service;
+package com.bobomee.android.gank.io.service;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -22,7 +22,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Parcelable;
 import com.bobomee.android.htttp.bean.Results;
-import com.bobomee.android.myapplication.util.GlideUtil;
+import com.bobomee.android.gank.io.util.GlideUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;

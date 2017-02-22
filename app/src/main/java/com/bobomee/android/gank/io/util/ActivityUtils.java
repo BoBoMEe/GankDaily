@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.util;
+package com.bobomee.android.gank.io.util;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;

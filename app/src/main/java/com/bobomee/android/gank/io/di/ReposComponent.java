@@ -14,16 +14,16 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.di;
+package com.bobomee.android.gank.io.di;
 
 import com.bobomee.android.data.di.Dagger2Application;
 import com.bobomee.android.data.di.scope.PerActivity;
 import com.bobomee.android.data.di.internal.components.ActivityComponent;
 import com.bobomee.android.data.di.internal.components.ApplicationComponent;
 import com.bobomee.android.data.di.internal.modules.ActivityModule;
-import com.bobomee.android.myapplication.base.BaseActivity;
-import com.bobomee.android.myapplication.mvp.CategoryContract.ReposListView;
-import com.bobomee.android.myapplication.ui.MainActivity;
+import com.bobomee.android.gank.io.base.BaseActivity;
+import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListView;
+import com.bobomee.android.gank.io.ui.MainActivity;
 import dagger.Component;
 /**
  * Created on 2016/12/7.下午11:08.

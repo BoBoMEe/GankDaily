@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.mvp;
+package com.bobomee.android.gank.io.mvp;
 
 import android.content.Context;
 import com.bobomee.android.common.mvp.BaseContract.BasePresenter;

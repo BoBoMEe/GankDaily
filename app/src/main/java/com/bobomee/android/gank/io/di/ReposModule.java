@@ -14,14 +14,14 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.di;
+package com.bobomee.android.gank.io.di;
 
 import com.bobomee.android.data.CacheRepository;
 import com.bobomee.android.data.di.scope.PerActivity;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
-import com.bobomee.android.myapplication.mvp.CategoryContract.ReposListView;
+import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListView;
 import dagger.Module;
 import dagger.Provides;
 

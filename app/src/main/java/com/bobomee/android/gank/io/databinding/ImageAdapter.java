@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.databinding;
+package com.bobomee.android.gank.io.databinding;
 
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;

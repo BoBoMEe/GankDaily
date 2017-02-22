@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
+ * Copyright (C) 2017.  BoBoMEe(wbwjx115@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,16 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.binding;
+package com.bobomee.android.gank.io;
 
-import android.databinding.ViewDataBinding;
-import android.support.v7.widget.RecyclerView;
+import com.bobomee.android.data.di.Dagger2Application;
 
 /**
- * Created on 2016/12/13.下午7:16.
+ * Created on 2016/11/20.下午7:29.
  *
  * @author bobomee.
+ * @description
  */
 
-public class BindingViewHolder<T extends ViewDataBinding> extends RecyclerView.ViewHolder {
-
-  protected final T mBinding;
-
-  public BindingViewHolder(T binding) {
-    super(binding.getRoot());
-    mBinding = binding;
-  }
-
-  public T getBinding() {
-    return mBinding;
-  }
+public class App extends Dagger2Application {
 }
