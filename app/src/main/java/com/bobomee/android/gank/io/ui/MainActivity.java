@@ -36,12 +36,6 @@ public class MainActivity extends BaseActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-    fab.setOnClickListener(
-        view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null)
-            .show());
-
     MainFragment lMainFragment =
         (MainFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 

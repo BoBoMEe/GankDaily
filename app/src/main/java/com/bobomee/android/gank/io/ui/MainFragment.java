@@ -19,6 +19,7 @@ package com.bobomee.android.gank.io.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -27,17 +28,18 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import com.bobomee.android.common.util.DayNightUtil;
 import com.bobomee.android.gank.io.R;
-import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.gank.io.base.BaseFragment;
 import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListPresenter;
 import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListView;
 import com.bobomee.android.gank.io.service.DataService;
 import com.bobomee.android.gank.io.util.GlideUtil;
 import com.bobomee.android.gank.io.widget.ScaleImageView;
+import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClick.OnItemClickListener;
 import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClickSupport;
 import com.zhy.adapter.recyclerview.CommonAdapter;
@@ -107,6 +109,14 @@ public class MainFragment extends BaseFragment
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     setHasOptionsMenu(true);
+
+    FloatingActionButton fab = (FloatingActionButton) mBaseActivity.findViewById(R.id.fab);
+    fab.setOnClickListener(new OnClickListener() {
+      @Override public void onClick(View v) {
+        mRecycler.smoothScrollToPosition(0);
+      }
+    });
+    
     StaggeredGridLayoutManager staggeredGridLayoutManager =
         new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL);
     mRecycler.setLayoutManager(staggeredGridLayoutManager);
