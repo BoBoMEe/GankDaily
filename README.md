@@ -21,8 +21,8 @@ Data from the source code:http://gank.io
 
 ## Thanks
 
-[rakeet/Meizhi](https://github.com/drakeet/Meizhi)
-[gank.io](http://gank.io)
+- [rakeet/Meizhi](https://github.com/drakeet/Meizhi)
+- [gank.io](http://gank.io)
 
 ## features
 
@@ -35,8 +35,8 @@ Data from the source code:http://gank.io
 
 ## links
 
-[Fernando Cejas](https://fernandocejas.com/)
-[googlesamples/android-architecture](https://github.com/googlesamples/android-architecture)
-[从零创建项目实践-魔都三帅](http://blog.csdn.net/marktheone/article/details/52047141)
+- [Fernando Cejas](https://fernandocejas.com/)
+- [googlesamples/android-architecture](https://github.com/googlesamples/android-architecture)
+- [从零创建项目实践-魔都三帅](http://blog.csdn.net/marktheone/article/details/52047141)
 
 
