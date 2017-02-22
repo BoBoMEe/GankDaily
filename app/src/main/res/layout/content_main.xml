@@ -15,14 +15,10 @@
   ~  limitations under the License.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-  <data>
-
-  </data>
-<LinearLayout
     android:id="@+id/content_main"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -49,4 +45,3 @@
   </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>
-</layout>

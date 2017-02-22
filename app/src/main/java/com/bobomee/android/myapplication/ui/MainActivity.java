@@ -16,7 +16,6 @@
 
 package com.bobomee.android.myapplication.ui;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,12 +27,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.bobomee.android.common.util.DayNightUtil;
 import com.bobomee.android.data.CacheRepository;
 import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.myapplication.R;
 import com.bobomee.android.myapplication.base.BaseActivity;
-import com.bobomee.android.myapplication.databinding.ActivityMainBinding;
 import com.bobomee.android.myapplication.mvp.CategoryContract.ReposListView;
 import com.bobomee.android.myapplication.mvp.presenter.CategoryListPresenter;
 import com.bobomee.android.myapplication.service.DataService;
@@ -54,8 +54,7 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
     implements ReposListView {
 
   @Inject CategoryListPresenter mReposListPresenter;
-
-  private ActivityMainBinding mMainBinding;
+  @BindView(R.id.recycler) RecyclerView mRecycler;
 
   @Override public CategoryListPresenter getPresenter() {
     return mReposListPresenter;
@@ -67,7 +66,8 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+    setContentView(R.layout.activity_main);
+    ButterKnife.bind(this);
 
     if (null != getComponent()) getComponent().inject(this);
 
@@ -103,9 +103,9 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
 
     StaggeredGridLayoutManager staggeredGridLayoutManager =
         new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL);
-    mMainBinding.contentLayout.recycler.setLayoutManager(staggeredGridLayoutManager);
+    mRecycler.setLayoutManager(staggeredGridLayoutManager);
 
-    mMainBinding.contentLayout.recycler.setAdapter(mGankItemBeanCommonAdapter =
+    mRecycler.setAdapter(mGankItemBeanCommonAdapter =
         new CommonAdapter<Results>(MainActivity.this, R.layout.recycler_item_image,
             mGankItemBeanList) {
 
@@ -118,8 +118,7 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
           }
         });
 
-    ItemClickSupport lItemClickSupport =
-        ItemClickSupport.from(mMainBinding.contentLayout.recycler).add();
+    ItemClickSupport lItemClickSupport = ItemClickSupport.from(mRecycler).add();
     lItemClickSupport.addOnItemClickListener(new OnItemClickListener() {
       @Override public void onItemClick(RecyclerView parent, View view, int position, long id) {
         MainActivity.this.onItemClick(mGankItemBeanList.get(position));
