@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
+ * Copyright (C) 2017.  BoBoMEe(wbwjx115@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.myapplication.mvp.view;
+package com.bobomee.android.myapplication.ui;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import com.bobomee.android.common.mvp.MvpPresenter;
-import com.bobomee.android.common.mvp.MvpView;
+import com.bobomee.android.common.mvp.BaseContract.MvpPresenter;
+import com.bobomee.android.common.mvp.BaseContract.MvpView;
 
 /**
  * @author markzhai on 16/3/4

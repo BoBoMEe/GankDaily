@@ -16,6 +16,8 @@
 
 package com.bobomee.android.common.mvp;
 
+import com.bobomee.android.common.mvp.BaseContract.MvpPresenter;
+import com.bobomee.android.common.mvp.BaseContract.MvpView;
 import java.lang.ref.WeakReference;
 
 /**

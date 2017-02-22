@@ -29,15 +29,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
-import com.bobomee.android.common.mvp.MvpPresenter;
-import com.bobomee.android.common.mvp.MvpView;
+import com.bobomee.android.common.mvp.BaseContract.MvpPresenter;
+import com.bobomee.android.common.mvp.BaseContract.MvpView;
 import com.bobomee.android.common.util.UIUtil;
 import com.bobomee.android.data.di.internal.HasComponent;
 import com.bobomee.android.htttp.receiver.NetWorkReceiver;
 import com.bobomee.android.htttp.util.HttpNetUtil;
 import com.bobomee.android.myapplication.R;
 import com.bobomee.android.myapplication.di.ReposComponent;
-import com.bobomee.android.myapplication.mvp.view.MvpActivity;
+import com.bobomee.android.myapplication.ui.MvpActivity;
 
 /**
  * Created on 2016/10/27.下午5:27.

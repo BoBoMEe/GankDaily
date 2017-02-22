@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
   ~ Copyright (C) 2017.  BoBoMEe(wbwjx115@gmail.com)
   ~
@@ -15,13 +15,6 @@
   ~  limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-  <item
-      android:id="@+id/night"
-      android:icon="@drawable/ic_brightness"
-      android:orderInCategory="0"
-      app:showAsAction="ifRoom"
-      android:title="@string/night_mode"/>
-</menu>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="24dp" android:viewportHeight="24.0" android:viewportWidth="24.0" android:width="24dp">
+    <path android:fillColor="@color/white" android:pathData="M4,12l1.41,1.41L11,7.83V20h2V7.83l5.58,5.59L20,12l-8,-8 -8,8z"/>
+</vector>

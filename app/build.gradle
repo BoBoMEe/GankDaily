@@ -17,7 +17,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.antfortune.freeline'
 
 android {
   packagingOptions {
@@ -35,6 +34,7 @@ android {
     versionCode rootProject.ext.versionCode
     versionName rootProject.ext.versionName
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    vectorDrawables.useSupportLibrary = true
   }
   lintOptions {
     checkReleaseBuilds false

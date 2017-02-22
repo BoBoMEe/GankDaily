@@ -34,8 +34,8 @@ import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.myapplication.R;
 import com.bobomee.android.myapplication.base.BaseActivity;
 import com.bobomee.android.myapplication.databinding.ActivityMainBinding;
+import com.bobomee.android.myapplication.mvp.CategoryContract.ReposListView;
 import com.bobomee.android.myapplication.mvp.presenter.CategoryListPresenter;
-import com.bobomee.android.myapplication.mvp.view.ReposListView;
 import com.bobomee.android.myapplication.service.DataService;
 import com.bobomee.android.myapplication.util.GlideUtil;
 import com.bobomee.android.myapplication.widget.ScaleImageView;
@@ -96,7 +96,7 @@ public class MainActivity extends BaseActivity<ReposListView, CategoryListPresen
   }
 
   @Override public void onItemClick(Results pResults) {
-    DetailImageActivity.start(this, pResults);
+    mReposListPresenter.startDetail(this, pResults);
   }
 
   public void initRecycler() {

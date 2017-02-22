@@ -16,14 +16,17 @@
 
 package com.bobomee.android.myapplication.mvp.presenter;
 
+import android.content.Context;
 import com.bobomee.android.common.mvp.MvpBasePresenter;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.DomainConstants;
+import com.bobomee.android.domain.interactor.DefaultSubscriber;
 import com.bobomee.android.htttp.bean.GankCategory;
 import com.bobomee.android.htttp.bean.Results;
-import com.bobomee.android.domain.interactor.DefaultSubscriber;
 import com.bobomee.android.myapplication.mapper.ReposDataMapper;
-import com.bobomee.android.myapplication.mvp.view.ReposListView;
+import com.bobomee.android.myapplication.mvp.CategoryContract;
+import com.bobomee.android.myapplication.mvp.CategoryContract.ReposListView;
+import com.bobomee.android.myapplication.ui.DetailImageActivity;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -32,7 +35,8 @@ import javax.inject.Inject;
  * Email nimengbo@gmail.com
  * github https://github.com/nimengbo
  */
-public class CategoryListPresenter extends MvpBasePresenter<ReposListView> {
+public class CategoryListPresenter extends MvpBasePresenter<ReposListView>
+    implements CategoryContract.ReposListPresenter<ReposListView> {
 
     private final Category mGetRepos;
     private final ReposDataMapper mUserModelDataMapper;
@@ -65,6 +69,10 @@ public class CategoryListPresenter extends MvpBasePresenter<ReposListView> {
         mGetRepos.setParam(DomainConstants.福利, DomainConstants.PAGE_SIZE,
             DomainConstants.FIRST_PAGE);
         mGetRepos.execute(new UserSubscriber(),update);
+    }
+
+    @Override public void startDetail(Context pContext, Results pResults) {
+        DetailImageActivity.start(pContext, pResults);
     }
 
     private class UserSubscriber extends DefaultSubscriber<GankCategory> {
