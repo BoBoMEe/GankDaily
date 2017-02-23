@@ -39,6 +39,7 @@ import com.bobomee.android.gank.io.base.BaseFragment;
 import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListPresenter;
 import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListView;
 import com.bobomee.android.gank.io.service.DataService;
+import com.bobomee.android.gank.io.util.FabUtil;
 import com.bobomee.android.gank.io.util.GlideUtil;
 import com.bobomee.android.gank.io.widget.ScaleImageView;
 import com.bobomee.android.htttp.bean.Results;
@@ -159,6 +160,8 @@ public class MainFragment extends BaseFragment
         mReposListPresenter.startDetail(mBaseActivity, mGankItemBeanList.get(position));
       }
     });
+
+    FabUtil.hideOrShow(mRecycler, fab);
   }
 
   @Override public void setPresenter(ReposListPresenter presenter) {
