@@ -34,7 +34,6 @@ import com.bobomee.android.common.util.UIUtil;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.htttp.receiver.NetWorkReceiver;
 import com.bobomee.android.htttp.util.HttpNetUtil;
-import com.bobomee.android.gank.io.di.ReposComponent;
 
 /**
  * Created on 2016/10/27.下午5:27.
@@ -121,7 +120,10 @@ public abstract class BaseActivity extends AppCompatActivity
 
   protected void showToolBarBack() {
     ActionBar actionBar = getSupportActionBar();
-    if (null != actionBar) actionBar.setDisplayHomeAsUpEnabled(true);
+    if (null != actionBar) {
+      actionBar.setDisplayHomeAsUpEnabled(true);
+      actionBar.setDisplayShowHomeEnabled(true);
+    }
   }
 
   @Override public void onConnected(boolean collect) {
@@ -133,4 +135,8 @@ public abstract class BaseActivity extends AppCompatActivity
     }
   }
 
+  @Override public boolean onNavigateUp() {
+    onBackPressed();
+    return true;
+  }
 }

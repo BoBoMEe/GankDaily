@@ -20,6 +20,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -68,7 +70,7 @@ public class MainFragment extends BaseFragment
     fragment.setArguments(args);
     return fragment;
   }
-  
+
   private ReposListPresenter mReposListPresenter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,7 +85,12 @@ public class MainFragment extends BaseFragment
 
   @Override public void onResume() {
     super.onResume();
-    mReposListPresenter.subscribe(true);
+    mReposListPresenter.subscribe(!mReposListPresenter.getRequsted());
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    mReposListPresenter.unsubscribe();
   }
 
   private List<Results> mGankItemBeanList = new ArrayList<>();
@@ -95,11 +102,16 @@ public class MainFragment extends BaseFragment
     mGankItemBeanList.addAll(data);
     mGankItemBeanCommonAdapter.notifyDataSetChanged();
   }
-  
+
   @BindView(R.id.recycler) RecyclerView mRecycler;
+  @BindView(R.id.swipelayout) SwipeRefreshLayout mSwipelayout;
 
   @Override public void userList(List<Results> userModels) {
-    DataService.startService(mBaseActivity, userModels);
+    if (!mReposListPresenter.getRequsted()) {
+      mReposListPresenter.setRequested(true);
+      mSwipelayout.setRefreshing(false);
+      DataService.startService(mBaseActivity, userModels);
+    }
   }
 
   @Override public Context context() {
@@ -116,14 +128,21 @@ public class MainFragment extends BaseFragment
         mRecycler.smoothScrollToPosition(0);
       }
     });
-    
+
     StaggeredGridLayoutManager staggeredGridLayoutManager =
         new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL);
     mRecycler.setLayoutManager(staggeredGridLayoutManager);
 
+    mSwipelayout.setOnRefreshListener(new OnRefreshListener() {
+      @Override public void onRefresh() {
+        mReposListPresenter.setRequested(false);
+        mGankItemBeanCommonAdapter.getDatas().clear();
+        mReposListPresenter.subscribe(true);
+      }
+    });
+
     mRecycler.setAdapter(mGankItemBeanCommonAdapter =
-        new CommonAdapter<Results>(mBaseActivity, R.layout.recycler_item_image,
-            mGankItemBeanList) {
+        new CommonAdapter<Results>(mBaseActivity, R.layout.recycler_item_image, mGankItemBeanList) {
 
           @Override protected void convert(ViewHolder holder, Results _gankItemBean, int position) {
 
@@ -143,7 +162,7 @@ public class MainFragment extends BaseFragment
   }
 
   @Override public void setPresenter(ReposListPresenter presenter) {
-               this.mReposListPresenter = presenter;
+    this.mReposListPresenter = presenter;
   }
 
   @Override public View initFragmentView(LayoutInflater pInflater, ViewGroup pContainer,
@@ -153,7 +172,7 @@ public class MainFragment extends BaseFragment
 
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     super.onCreateOptionsMenu(menu, inflater);
-     inflater.inflate(R.menu.menu, menu);
+    inflater.inflate(R.menu.menu, menu);
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {

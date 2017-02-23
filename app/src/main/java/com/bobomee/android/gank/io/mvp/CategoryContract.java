@@ -51,5 +51,9 @@ public class CategoryContract {
   public interface ReposListPresenter extends BasePresenter {
 
     void startDetail(Context pContext, Results pResults);
+    
+    boolean getRequsted();
+    
+    void setRequested(boolean pRequested);
   }
 }

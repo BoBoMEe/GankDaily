@@ -20,12 +20,12 @@ import android.content.Context;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.domain.interactor.DefaultSubscriber;
-import com.bobomee.android.htttp.bean.GankCategory;
-import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.gank.io.mapper.ReposDataMapper;
 import com.bobomee.android.gank.io.mvp.CategoryContract;
 import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListView;
 import com.bobomee.android.gank.io.ui.DetailImageActivity;
+import com.bobomee.android.htttp.bean.GankCategory;
+import com.bobomee.android.htttp.bean.Results;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -39,6 +39,7 @@ public class CategoryListPresenter implements CategoryContract.ReposListPresente
     private final Category mGetRepos;
     private final ReposDataMapper mUserModelDataMapper;
     private final ReposListView<Results,CategoryListPresenter> mResultsCategoryListPresenterReposListView;
+    private boolean isRequsted = false;
 
     @Inject public CategoryListPresenter(Category getRepos, ReposListView pReposListView,
                               ReposDataMapper userModelDataMapper) {
@@ -76,6 +77,14 @@ public class CategoryListPresenter implements CategoryContract.ReposListPresente
 
     @Override public void startDetail(Context pContext, Results pResults) {
         DetailImageActivity.start(pContext, pResults);
+    }
+
+    @Override public boolean getRequsted() {
+        return isRequsted;
+    }
+
+    @Override public void setRequested(boolean pRequested) {
+        this.isRequsted = pRequested;
     }
 
     private class UserSubscriber extends DefaultSubscriber<GankCategory> {

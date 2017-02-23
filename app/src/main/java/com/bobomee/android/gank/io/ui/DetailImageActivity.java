@@ -23,9 +23,9 @@ import android.support.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bobomee.android.gank.io.R;
-import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.gank.io.base.BaseActivity;
 import com.bobomee.android.gank.io.util.GlideUtil;
+import com.bobomee.android.htttp.bean.Results;
 import uk.co.senab.photoview.PhotoView;
 
 /**
@@ -54,6 +54,7 @@ public class DetailImageActivity extends BaseActivity {
   }
 
   private void initView() {
+    showToolBarBack();
     GlideUtil.load(this, mResults.url, mDetailImage);
   }
 
