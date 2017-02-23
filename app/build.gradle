@@ -103,7 +103,6 @@ dependencies {
   compile mineDependencies.recyclerviewhelper
   apt mineDependencies.layoutbindercompiler
 
-  compile 'com.zhy:base-rvadapter:3.0.3'
   compile project(':clean:data')
 
 }

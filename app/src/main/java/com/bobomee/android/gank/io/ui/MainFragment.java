@@ -24,7 +24,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,14 +38,12 @@ import com.bobomee.android.gank.io.base.BaseFragment;
 import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListPresenter;
 import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListView;
 import com.bobomee.android.gank.io.service.DataService;
+import com.bobomee.android.gank.io.ui.MainAdapterProvider.MainAdapter;
 import com.bobomee.android.gank.io.util.FabUtil;
-import com.bobomee.android.gank.io.util.GlideUtil;
-import com.bobomee.android.gank.io.widget.ScaleImageView;
+import com.bobomee.android.gank.io.widget.WrapperStaggeredGridLayoutManager;
 import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClick.OnItemClickListener;
 import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClickSupport;
-import com.zhy.adapter.recyclerview.CommonAdapter;
-import com.zhy.adapter.recyclerview.base.ViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
@@ -94,14 +91,10 @@ public class MainFragment extends BaseFragment
     mReposListPresenter.unsubscribe();
   }
 
-  private List<Results> mGankItemBeanList = new ArrayList<>();
-
-  private CommonAdapter<Results> mGankItemBeanCommonAdapter;
+  private MainAdapter mGankItemBeanCommonAdapter;
 
   @Subscribe(threadMode = ThreadMode.MAIN) public void dataEvent(List<Results> data) {
-
-    mGankItemBeanList.addAll(data);
-    mGankItemBeanCommonAdapter.notifyDataSetChanged();
+    mGankItemBeanCommonAdapter.setData(data);
   }
 
   @BindView(R.id.recycler) RecyclerView mRecycler;
@@ -130,34 +123,25 @@ public class MainFragment extends BaseFragment
       }
     });
 
-    StaggeredGridLayoutManager staggeredGridLayoutManager =
-        new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL);
+    WrapperStaggeredGridLayoutManager staggeredGridLayoutManager =
+        new WrapperStaggeredGridLayoutManager(2, OrientationHelper.VERTICAL);
     mRecycler.setLayoutManager(staggeredGridLayoutManager);
 
     mSwipelayout.setOnRefreshListener(new OnRefreshListener() {
       @Override public void onRefresh() {
         mReposListPresenter.setRequested(false);
-        mGankItemBeanCommonAdapter.getDatas().clear();
+        mGankItemBeanCommonAdapter.clearData();
         mReposListPresenter.subscribe(true);
       }
     });
 
-    mRecycler.setAdapter(mGankItemBeanCommonAdapter =
-        new CommonAdapter<Results>(mBaseActivity, R.layout.recycler_item_image, mGankItemBeanList) {
-
-          @Override protected void convert(ViewHolder holder, Results _gankItemBean, int position) {
-
-            ScaleImageView image = holder.getView(R.id.image);
-            image.setInitSize(_gankItemBean.width, _gankItemBean.height);
-
-            GlideUtil.load(mBaseActivity, _gankItemBean.url, image);
-          }
-        });
+    mRecycler.setAdapter(
+        mGankItemBeanCommonAdapter = MainAdapterProvider.provideAdapter());
 
     ItemClickSupport lItemClickSupport = ItemClickSupport.from(mRecycler).add();
     lItemClickSupport.addOnItemClickListener(new OnItemClickListener() {
       @Override public void onItemClick(RecyclerView parent, View view, int position, long id) {
-        mReposListPresenter.startDetail(mBaseActivity, mGankItemBeanList.get(position));
+        mReposListPresenter.startDetail(mBaseActivity, mGankItemBeanCommonAdapter.getData().get(position));
       }
     });
 
