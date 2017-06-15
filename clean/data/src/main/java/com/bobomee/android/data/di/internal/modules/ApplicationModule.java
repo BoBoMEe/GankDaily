@@ -36,10 +36,6 @@ import javax.inject.Singleton;
     this.application = application;
   }
 
-  @Singleton @Provides Application provideApplication() {
-    return this.application;
-  }
-
   @Provides @Singleton @ApplicationContext Context provideApplicationContext() {
     return this.application;
   }

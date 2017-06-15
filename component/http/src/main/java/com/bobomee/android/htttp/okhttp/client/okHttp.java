@@ -28,7 +28,10 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
 /**
- * Created by bobomee on 16/5/19.
+ * Created on 16/10/2.下午6:43.
+ *
+ * @author bobomee.
+ *         https://github.com/BoBoMEe
  */
 @Singleton
 public class okHttp {

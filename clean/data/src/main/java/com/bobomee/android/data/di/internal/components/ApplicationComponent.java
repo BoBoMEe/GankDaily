@@ -15,13 +15,12 @@
  */
 package com.bobomee.android.data.di.internal.components;
 
-import android.app.Application;
 import android.content.Context;
 import com.bobomee.android.data.CacheRepository;
 import com.bobomee.android.data.di.Dagger2Application;
-import com.bobomee.android.data.di.scope.ApplicationContext;
 import com.bobomee.android.data.di.internal.modules.ApiModule;
 import com.bobomee.android.data.di.internal.modules.ApplicationModule;
+import com.bobomee.android.data.di.scope.ApplicationContext;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
 import dagger.Component;
@@ -37,9 +36,6 @@ import javax.inject.Singleton;
   void inject(Dagger2Application _myApplication);
 
   @ApplicationContext Context applicationContext();
-
-  //Exposed to sub-graphs.
-  Application application();
 
   ThreadExecutor threadExecutor();
 

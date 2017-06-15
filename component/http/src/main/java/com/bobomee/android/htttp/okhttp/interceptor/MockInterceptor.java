@@ -24,7 +24,7 @@ import okhttp3.Response;
  * Created on 16/9/13.上午9:51.
  *
  * @author bobomee.
- * @description
+ *         https://github.com/BoBoMEe
  */
 public class MockInterceptor implements Interceptor {
 

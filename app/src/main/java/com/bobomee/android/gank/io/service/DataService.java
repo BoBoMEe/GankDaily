@@ -21,8 +21,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Parcelable;
-import com.bobomee.android.htttp.bean.Results;
+import com.bobomee.android.gank.io.event.DataLoadFinishEvent;
 import com.bobomee.android.gank.io.util.GlideUtil;
+import com.bobomee.android.htttp.bean.Results;
 import java.util.ArrayList;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
@@ -35,39 +36,38 @@ import org.greenrobot.eventbus.EventBus;
  */
 
 public class DataService extends IntentService {
+
+  private static String DATA = "data";
+
   public DataService() {
     super("");
   }
 
   public static void startService(Context context, List<Results> datas) {
     Intent intent = new Intent(context, DataService.class);
-    intent.putParcelableArrayListExtra("data", (ArrayList<? extends Parcelable>) datas);
+
+    intent.putParcelableArrayListExtra(DATA, (ArrayList<? extends Parcelable>) datas);
     context.startService(intent);
   }
 
   @Override protected void onHandleIntent(Intent intent) {
-    if (intent == null) {
-      return;
+    if (null!= intent) {
+      List<Results> datas = intent.getParcelableArrayListExtra(DATA);
+      handleGirlItemData(datas);
     }
-
-    List<Results> datas = intent.getParcelableArrayListExtra("data");
-    String subtype = intent.getStringExtra("subtype");
-    handleGirlItemData(datas, subtype);
   }
 
-  private void handleGirlItemData(List<Results> datas, String subtype) {
-    if (datas.size() == 0) {
-      EventBus.getDefault().post("finish");
-      return;
-    }
-    for (Results data : datas) {
-      Bitmap bitmap = GlideUtil.load(this, data.url);
-      if (bitmap != null) {
-        data.setWidth(bitmap.getWidth());
-        data.setHeight(bitmap.getHeight());
+  private void handleGirlItemData(List<Results> datas) {
+    if (datas.size() != 0) {
+      for (Results data : datas) {
+        Bitmap bitmap = GlideUtil.load(this, data.url);
+        if (bitmap != null) {
+          data.setWidth(bitmap.getWidth());
+          data.setHeight(bitmap.getHeight());
+        }
       }
     }
-    EventBus.getDefault().post(datas);
+    EventBus.getDefault().post(new DataLoadFinishEvent(datas));
   }
 }
 

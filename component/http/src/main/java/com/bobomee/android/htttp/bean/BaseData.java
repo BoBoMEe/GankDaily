@@ -20,7 +20,7 @@ package com.bobomee.android.htttp.bean;
  * Created on 2016/11/20.下午11:59.
  *
  * @author bobomee.
- * @description
+ *         https://github.com/BoBoMEe
  */
 
 public class BaseData<T> {

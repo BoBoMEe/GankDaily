@@ -56,11 +56,11 @@ public class FabUtil {
     }
 
     public void onScrolledUp() {
-
+      onScrolledToTop();
     }
 
     public void onScrolledDown() {
-
+      onScrolledToBottom();
     }
 
     public void onScrolledToTop() {

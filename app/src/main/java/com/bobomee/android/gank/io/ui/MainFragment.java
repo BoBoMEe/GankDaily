@@ -35,6 +35,7 @@ import butterknife.BindView;
 import com.bobomee.android.common.util.DayNightUtil;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.base.BaseFragment;
+import com.bobomee.android.gank.io.event.DataLoadFinishEvent;
 import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListPresenter;
 import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListView;
 import com.bobomee.android.gank.io.service.DataService;
@@ -44,7 +45,6 @@ import com.bobomee.android.gank.io.widget.WrapperStaggeredGridLayoutManager;
 import com.bobomee.android.htttp.bean.Results;
 import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClick.OnItemClickListener;
 import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClickSupport;
-import java.util.ArrayList;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -93,8 +93,10 @@ public class MainFragment extends BaseFragment
 
   private MainAdapter mGankItemBeanCommonAdapter;
 
-  @Subscribe(threadMode = ThreadMode.MAIN) public void dataEvent(List<Results> data) {
-    mGankItemBeanCommonAdapter.setData(data);
+  @Subscribe(threadMode = ThreadMode.MAIN)
+  public void dataEvent(DataLoadFinishEvent dataLoadFinishEvent) {
+    List<Results> datas = dataLoadFinishEvent.getDatas();
+    if (null != datas && !datas.isEmpty()) mGankItemBeanCommonAdapter.setData(datas);
   }
 
   @BindView(R.id.recycler) RecyclerView mRecycler;
@@ -135,13 +137,13 @@ public class MainFragment extends BaseFragment
       }
     });
 
-    mRecycler.setAdapter(
-        mGankItemBeanCommonAdapter = MainAdapterProvider.provideAdapter());
+    mRecycler.setAdapter(mGankItemBeanCommonAdapter = MainAdapterProvider.provideAdapter());
 
     ItemClickSupport lItemClickSupport = ItemClickSupport.from(mRecycler).add();
     lItemClickSupport.addOnItemClickListener(new OnItemClickListener() {
       @Override public void onItemClick(RecyclerView parent, View view, int position, long id) {
-        mReposListPresenter.startDetail(mBaseActivity, mGankItemBeanCommonAdapter.getData().get(position));
+        mReposListPresenter.startDetail(mBaseActivity,
+            mGankItemBeanCommonAdapter.getData().get(position));
       }
     });
 

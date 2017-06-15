@@ -17,7 +17,6 @@
 package com.bobomee.android.data.di.internal.modules;
 
 import android.app.Activity;
-import android.content.Context;
 import com.bobomee.android.data.di.scope.ActivityContext;
 import com.bobomee.android.data.di.scope.PerActivity;
 import dagger.Module;
@@ -36,14 +35,7 @@ import dagger.Provides;
     this.activity = activity;
   }
 
-  /**
-   * Expose the activity to dependents in the graph.
-   */
-  @Provides @PerActivity Activity provideActivity() {
-    return activity;
-  }
-
-  @Provides @ActivityContext @PerActivity Context provideActivityContext() {
+  @Provides @ActivityContext @PerActivity Activity provideActivityContext() {
     return activity;
   }
 }

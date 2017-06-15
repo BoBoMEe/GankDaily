@@ -24,7 +24,7 @@ import javax.inject.Singleton;
  * Created on 16/10/2.下午6:43.
  *
  * @author bobomee.
- * @description
+ *         https://github.com/BoBoMEe
  */
 
 @Singleton public class RestService {

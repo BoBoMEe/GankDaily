@@ -26,6 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by bobomee on 2016/5/19.
+ *  @author bobomee.
+ *         https://github.com/BoBoMEe
  */
 @Singleton public class Retrofit2Client {
 

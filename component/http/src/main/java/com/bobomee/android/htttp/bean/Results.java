@@ -24,7 +24,7 @@ import java.util.List;
  * Created on 2016/11/22.下午5:00.
  *
  * @author bobomee.
- * @description
+ *         https://github.com/BoBoMEe
  */
 
 public class Results implements Parcelable {
