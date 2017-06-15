@@ -16,8 +16,6 @@
 
 package com.bobomee.android.common.mvp;
 
-import android.content.Context;
-
 /**
  * Base Contract for MVP
  */
@@ -39,11 +37,6 @@ public interface BaseContract {
    */
 
   public interface MvpView<T extends BasePresenter> {
-
-    /**
-     * Get a {@link Context}.
-     */
-    Context context();
 
     void setPresenter(T presenter);
   }

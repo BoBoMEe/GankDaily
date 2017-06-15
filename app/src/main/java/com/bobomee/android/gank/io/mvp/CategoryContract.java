@@ -16,10 +16,8 @@
 
 package com.bobomee.android.gank.io.mvp;
 
-import android.content.Context;
 import com.bobomee.android.common.mvp.BaseContract.BasePresenter;
 import com.bobomee.android.common.mvp.BaseContract.MvpView;
-import com.bobomee.android.htttp.bean.Results;
 import java.util.List;
 
 /**
@@ -40,20 +38,14 @@ public class CategoryContract {
    */
   public interface ReposListView<M, T extends BasePresenter> extends MvpView<T> {
 
-    void userList(List<M> userModels);
-
+    void setDatas(List<M> datas);
   }
 
   /**
    * the repos presenter
    *
    */
-  public interface ReposListPresenter extends BasePresenter {
+  public interface ReposListPresenter<T> extends BasePresenter {
 
-    void startDetail(Context pContext, Results pResults);
-    
-    boolean getRequsted();
-    
-    void setRequested(boolean pRequested);
   }
 }

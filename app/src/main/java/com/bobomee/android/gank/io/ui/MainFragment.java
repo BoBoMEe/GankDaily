@@ -16,12 +16,10 @@
 
 package com.bobomee.android.gank.io.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,7 +27,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import com.bobomee.android.common.util.DayNightUtil;
@@ -43,7 +40,6 @@ import com.bobomee.android.gank.io.ui.MainAdapterProvider.MainAdapter;
 import com.bobomee.android.gank.io.util.FabUtil;
 import com.bobomee.android.gank.io.widget.WrapperStaggeredGridLayoutManager;
 import com.bobomee.android.htttp.bean.Results;
-import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClick.OnItemClickListener;
 import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClickSupport;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
@@ -62,14 +58,12 @@ import org.greenrobot.eventbus.ThreadMode;
 public class MainFragment extends BaseFragment
     implements ReposListView<Results, ReposListPresenter> {
 
-  public static MainFragment newInstance() {
-    Bundle args = new Bundle();
-    MainFragment fragment = new MainFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
+  @BindView(R.id.recycler) RecyclerView mRecycler;
+  @BindView(R.id.swipelayout) SwipeRefreshLayout mSwipelayout;
+  FloatingActionButton mFab;
+  private MainAdapter mGankItemBeanCommonAdapter;
   private ReposListPresenter mReposListPresenter;
+  private boolean isRequested = false;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -83,7 +77,7 @@ public class MainFragment extends BaseFragment
 
   @Override public void onResume() {
     super.onResume();
-    mReposListPresenter.subscribe(!mReposListPresenter.getRequsted());
+    mReposListPresenter.subscribe(!isRequested);
   }
 
   @Override public void onDestroyView() {
@@ -91,63 +85,58 @@ public class MainFragment extends BaseFragment
     mReposListPresenter.unsubscribe();
   }
 
-  private MainAdapter mGankItemBeanCommonAdapter;
-
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  public void dataEvent(DataLoadFinishEvent dataLoadFinishEvent) {
-    List<Results> datas = dataLoadFinishEvent.getDatas();
-    if (null != datas && !datas.isEmpty()) mGankItemBeanCommonAdapter.setData(datas);
+  @Override public void setDatas(List<Results> datas) {
+    isRequested = true;
+    mSwipelayout.setRefreshing(false);
+    DataService.startService(mBaseActivity, datas);
   }
 
-  @BindView(R.id.recycler) RecyclerView mRecycler;
-  @BindView(R.id.swipelayout) SwipeRefreshLayout mSwipelayout;
-
-  @Override public void userList(List<Results> userModels) {
-    if (!mReposListPresenter.getRequsted()) {
-      mReposListPresenter.setRequested(true);
-      mSwipelayout.setRefreshing(false);
-      DataService.startService(mBaseActivity, userModels);
-    }
-  }
-
-  @Override public Context context() {
-    return mBaseActivity;
+  public static MainFragment newInstance() {
+    Bundle args = new Bundle();
+    MainFragment fragment = new MainFragment();
+    fragment.setArguments(args);
+    return fragment;
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     setHasOptionsMenu(true);
 
-    FloatingActionButton fab = (FloatingActionButton) mBaseActivity.findViewById(R.id.fab);
-    fab.setOnClickListener(new OnClickListener() {
-      @Override public void onClick(View v) {
-        mRecycler.smoothScrollToPosition(0);
-      }
+    setViews();
+    setListeners();
+  }
+
+  private void setListeners() {
+    mRecycler.setAdapter(mGankItemBeanCommonAdapter = MainAdapterProvider.provideAdapter());
+
+    ItemClickSupport itemClickSupport = ItemClickSupport.from(mRecycler).add();
+    itemClickSupport.addOnItemClickListener((parent, view, position, id) -> {
+      DetailImageActivity.start(mBaseActivity, mGankItemBeanCommonAdapter.getData().get(position));
     });
+
+    FabUtil.hideOrShow(mRecycler, mFab);
+  }
+
+  private void setViews() {
+    mFab = (FloatingActionButton) mBaseActivity.findViewById(R.id.fab);
+
+    mFab.setOnClickListener(v -> mRecycler.smoothScrollToPosition(0));
 
     WrapperStaggeredGridLayoutManager staggeredGridLayoutManager =
         new WrapperStaggeredGridLayoutManager(2, OrientationHelper.VERTICAL);
     mRecycler.setLayoutManager(staggeredGridLayoutManager);
 
-    mSwipelayout.setOnRefreshListener(new OnRefreshListener() {
-      @Override public void onRefresh() {
-        mReposListPresenter.setRequested(false);
-        mGankItemBeanCommonAdapter.clearData();
-        mReposListPresenter.subscribe(true);
-      }
+    mSwipelayout.setOnRefreshListener(() -> {
+      isRequested = true;
+      mGankItemBeanCommonAdapter.clearData();
+      mReposListPresenter.subscribe(isRequested);
     });
+  }
 
-    mRecycler.setAdapter(mGankItemBeanCommonAdapter = MainAdapterProvider.provideAdapter());
-
-    ItemClickSupport lItemClickSupport = ItemClickSupport.from(mRecycler).add();
-    lItemClickSupport.addOnItemClickListener(new OnItemClickListener() {
-      @Override public void onItemClick(RecyclerView parent, View view, int position, long id) {
-        mReposListPresenter.startDetail(mBaseActivity,
-            mGankItemBeanCommonAdapter.getData().get(position));
-      }
-    });
-
-    FabUtil.hideOrShow(mRecycler, fab);
+  @Subscribe(threadMode = ThreadMode.MAIN)
+  public void dataEvent(DataLoadFinishEvent dataLoadFinishEvent) {
+    List<Results> datas = dataLoadFinishEvent.getDatas();
+    if (null != datas && !datas.isEmpty()) mGankItemBeanCommonAdapter.setData(datas);
   }
 
   @Override public void setPresenter(ReposListPresenter presenter) {
