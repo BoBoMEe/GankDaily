@@ -18,6 +18,7 @@ package com.bobomee.android.htttp.rx;
 
 import com.bobomee.android.domain.exception.NotFoundException;
 import com.bobomee.android.htttp.bean.BaseData;
+import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,10 +33,53 @@ import rx.schedulers.Schedulers;
  */
 
 public class Transformers {
+  /**
+   * Switch schedulers observable . transformer.
+   * 切换线程的     Transformer
+   *
+   * @param <T> the type parameter
+   * @return the observable . transformer
+   */
   public static <T> Observable.Transformer<T, T> switchSchedulers() {
     return observable -> observable.subscribeOn(Schedulers.io())
         .unsubscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
+  }
+
+  /**
+   * Debounce observable . transformer.
+   * 拦截重复点击的Transformer
+   *
+   * @param <T> the type parameter
+   * @return the observable . transformer
+   */
+  public static <T> Observable.Transformer<T, T> debounce() {
+    return observable -> observable.debounce(150, TimeUnit.MILLISECONDS);
+  }
+
+  /**
+   * Main schedulers observable . transformer.
+   * 一直在主线程的Transformer
+   *
+   * @param <T> the type parameter
+   * @return the observable . transformer
+   */
+  public static <T> Observable.Transformer<T, T> mainSchedulers() {
+    return observable -> observable.subscribeOn(AndroidSchedulers.mainThread())
+        .observeOn(AndroidSchedulers.mainThread());
+  }
+
+  /**
+   * Io schedulers observable . transformer.
+   * 一直在io线程的Transformer
+   *
+   * @param <T> the type parameter
+   * @return the observable . transformer
+   */
+  public static <T> Observable.Transformer<T, T> ioSchedulers() {
+    return observable -> observable.subscribeOn(Schedulers.io())
+        .unsubscribeOn(Schedulers.io())
+        .observeOn(Schedulers.io());
   }
 
   public static <T> Observable.Transformer<BaseData<T>, T> handleGankResult() {   //compose判断结果
@@ -47,14 +91,13 @@ public class Transformers {
             } else {
               return Observable.error(new NotFoundException("服务器返回error"));
             }
-      }
+          }
         });
   }
 
   public static <T> Observable<T> createData(final T t) {
     return Observable.create(new Observable.OnSubscribe<T>() {
-      @Override
-      public void call(Subscriber<? super T> subscriber) {
+      @Override public void call(Subscriber<? super T> subscriber) {
         try {
           subscriber.onNext(t);
           subscriber.onCompleted();
