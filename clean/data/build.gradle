@@ -51,30 +51,21 @@ dependencies {
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compile injectDependencies.flow
-  compile injectDependencies.mortar
-  compile injectDependencies.flowPath
 
-  provided injectDependencies.jsr250
-  provided injectDependencies.javaxAnnotation
+  provided "javax.annotation:jsr250-api:${jsr250Version}"
+  provided "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}"
 
-  compile injectDependencies.butterknife
-  compile injectDependencies.dagger
-  apt injectDependencies.butterknifeCompiler
-  apt injectDependencies.daggerCompiler
+  compile "com.jakewharton:butterknife:${butterknifeVersion}"
+  compile "com.google.dagger:dagger:${dagger2Version}"
+  apt "com.jakewharton:butterknife-compiler:${butterknifeCompilerVersion}"
+  apt "com.google.dagger:dagger-compiler:${dagger2Version}"
 
-  compile injectDependencies.autodagger2
-  apt injectDependencies.autodagger2Compiler
-//  compile injectDependencies.automortar
-//  apt injectDependencies.automortarCompiler
-
-
-  androidTestCompile domainTestDependencies.testRunner
-  androidTestCompile domainTestDependencies.testRules
-  androidTestCompile domainTestDependencies.uiautomator
-  testCompile domainTestDependencies.junit
-  testCompile domainTestDependencies.mockito
-  testCompile domainTestDependencies.robolectric
+  androidTestCompile "com.android.support.test:runner:${androidTesVersion}"
+  androidTestCompile "com.android.support.test:rules:${androidTesVersion}"
+  androidTestCompile "com.android.support.test.uiautomator:uiautomator-v18:${uiautomatorVersion}"
+  testCompile "junit:junit:${junitVersion}"
+  testCompile "org.mockito:mockito-core:${mockitoVersion}"
+  testCompile "org.robolectric:robolectric:${robolectricVersion}"
 
   compile project(':component:common')
   compile project(':clean:domain')

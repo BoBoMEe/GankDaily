@@ -32,10 +32,9 @@ sourceSets {
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
 
-  provided injectDependencies.jsr250
-
-  compile injectDependencies.javaxInject
-  compile rxDependencies.rxjava
-  compile httpDependencies.gson
+  provided "javax.annotation:jsr250-api:${jsr250Version}"
+  compile "javax.inject:javax.inject:${javaxInjectVersion}"
+  compile "io.reactivex:rxjava:${rxjavaVersion}"
+  compile "com.google.code.gson:gson:${gsonVersion}"
 }
 

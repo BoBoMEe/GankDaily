@@ -31,16 +31,16 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import com.bobomee.android.common.util.DayNightUtil;
 import com.bobomee.android.gank.io.R;
+import com.bobomee.android.gank.io.adapter.MeizhiAdapter;
+import com.bobomee.android.gank.io.adapter.MeizhiItemViewBinder;
 import com.bobomee.android.gank.io.base.BaseFragment;
 import com.bobomee.android.gank.io.event.DataLoadFinishEvent;
 import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListPresenter;
 import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListView;
 import com.bobomee.android.gank.io.service.DataService;
-import com.bobomee.android.gank.io.ui.MainAdapterProvider.MainAdapter;
 import com.bobomee.android.gank.io.util.FabUtil;
 import com.bobomee.android.gank.io.widget.WrapperStaggeredGridLayoutManager;
 import com.bobomee.android.htttp.bean.Results;
-import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClickSupport;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,7 +61,7 @@ public class MainFragment extends BaseFragment
   @BindView(R.id.recycler) RecyclerView mRecycler;
   @BindView(R.id.swipelayout) SwipeRefreshLayout mSwipelayout;
   FloatingActionButton mFab;
-  private MainAdapter mGankItemBeanCommonAdapter;
+  private MeizhiAdapter adapter;
   private ReposListPresenter mReposListPresenter;
   private boolean isRequested = false;
 
@@ -107,12 +107,9 @@ public class MainFragment extends BaseFragment
   }
 
   private void setListeners() {
-    mRecycler.setAdapter(mGankItemBeanCommonAdapter = MainAdapterProvider.provideAdapter());
-
-    ItemClickSupport itemClickSupport = ItemClickSupport.from(mRecycler).add();
-    itemClickSupport.addOnItemClickListener((parent, view, position, id) -> {
-      DetailImageActivity.start(mBaseActivity, mGankItemBeanCommonAdapter.getData().get(position));
-    });
+    adapter = new MeizhiAdapter();
+    adapter.register(Results.class, new MeizhiItemViewBinder());
+    mRecycler.setAdapter(adapter);
 
     FabUtil.hideOrShow(mRecycler, mFab);
   }
@@ -128,7 +125,7 @@ public class MainFragment extends BaseFragment
 
     mSwipelayout.setOnRefreshListener(() -> {
       isRequested = true;
-      mGankItemBeanCommonAdapter.clearData();
+      adapter.clear();
       mReposListPresenter.subscribe(isRequested);
     });
   }
@@ -136,7 +133,9 @@ public class MainFragment extends BaseFragment
   @Subscribe(threadMode = ThreadMode.MAIN)
   public void dataEvent(DataLoadFinishEvent dataLoadFinishEvent) {
     List<Results> datas = dataLoadFinishEvent.getDatas();
-    if (null != datas && !datas.isEmpty()) mGankItemBeanCommonAdapter.setData(datas);
+    if (null != datas && !datas.isEmpty()) {
+      adapter.setItems(datas);
+    }
   }
 
   @Override public void setPresenter(ReposListPresenter presenter) {

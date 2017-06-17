@@ -15,17 +15,7 @@
  */
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply from: 'buildtools/dependencies.gradle'
-apply from: 'buildtools/version.gradle'
-
-def supportDependencies = rootProject.ext.supportDependencies
-def httpDependencies = rootProject.ext.httpDependencies
-def injectDependencies = rootProject.ext.injectDependencies
-def rxDependencies = rootProject.ext.rxDependencies
-def utilDependencies = rootProject.ext.utilDependencies
-def uiWidgetDependencies = rootProject.ext.uiWidgetDependencies
-def domainTestDependencies = rootProject.ext.domainTestDependencies
-def annoDependencies = rootProject.ext.annoDependencies
+apply from: 'dependencies.gradle'
 
 buildscript {
   repositories {

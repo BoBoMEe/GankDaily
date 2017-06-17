@@ -51,73 +51,65 @@ dependencies {
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compile supportDependencies.appcompat
-  compile supportDependencies.design
-  compile supportDependencies.recyclerview
-  compile supportDependencies.cardView
-  compile supportDependencies.multidex
+  compile "com.android.support:appcompat-v7:${supportLibVersion}"
+  compile "com.android.support:design:${supportLibVersion}"
+  compile "com.android.support:recyclerview-v7:${supportLibVersion}"
+  compile "com.android.support:cardview-v7:${supportLibVersion}"
+  compile "com.android.support:multidex:${multidexVersion}"
 
-  compile httpDependencies.retrofit
-  compile httpDependencies.converterGson
-  compile httpDependencies.adapterRxjava
-  compile httpDependencies.glide
-  compile httpDependencies.glidetransformations
-  compile httpDependencies.okhttp
-  compile httpDependencies.okhttputils
-  compile httpDependencies.okio
-
-  compile injectDependencies.flow
-  compile injectDependencies.mortar
-  compile injectDependencies.flowPath
-
-  provided injectDependencies.jsr250
-  provided injectDependencies.javaxAnnotation
-
-  compile injectDependencies.butterknife
-  compile injectDependencies.dagger
-  apt injectDependencies.butterknifeCompiler
-  apt injectDependencies.daggerCompiler
-  compile injectDependencies.autodagger2
-  apt injectDependencies.autodagger2Compiler
-//  compile injectDependencies.automortar
-//  apt injectDependencies.automortarCompiler
-
-  compile rxDependencies.rxjava
-  compile rxDependencies.rxandroid
-  compile rxDependencies.rxPreferences
-  compile rxDependencies.rxBinding
-  compile rxDependencies.rxCache
-  compile rxDependencies.Jolyglotgson
-  compile rxDependencies.RxCacheCompiler
-
-  compile utilDependencies.sqlbrite
-  compile utilDependencies.stetho
-  compile utilDependencies.timber
-  compile utilDependencies.logger
-  compile utilDependencies.eventbus
-  compile utilDependencies.databinding
-  compile utilDependencies.lombok
-  compile utilDependencies.stetho
-  compile utilDependencies.stethohttp
-
-  compile uiWidgetDependencies.overscroll
-  compile uiWidgetDependencies.circleImageView
-  compile uiWidgetDependencies.ultraPtr
-
-  compile mineDependencies.common
-  compile mineDependencies.recyclerviewhelper
-
-  androidTestCompile domainTestDependencies.testRunner
-  androidTestCompile domainTestDependencies.testRules
-  androidTestCompile domainTestDependencies.uiautomator
-
-  testCompile domainTestDependencies.junit
-  testCompile domainTestDependencies.mockito
-  testCompile domainTestDependencies.robolectric
+  compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+  compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+  compile "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}"
+  compile "com.github.bumptech.glide:glide:${glideVersion}"
+  compile "jp.wasabeef:glide-transformations:${glideTransVersion}"
+  compile "com.squareup.okhttp3:okhttp:${okhttpVersion}"
+  compile "com.zhy:okhttputils:${okhttpUtils}"
+  compile "com.squareup.okio:okio:${okioVersion}"
 
 
-  debugCompile utilDependencies.debugleakcanary
-  releaseCompile utilDependencies.relaseleakcanary
+  provided "javax.annotation:jsr250-api:${jsr250Version}"
+  provided "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}"
+
+  compile "com.jakewharton:butterknife:${butterknifeVersion}"
+  compile "com.google.dagger:dagger:${dagger2Version}"
+  apt "com.jakewharton:butterknife-compiler:${butterknifeCompilerVersion}"
+  apt "com.google.dagger:dagger-compiler:${dagger2Version}"
+
+  compile "io.reactivex:rxjava:${rxjavaVersion}"
+  compile "io.reactivex:rxandroid:${rxjavaVersion}"
+  compile "com.f2prateek.rx.preferences:rx-preferences:${rxPreferencesVersion}"
+  compile "com.jakewharton.rxbinding:rxbinding:${rxBindingVersion}"
+  compile "com.github.VictorAlbertos.RxCache:runtime:${rxCacheVersion}"
+  compile "com.github.VictorAlbertos.Jolyglot:gson:${Jolyglotgson}"
+  compile "com.github.VictorAlbertos.RxCache:compiler:${RxCacheCompiler}"
+
+  compile "com.squareup.sqlbrite:sqlbrite:${sqlbriteVersion}"
+  compile "com.facebook.stetho:stetho:${stethoVersion}"
+  compile "com.jakewharton.timber:timber:${timberVersion}"
+  compile "com.github.orhanobut:logger:${loggerVersion}"
+  compile "org.greenrobot:eventbus:${eventbusVersion}"
+  compile "com.android.databinding:baseLibrary:${databindingVersion}"
+  compile "org.projectlombok:lombok:${lombokVersion}"
+  compile "com.facebook.stetho:stetho-okhttp3:${stethoVersion}"
+
+  compile "me.everything:overscroll-decor-android:${overscrollVersion}"
+
+  compile "com.bobomee.android:common:${commonVersion}"
+  compile "com.bobomee.android:recyclerviewhelper:${recyclerVersion}"
+  compile "com.bobomee.android:layout-api:${layoutVersion}"
+  apt "com.bobomee.android:layout-compiler:${layoutVersion}"
+
+  androidTestCompile "com.android.support.test:runner:${androidTesVersion}"
+  androidTestCompile "com.android.support.test:rules:${androidTesVersion}"
+  androidTestCompile "com.android.support.test.uiautomator:uiautomator-v18:${uiautomatorVersion}"
+
+  testCompile "junit:junit:${junitVersion}"
+  testCompile "org.mockito:mockito-core:${mockitoVersion}"
+  testCompile "org.robolectric:robolectric:${robolectricVersion}"
+
+
+  debugCompile "com.squareup.leakcanary:leakcanary-android:${leakcanaryVersion}"
+  releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryVersion}"
 
 
 }

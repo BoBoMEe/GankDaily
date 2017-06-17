@@ -1,0 +1,135 @@
+/*
+ * Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+ext {
+
+  //version
+  versionCode = 100
+  versionName = '1.0'
+
+  //packagename
+  applicationId = 'com.bobomee.android.gank.io'
+
+  //build tools
+  minSdk = 18
+  targetSdk = 24
+  buildToolsVersion = '24.0.2'
+  compileSdkVersion = 24
+
+
+  //singning
+  storeFile = file('buildtools/MyApplication.jks')
+  storePassword = '123456'
+  keyAlias = 'MyApplication'
+  keyPassword = '123456'
+
+  // Libraries
+   supportLibVersion = '24.2.1'
+   multidexVersion = '1.0.1'
+
+  // RxJava
+  rxjavaVersion = '1.1.0'
+  rxandroidVersion = '1.1.0'
+  rxPreferencesVersion = '1.0.1'
+  rxBindingVersion = '0.4.0'
+  rxCacheVersion = '1.6.8'
+  Jolyglotgson = '0.0.3'
+  RxCacheCompiler = '1.6.8'
+
+  // Inject
+  dagger2Version = '2.7'
+  butterknifeVersion = '8.0.1'
+  butterknifeCompilerVersion = '8.0.1'
+  javaxAnnotationVersion = '1.2'
+  jsr250Version = '1.0'
+  javaxInjectVersion = '1'
+
+
+  //auto dagger2
+  mortarVersion = '0.17'
+  flowVersion = '0.10'
+
+  autoDagger2Version = '1.1'
+  automortarVersion = '1.1'
+
+  //net
+  retrofitVersion = '2.0.2'
+  okhttpVersion = '3.2.0'
+  okhttpUtils = '2.5.2'
+  okioVersion = '1.6.0'
+  gsonVersion = '2.6.1'
+
+  //pic
+  glideVersion = '3.7.0'
+  glideTransVersion = '2.0.0'
+
+  //sqlite
+  sqlbriteVersion = '0.5.0'
+
+  //tools
+  stethoVersion = '1.3.1'
+  databindingVersion = '1.0'
+  lombokVersion = '1.12.6'
+  stethoVersion = '1.4.1'
+  leakcanaryVersion = '1.5'
+
+  // log
+  timberVersion = '4.1.0'
+  loggerVersion = '1.12'
+
+  // ui
+  circleImageViewVersion = '2.0.0'
+  ptrVersion = '1.0.11'
+  overscrollVersion = '1.0.3'
+  photoviewVersion = '1.3.1'
+
+  // Test Libs
+  junitVersion = '4.12'
+  mockitoVersion = '1.10.19'
+  robolectricVersion = '3.0'
+  leakcanaryVersion = '1.5'
+  androidTesVersion = '0.5'
+  uiautomatorVersion = '2.1.2'
+
+  //event
+  eventbusVersion = '3.0.0'
+
+
+  //annotations
+  autoService = '1.0-rc2'
+  javapoet = '1.6.1'
+
+  //
+  commonVersion = '1.4.1'
+  layoutVersion = '1.0.1'
+  recyclerVersion = '1.0.7'
+  multitypeVersion = '3.1.0-beta1'
+}
+
+afterEvaluate {
+  tasks.matching {
+    it.name.startsWith('dex')
+  }.each { dx ->
+    if (dx.additionalParameters == null) {
+      dx.additionalParameters = []
+    }
+    dx.additionalParameters += '--multi-dex' // enable multidex
+
+    // optional
+    dx.additionalParameters += "--main-dex-list=$projectDir/<filename>".toString()
+    // enable the main-dex-list
+  }
+}
