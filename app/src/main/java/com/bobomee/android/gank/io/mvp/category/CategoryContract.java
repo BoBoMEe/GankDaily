@@ -1,11 +1,11 @@
 /*
- * Copyright (C) 2017.  BoBoMEe(wbwjx115@gmail.com)
+ *  Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.mvp;
+package com.bobomee.android.gank.io.mvp.category;
 
 import com.bobomee.android.common.mvp.BaseContract.BasePresenter;
 import com.bobomee.android.common.mvp.BaseContract.MvpView;
@@ -36,7 +36,7 @@ public class CategoryContract {
    * Email nimengbo@gmail.com
    * github https://github.com/nimengbo
    */
-  public interface ReposListView<M, T extends BasePresenter> extends MvpView<T> {
+  public interface CategoryView<M, T extends BasePresenter> extends MvpView<T> {
 
     void setDatas(List<M> datas);
   }
@@ -45,7 +45,7 @@ public class CategoryContract {
    * the repos presenter
    *
    */
-  public interface ReposListPresenter<T> extends BasePresenter {
-
+  public interface CategoryPresenter extends BasePresenter {
+    void setParams(String category,int count,int page);
   }
 }

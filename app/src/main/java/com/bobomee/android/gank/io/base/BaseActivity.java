@@ -16,7 +16,6 @@
 
 package com.bobomee.android.gank.io.base;
 
-import android.app.FragmentManager;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -26,13 +25,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import com.bobomee.android.common.util.UIUtil;
 import com.bobomee.android.gank.io.R;
-import com.bobomee.android.htttp.receiver.NetWorkReceiver;
 import com.bobomee.android.htttp.util.HttpNetUtil;
 
 /**
@@ -43,7 +40,7 @@ import com.bobomee.android.htttp.util.HttpNetUtil;
  */
 
 public abstract class BaseActivity extends AppCompatActivity
-    implements HttpNetUtil.Networkreceiver {
+    implements HttpNetUtil.NetWorkReceiver {
 
   protected Toolbar mToolbar;
   private BroadcastReceiver mReceiver;
@@ -58,7 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
   private void registerReceiver() {
 
-    mReceiver = new NetWorkReceiver();
+    mReceiver = new com.bobomee.android.htttp.receiver.NetWorkReceiver();
 
     IntentFilter intentFilter = new IntentFilter();
     intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -91,26 +88,6 @@ public abstract class BaseActivity extends AppCompatActivity
     setupToolbar();
   }
 
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        FragmentManager fm = getFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-          fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        } else {
-          onBackPressed();
-        }
-        return true;
-      default:
-        return super.onOptionsItemSelected(item);
-    }
-  }
-
-  @Override public void onBackPressed() {
-    super.onBackPressed();
-    supportFinishAfterTransition();
-  }
-
   private void setupToolbar() {
     if (null == getSupportActionBar()) {
       mToolbar = ButterKnife.findById(this, R.id.toolbar);
@@ -126,6 +103,15 @@ public abstract class BaseActivity extends AppCompatActivity
     }
   }
 
+  protected void showToolBarHome(int id) {
+    ActionBar actionBar = getSupportActionBar();
+    if (null != actionBar) {
+      actionBar.setHomeAsUpIndicator(id);
+      actionBar.setDisplayHomeAsUpEnabled(true);
+      actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+  }
+
   @Override public void onConnected(boolean collect) {
 
     if (!collect) {
@@ -133,10 +119,5 @@ public abstract class BaseActivity extends AppCompatActivity
     } else {
       // start load ,if not loaded
     }
-  }
-
-  @Override public boolean onNavigateUp() {
-    onBackPressed();
-    return true;
   }
 }

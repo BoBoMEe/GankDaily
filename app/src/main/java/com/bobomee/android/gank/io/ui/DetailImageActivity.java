@@ -67,4 +67,9 @@ public class DetailImageActivity extends BaseActivity {
     starter.putExtra(RESULT, pResults);
     context.startActivity(starter);
   }
+
+  @Override public boolean onSupportNavigateUp() {
+    onBackPressed();
+    return true;
+  }
 }

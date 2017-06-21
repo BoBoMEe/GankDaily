@@ -27,16 +27,16 @@ import javax.inject.Inject;
  * Email nimengbo@gmail.com
  * github https://github.com/nimengbo
  */
-@PerActivity public class ReposDataMapper {
+@PerActivity public class CategoryDataMapper {
 
-  @Inject public ReposDataMapper() {
+  @Inject public CategoryDataMapper() {
   }
 
-  public List<Results> transform(GankCategory _category) {
-    if (_category == null) {
+  public List<Results> transform(GankCategory gankCategory) {
+    if (gankCategory == null) {
       throw new IllegalArgumentException("Cannot transform a null value");
     }
 
-    return _category.getResults();
+    return gankCategory.getResults();
   }
 }

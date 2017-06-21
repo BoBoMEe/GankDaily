@@ -16,7 +16,7 @@
 package com.bobomee.android.data.di.internal.components;
 
 import android.content.Context;
-import com.bobomee.android.data.CacheRepository;
+import com.bobomee.android.data.Repository;
 import com.bobomee.android.data.di.Dagger2Application;
 import com.bobomee.android.data.di.internal.modules.ApiModule;
 import com.bobomee.android.data.di.internal.modules.ApplicationModule;
@@ -33,7 +33,7 @@ import javax.inject.Singleton;
 @Component(modules = {
     ApplicationModule.class, ApiModule.class
 }) public interface ApplicationComponent {
-  void inject(Dagger2Application _myApplication);
+  void inject(Dagger2Application dagger2Application);
 
   @ApplicationContext Context applicationContext();
 
@@ -41,15 +41,15 @@ import javax.inject.Singleton;
 
   PostExecutionThread postExecutionThread();
 
-  CacheRepository cacheRepository();
+  Repository cacheRepository();
 
   class Init {
     private Init() {
     }
 
-    public static ApplicationComponent initialize(Dagger2Application _myApplication) {
+    public static ApplicationComponent initialize(Dagger2Application dagger2Application) {
       return DaggerApplicationComponent.builder()
-          .applicationModule(new ApplicationModule(_myApplication))
+          .applicationModule(new ApplicationModule(dagger2Application))
           .apiModule(new ApiModule())
           .build();
     }

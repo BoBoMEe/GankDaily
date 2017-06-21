@@ -35,8 +35,8 @@ import com.bobomee.android.gank.io.adapter.MeizhiAdapter;
 import com.bobomee.android.gank.io.adapter.MeizhiItemViewBinder;
 import com.bobomee.android.gank.io.base.BaseFragment;
 import com.bobomee.android.gank.io.event.DataLoadFinishEvent;
-import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListPresenter;
-import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListView;
+import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryPresenter;
+import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryView;
 import com.bobomee.android.gank.io.service.DataService;
 import com.bobomee.android.gank.io.util.FabUtil;
 import com.bobomee.android.gank.io.widget.WrapperStaggeredGridLayoutManager;
@@ -56,14 +56,14 @@ import org.greenrobot.eventbus.ThreadMode;
  * @since 2016/12/22.汪波.
  */
 public class MainFragment extends BaseFragment
-    implements ReposListView<Results, ReposListPresenter> {
+    implements CategoryView<Results, CategoryPresenter> {
 
   @BindView(R.id.recycler) RecyclerView mRecycler;
   @BindView(R.id.swipelayout) SwipeRefreshLayout mSwipelayout;
   FloatingActionButton mFab;
-  private MeizhiAdapter adapter;
-  private ReposListPresenter mReposListPresenter;
-  private boolean isRequested = false;
+  private MeizhiAdapter mMeizhiAdapter;
+  private CategoryPresenter mCategoryPresenter;
+  private boolean mIsRequested = false;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -77,16 +77,16 @@ public class MainFragment extends BaseFragment
 
   @Override public void onResume() {
     super.onResume();
-    mReposListPresenter.subscribe(!isRequested);
+    mCategoryPresenter.subscribe(!mIsRequested);
   }
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    mReposListPresenter.unsubscribe();
+    mCategoryPresenter.unsubscribe();
   }
 
   @Override public void setDatas(List<Results> datas) {
-    isRequested = true;
+    mIsRequested = true;
     mSwipelayout.setRefreshing(false);
     DataService.startService(mBaseActivity, datas);
   }
@@ -107,9 +107,9 @@ public class MainFragment extends BaseFragment
   }
 
   private void setListeners() {
-    adapter = new MeizhiAdapter();
-    adapter.register(Results.class, new MeizhiItemViewBinder());
-    mRecycler.setAdapter(adapter);
+    mMeizhiAdapter = new MeizhiAdapter();
+    mMeizhiAdapter.register(Results.class, new MeizhiItemViewBinder());
+    mRecycler.setAdapter(mMeizhiAdapter);
 
     FabUtil.hideOrShow(mRecycler, mFab);
   }
@@ -124,9 +124,9 @@ public class MainFragment extends BaseFragment
     mRecycler.setLayoutManager(staggeredGridLayoutManager);
 
     mSwipelayout.setOnRefreshListener(() -> {
-      isRequested = true;
-      adapter.clear();
-      mReposListPresenter.subscribe(isRequested);
+      mIsRequested = true;
+      mMeizhiAdapter.clear();
+      mCategoryPresenter.subscribe(mIsRequested);
     });
   }
 
@@ -134,12 +134,12 @@ public class MainFragment extends BaseFragment
   public void dataEvent(DataLoadFinishEvent dataLoadFinishEvent) {
     List<Results> datas = dataLoadFinishEvent.getDatas();
     if (null != datas && !datas.isEmpty()) {
-      adapter.setItems(datas);
+      mMeizhiAdapter.setItems(datas);
     }
   }
 
-  @Override public void setPresenter(ReposListPresenter presenter) {
-    this.mReposListPresenter = presenter;
+  @Override public void setPresenter(CategoryPresenter presenter) {
+    this.mCategoryPresenter = presenter;
   }
 
   @Override public View initFragmentView(LayoutInflater pInflater, ViewGroup pContainer,

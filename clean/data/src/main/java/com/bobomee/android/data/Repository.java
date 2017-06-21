@@ -40,18 +40,18 @@ import rx.Observable;
  */
 
 @Singleton
-public class CacheRepository {
+public class Repository {
 
   private RestApi mRestApi;
   private CacheProviders mCacheProviders;
 
   @Inject
-  public CacheRepository(RestApi _restApi) {
+  public Repository(RestApi restApi) {
 
     mCacheProviders =
         new RxCache.Builder().persistence(UIUtil.getContext().getFilesDir(), new GsonSpeaker()).using(CacheProviders.class);
 
-    mRestApi = _restApi;
+    mRestApi = restApi;
   }
 
   public Observable<Reply<GankCategory>> getCategoryData(final String category, final Integer count,
@@ -66,7 +66,7 @@ public class CacheRepository {
         new DynamicKey(day), new EvictProvider(update));
   }
 
-  Observable<Reply<GankQuery>> getQueryData(final String query, final String category,
+  public Observable<Reply<GankQuery>> getQueryData(final String query, final String category,
       final Integer count, final Integer page, final boolean update) {
     return mCacheProviders.getQueryData(mRestApi.getQueryData(query, category, count, page),
         new DynamicKey(query), new EvictDynamicKey(update));

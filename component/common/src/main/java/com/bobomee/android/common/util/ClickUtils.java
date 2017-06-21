@@ -14,10 +14,9 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.util;
+package com.bobomee.android.common.util;
 
 import android.view.View;
-import com.bobomee.android.htttp.rx.Transformers;
 import com.jakewharton.rxbinding.view.RxView;
 import java.util.concurrent.TimeUnit;
 import rx.Observable;

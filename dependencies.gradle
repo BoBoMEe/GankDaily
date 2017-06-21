@@ -115,7 +115,7 @@ ext {
   //
   commonVersion = '1.4.1'
   layoutVersion = '1.0.1'
-  recyclerVersion = '1.0.7'
+  recyclerVersion = '1.0.8'
   multitypeVersion = '3.1.0-beta1'
 }
 

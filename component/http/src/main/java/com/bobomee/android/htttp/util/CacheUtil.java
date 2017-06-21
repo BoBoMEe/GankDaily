@@ -27,12 +27,11 @@ import okhttp3.Cache;
 public class CacheUtil {
 
     private static final int HTTP_RESPONSE_DISK_CACHE_MAX_SIZE = 10 * 1024 * 1024;
+    private static final String CACHE_DIR_NAME = "GankDaily_HttpResponseCache";
 
-    public static File getCacheDir() {
-        //设置缓存路径
+    private static File getCacheDir() {
         final File baseDir = StorageUtil.getCacheDir(UIUtil.getContext());
-        final File cacheDir = new File(baseDir, "HttpResponseCache");
-        return cacheDir;
+        return new File(baseDir, CACHE_DIR_NAME);
     }
 
     public static Cache getCache() {

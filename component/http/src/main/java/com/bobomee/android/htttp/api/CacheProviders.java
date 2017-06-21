@@ -34,12 +34,12 @@ import rx.Observable;
 
 public interface CacheProviders {
 
-  Observable<Reply<GankQuery>> getQueryData(Observable<GankQuery> _queryObservable,
+  Observable<Reply<GankQuery>> getQueryData(Observable<GankQuery> queryObservable,
       DynamicKey query, EvictDynamicKey queryUpdate);
 
-  Observable<Reply<GankDay>> getGankDayData(Observable<GankDay> _dayObservable, DynamicKey day,
+  Observable<Reply<GankDay>> getGankDayData(Observable<GankDay> dayObservable, DynamicKey day,
       EvictProvider dayUpdate);
 
-  Observable<Reply<GankCategory>> getCategoryData(Observable<GankCategory> _categoryObservable,
+  Observable<Reply<GankCategory>> getCategoryData(Observable<GankCategory> categoryObservable,
       EvictProvider categoryUpdate);
 }

@@ -27,31 +27,31 @@ public enum HttpNetUtil {
 
     INSTANCE;
 
-    private List<WeakReference<Networkreceiver>> networkreceivers;
+    private List<WeakReference<NetWorkReceiver>> mNetWorkReceivers;
 
-    public interface Networkreceiver {
+    public interface NetWorkReceiver {
 
         void onConnected(boolean collect);
     }
 
-    public void addNetWorkListener(Networkreceiver networkreceiver) {
-        if (null == networkreceivers) {
-            networkreceivers = new ArrayList<>();
+    public void addNetWorkListener(NetWorkReceiver networkreceiver) {
+        if (null == mNetWorkReceivers) {
+            mNetWorkReceivers = new ArrayList<>();
         }
-        networkreceivers.add(new WeakReference<>(networkreceiver));
+        mNetWorkReceivers.add(new WeakReference<>(networkreceiver));
     }
 
-    public void removeNetWorkListener(Networkreceiver listener) {
-        if (networkreceivers != null) {
-            for (int i = 0; i < networkreceivers.size(); i++) {
-                WeakReference<Networkreceiver> reference = networkreceivers.get(i);
+    public void removeNetWorkListener(NetWorkReceiver listener) {
+        if (mNetWorkReceivers != null) {
+            for (int i = 0; i < mNetWorkReceivers.size(); i++) {
+                WeakReference<NetWorkReceiver> reference = mNetWorkReceivers.get(i);
                 if (reference == null || reference.get() == null) {
-                    networkreceivers.remove(i);
+                    mNetWorkReceivers.remove(i);
                     i--;
                     continue;
                 }
                 if (reference.get() == listener) {
-                    networkreceivers.remove(i);
+                    mNetWorkReceivers.remove(i);
                     break;
                 }
             }
@@ -59,27 +59,21 @@ public enum HttpNetUtil {
     }
 
     public void clearNetWorkListeners() {
-        if (networkreceivers != null) {
-            networkreceivers.clear();
+        if (mNetWorkReceivers != null) {
+            mNetWorkReceivers.clear();
         }
     }
 
-    private boolean isConnected = true;
+    private boolean mIsConnected = true;
 
-    /**
-     * 获取是否连接
-     */
     public boolean isConnected() {
-        return isConnected;
+        return mIsConnected;
     }
 
     private void setConnected(boolean connected) {
-        isConnected = connected;
+        mIsConnected = connected;
     }
 
-    /**
-     * 判断网络连接是否存在
-     */
     public void setConnected(Context context) {
         ConnectivityManager manager =
             (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -90,11 +84,11 @@ public enum HttpNetUtil {
         }
         setConnected(connected);
 
-        if (networkreceivers != null) {
-            for (int i = 0, z = networkreceivers.size(); i < z; i++) {
-                WeakReference<Networkreceiver> listener = networkreceivers.get(i);
+        if (mNetWorkReceivers != null) {
+            for (int i = 0, z = mNetWorkReceivers.size(); i < z; i++) {
+                WeakReference<NetWorkReceiver> listener = mNetWorkReceivers.get(i);
                 if (listener != null) {
-                    Networkreceiver networkreceiver = listener.get();
+                    NetWorkReceiver networkreceiver = listener.get();
                     if (networkreceiver != null) networkreceiver.onConnected(connected);
                 }
             }

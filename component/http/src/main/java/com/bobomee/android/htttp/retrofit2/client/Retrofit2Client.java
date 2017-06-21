@@ -36,7 +36,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
   @Inject
   Retrofit2Client(okHttp _okHttp) {
     retrofitBuilder = new Retrofit.Builder()
-        //设置OKHttpClient
         .client(_okHttp.getOkHttpClient())
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .addConverterFactory(StringConverterFactory.create())

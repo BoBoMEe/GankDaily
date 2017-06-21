@@ -23,7 +23,7 @@ import retrofit2.Converter;
 /**
  * Created by bobomee on 16/5/14.
  */
-public class StringConverter implements Converter<ResponseBody, String> {
+class StringConverter implements Converter<ResponseBody, String> {
 
     public static final StringConverter INSTANCE = new StringConverter();
 

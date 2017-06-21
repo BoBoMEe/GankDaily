@@ -56,8 +56,8 @@ public class Dagger2Application extends BaseApplication {
 
   }
 
-  public static Dagger2Application get(final Context _context) {
-    return (Dagger2Application) _context.getApplicationContext();
+  public static Dagger2Application get(final Context context) {
+    return (Dagger2Application) context.getApplicationContext();
   }
 
   public ApplicationComponent getComponent() {

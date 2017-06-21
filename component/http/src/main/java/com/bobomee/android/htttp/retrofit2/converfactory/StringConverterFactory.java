@@ -32,13 +32,11 @@ public class StringConverterFactory extends Converter.Factory {
         return INSTANCE;
     }
 
-    // 我们只关实现从ResponseBody 到 String 的转换，所以其它方法可不覆盖
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
         if (type == String.class) {
             return StringConverter.INSTANCE;
         }
-        //其它类型我们不处理，返回null就行
         return null;
     }
 }

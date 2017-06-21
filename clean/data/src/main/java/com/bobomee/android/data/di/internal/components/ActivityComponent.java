@@ -33,5 +33,4 @@ import dagger.Component;
 public interface ActivityComponent {
 
   @ActivityContext Activity activityContext();
-
 }

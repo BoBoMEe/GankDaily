@@ -29,10 +29,10 @@ import javax.inject.Singleton;
 
 @Singleton public class RestService {
 
-  private RestApi mRestApi;
+  private final RestApi mRestApi;
 
-  @Inject RestService(Retrofit2Client _retrofit2Client) {
-    mRestApi = _retrofit2Client.getRetrofitBuilder().baseUrl(RestApi.API_GANK_URL)
+  @Inject RestService(Retrofit2Client retrofit2Client) {
+    mRestApi = retrofit2Client.getRetrofitBuilder().baseUrl(RestApi.API_GANK_URL)
         .build()
         .create(RestApi.class);
   }

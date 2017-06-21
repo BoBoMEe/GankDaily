@@ -16,12 +16,14 @@
 
 package com.bobomee.android.gank.io.di;
 
-import com.bobomee.android.data.CacheRepository;
+import com.bobomee.android.data.Repository;
 import com.bobomee.android.data.di.scope.PerActivity;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
-import com.bobomee.android.gank.io.mvp.CategoryContract.ReposListView;
+import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryPresenter;
+import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryView;
+import com.bobomee.android.htttp.bean.Results;
 import dagger.Module;
 import dagger.Provides;
 
@@ -31,22 +33,20 @@ import dagger.Provides;
  * @author bobomee.
  *         https://github.com/BoBoMEe
  */
-@Module
-public class ReposModule {
+@Module class CategoryModule {
 
-    @Provides @PerActivity Category provideCategory(CacheRepository reposRepository,
-        ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-        return new Category(reposRepository, threadExecutor, postExecutionThread);
-    }
+  @Provides @PerActivity Category provideCategory(Repository repository,
+      ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    return new Category(repository, threadExecutor, postExecutionThread);
+  }
 
-    private final ReposListView mReposListView;
+  private final CategoryView<Results, CategoryPresenter> mCategoryView;
 
-    public ReposModule(ReposListView pReposListView) {
-        mReposListView = pReposListView;
-    }
+  CategoryModule(CategoryView<Results, CategoryPresenter> categoryView) {
+    mCategoryView = categoryView;
+  }
 
-    @Provides ReposListView provideReposListView() {
-        return mReposListView;
-    }
-
+  @Provides CategoryView<Results, CategoryPresenter> provideReposListView() {
+    return mCategoryView;
+  }
 }

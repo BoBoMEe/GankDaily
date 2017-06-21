@@ -17,24 +17,30 @@
 package com.bobomee.android.gank.io.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.MenuItem;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.bobomee.android.common.util.ActivityUtils;
+import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.base.BaseActivity;
-import com.bobomee.android.gank.io.di.ReposComponent;
-import com.bobomee.android.gank.io.mvp.presenter.CategoryListPresenter;
-import com.bobomee.android.gank.io.util.ActivityUtils;
+import com.bobomee.android.gank.io.di.CategoryComponent;
+import com.bobomee.android.gank.io.mvp.category.CategoryListPresenter;
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
 
-  @Inject CategoryListPresenter mReposListPresenter;
+  @Inject CategoryListPresenter mCategoryListPresenter;
+  @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_drawer_layout);
     ButterKnife.bind(this);
+
+    showToolBarHome(R.drawable.ic_menu);
 
     MainFragment lMainFragment =
         (MainFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
@@ -42,12 +48,24 @@ public class MainActivity extends BaseActivity {
     if (null == lMainFragment) {
       lMainFragment = MainFragment.newInstance();
 
-      ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
-          lMainFragment, R.id.contentFrame);
+      ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), lMainFragment,
+          R.id.contentFrame);
     }
 
-    
+    CategoryComponent.Init.initialize(this, lMainFragment).inject(this);
 
-    ReposComponent.Init.initialize(this, lMainFragment).inject(this);
+    mCategoryListPresenter.setParams(DomainConstants.福利, DomainConstants.PAGE_SIZE,
+        DomainConstants.FIRST_PAGE);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        // Open the navigation drawer when the home icon is selected from the toolbar.
+        mDrawerLayout.openDrawer(GravityCompat.START);
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
   }
 }

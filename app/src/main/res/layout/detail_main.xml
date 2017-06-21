@@ -24,7 +24,6 @@
     >
   <include
       layout="@layout/common_layout_appbar"
-      android:id="@+id/app_bar_layout"
       />
   <uk.co.senab.photoview.PhotoView
       android:id="@+id/detail_image"

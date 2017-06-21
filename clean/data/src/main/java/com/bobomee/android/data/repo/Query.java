@@ -1,11 +1,11 @@
 /*
- * Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
+ *  Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,37 +17,41 @@
 package com.bobomee.android.data.repo;
 
 import com.bobomee.android.data.Repository;
-import com.bobomee.android.htttp.bean.GankCategory;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
 import com.bobomee.android.domain.interactor.UseCase;
+import com.bobomee.android.htttp.bean.GankQuery;
 import io.rx_cache.Reply;
 import rx.Observable;
 
 /**
- * This class is an implementation of {@link UseCase} that represents a use case for login and
- * retrieve a {@link GankCategory}.
+ * @author BoBoMEe
+ * @since 2017/6/21
  */
-public class Category extends UseCase<GankCategory> {
+public class Query extends UseCase<GankQuery> {
 
   private final Repository mRepository;
+
+  private String mQuery;
   private String mCategory;
   private Integer mCount;
   private Integer mPage;
 
-  public Category(Repository reposRepository, ThreadExecutor threadExecutor,
+  protected Query(Repository reposRepository, ThreadExecutor threadExecutor,
       PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
     this.mRepository = reposRepository;
   }
 
-  public void setParam(String category, Integer count, Integer page) {
+  public void setParam(String query, Integer count, String category, Integer page) {
+    this.mQuery = query;
     this.mCategory = category;
     this.mCount = count;
     this.mPage = page;
   }
 
-  @Override public Observable<GankCategory> buildUseCaseObservable(boolean update) {
-    return this.mRepository.getCategoryData(mCategory, mCount, mPage, update).map(Reply::getData);
+  @Override protected Observable<GankQuery> buildUseCaseObservable(boolean update) {
+    return this.mRepository.getQueryData(mQuery, mCategory, mCount, mPage, update)
+        .map(Reply::getData);
   }
 }

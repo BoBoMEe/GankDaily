@@ -25,7 +25,6 @@ import android.support.v7.app.AppCompatDelegate;
  * Created on 2016/10/20.下午10:19.
  *
  * @author bobomee.
- * @description
  */
 
 public class DayNightUtil {

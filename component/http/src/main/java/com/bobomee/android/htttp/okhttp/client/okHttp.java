@@ -16,7 +16,6 @@
 
 package com.bobomee.android.htttp.okhttp.client;
 
-import com.bobomee.android.htttp.okhttp.interceptor.MockInterceptor;
 import com.bobomee.android.htttp.okhttp.interceptor.OfflineCacheControlInterceptor;
 import com.bobomee.android.htttp.okhttp.interceptor.UserAgentInterceptor;
 import com.bobomee.android.htttp.util.CacheUtil;
@@ -50,9 +49,6 @@ public class okHttp {
 
         //添加UA
         .addInterceptor(new UserAgentInterceptor(UserAgentInterceptor.UAHelper.INSTANCE.getUserAgent()))
-
-        //添加mock
-        .addInterceptor(new MockInterceptor())
 
         //stetho
         .addNetworkInterceptor(new StethoInterceptor())

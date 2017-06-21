@@ -26,7 +26,7 @@ import android.widget.ImageView;
  * @author bobomee.
  */
 
-public class ScaleImageView extends ImageView {
+public class ScaleImageView extends android.support.v7.widget.AppCompatImageView {
   private int initWidth;
   private int initHeight;
 
