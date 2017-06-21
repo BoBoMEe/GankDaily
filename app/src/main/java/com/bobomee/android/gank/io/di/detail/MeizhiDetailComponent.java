@@ -14,21 +14,22 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.mvp.query;
-
-import com.bobomee.android.common.mvp.BaseContract.BasePresenter;
-import com.bobomee.android.common.mvp.BaseContract.MvpView;
+package com.bobomee.android.gank.io.di.detail;
 
 /**
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public interface QueryContract {
-  public interface QueryView<M, T extends BasePresenter> extends MvpView<T> {
-
-  }
-
-  public interface QueryPresenter extends BasePresenter {
-    void setParams(String query, String category, Integer count, Integer page);
-  }
-}
+//@PerActivity @Component(dependencies = {ApplicationComponent.class},modules = {MeizhiDetailModule.class})
+//public interface MeizhiDetailComponent {
+//
+//  void inject(DetailImageActivity detailImageActivity);
+//
+//  class Init{
+//    private Init() {
+//    }
+//    public static <T extends BaseActivity> MeizhiDetailComponent initialize(T activity){
+//
+//    }
+//  }
+//}

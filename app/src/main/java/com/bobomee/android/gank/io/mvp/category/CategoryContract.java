@@ -18,6 +18,7 @@ package com.bobomee.android.gank.io.mvp.category;
 
 import com.bobomee.android.common.mvp.BaseContract.BasePresenter;
 import com.bobomee.android.common.mvp.BaseContract.MvpView;
+import com.bobomee.android.htttp.bean.Results;
 import java.util.List;
 
 /**
@@ -29,23 +30,29 @@ import java.util.List;
  * @see
  * @since 2017/2/22.汪波.
  */
-public class CategoryContract {
+public interface CategoryContract {
 
   /**
    * Created by Abner on 16/6/16.
    * Email nimengbo@gmail.com
    * github https://github.com/nimengbo
    */
-  public interface CategoryView<M, T extends BasePresenter> extends MvpView<T> {
-
-    void setDatas(List<M> datas);
+  interface CategoryView<P extends CategoryPresenter> extends MvpView<P> {
   }
 
   /**
    * the repos presenter
-   *
    */
-  public interface CategoryPresenter extends BasePresenter {
-    void setParams(String category,int count,int page);
+  interface CategoryPresenter<V extends CategoryView>
+      extends BasePresenter<V> {
+    void setParams(String category, int count, int page);
+  }
+
+  ///////////////
+  interface MeizhiView extends CategoryView<MeizhiPresenter> {
+    void setDatas(List<Results> datas);
+  }
+
+  interface MeizhiPresenter extends CategoryPresenter<MeizhiView> {
   }
 }

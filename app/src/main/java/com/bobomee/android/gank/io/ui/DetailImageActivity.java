@@ -62,9 +62,9 @@ public class DetailImageActivity extends BaseActivity {
     mResults = getIntent().getParcelableExtra(RESULT);
   }
 
-  public static void start(Context context, Results pResults) {
+  public static void start(Context context, Results results) {
     Intent starter = new Intent(context, DetailImageActivity.class);
-    starter.putExtra(RESULT, pResults);
+    starter.putExtra(RESULT, results);
     context.startActivity(starter);
   }
 

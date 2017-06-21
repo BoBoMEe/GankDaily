@@ -18,40 +18,29 @@ package com.bobomee.android.gank.io.mvp.category;
 
 import android.support.annotation.NonNull;
 import com.bobomee.android.data.repo.Category;
-import com.bobomee.android.domain.interactor.DefaultSubscriber;
-import com.bobomee.android.gank.io.mapper.CategoryDataMapper;
-import com.bobomee.android.htttp.bean.GankCategory;
-import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryView;
 import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryPresenter;
-import com.bobomee.android.htttp.bean.Results;
-import java.util.List;
-import javax.inject.Inject;
+import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryView;
+import com.bobomee.android.htttp.bean.GankCategory;
+import rx.Subscriber;
 
 /**
  * Created by Abner on 16/6/16.
  * Email nimengbo@gmail.com
  * github https://github.com/nimengbo
  */
-public class CategoryListPresenter implements CategoryPresenter {
+public class CategoryListPresenter<V extends CategoryView>
+    implements CategoryPresenter<V> {
 
   private final Category mCategoryUseCase;
-  private final CategoryDataMapper mCategoryDataMapper;
-  private final CategoryView<Results, CategoryPresenter> mCategoryView;
+  private final V mCategoryView;
 
   private String mCategory;
   private Integer mCount;
   private Integer mPage;
 
-  @Inject public CategoryListPresenter(@NonNull Category category,
-      @NonNull CategoryView<Results, CategoryPresenter> categoryView,
-      @NonNull CategoryDataMapper categoryDataMapper) {
+  public CategoryListPresenter(@NonNull Category category, @NonNull V categoryView) {
     mCategoryUseCase = category;
     this.mCategoryView = categoryView;
-    mCategoryDataMapper = categoryDataMapper;
-  }
-
-  @Inject void setupListeners() {
-    mCategoryView.setPresenter(this);
   }
 
   /**
@@ -59,11 +48,27 @@ public class CategoryListPresenter implements CategoryPresenter {
    */
   @Override public void subscribe(boolean update) {
     mCategoryUseCase.setParam(mCategory, mCount, mPage);
-    mCategoryUseCase.execute(new UserSubscriber(), update);
+    mCategoryUseCase.execute(new Subscriber<GankCategory>() {
+      @Override public void onCompleted() {
+
+      }
+
+      @Override public void onError(Throwable e) {
+
+      }
+
+      @Override public void onNext(GankCategory gankCategory) {
+        doOnNext(gankCategory,mCategoryView);
+      }
+    }, update);
   }
 
   @Override public void unsubscribe() {
     mCategoryUseCase.unsubscribe();
+  }
+
+  @Override public V getView() {
+    return mCategoryView;
   }
 
   @Override public void setParams(String category, int count, int page) {
@@ -72,16 +77,7 @@ public class CategoryListPresenter implements CategoryPresenter {
     this.mPage = page;
   }
 
-  private class UserSubscriber extends DefaultSubscriber<GankCategory> {
-    @Override public void onCompleted() {
-    }
+  protected void doOnNext(GankCategory category,V categoryView){
 
-    @Override public void onError(Throwable e) {
-    }
-
-    @Override public void onNext(GankCategory reposEntity) {
-      final List<Results> reposModels = mCategoryDataMapper.transform(reposEntity);
-      mCategoryView.setDatas(reposModels);
-    }
   }
 }

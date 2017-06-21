@@ -28,7 +28,7 @@ import dagger.Provides;
  * @author bobomee.
  * @description
  */
-@Module public class ActivityModule {
+@Module public class  ActivityModule {
   private final Activity activity;
 
   public ActivityModule(final Activity activity) {

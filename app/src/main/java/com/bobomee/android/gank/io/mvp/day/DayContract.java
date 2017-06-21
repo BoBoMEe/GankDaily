@@ -16,9 +16,20 @@
 
 package com.bobomee.android.gank.io.mvp.day;
 
+import com.bobomee.android.common.mvp.BaseContract.BasePresenter;
+import com.bobomee.android.common.mvp.BaseContract.MvpView;
+
 /**
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public class DayContract {
+public interface DayContract {
+
+  public interface DayView<M, T extends BasePresenter> extends MvpView<T> {
+
+  }
+
+  public interface DayPresenter extends BasePresenter {
+    void setParams(Integer year, Integer month, Integer day);
+  }
 }

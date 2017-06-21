@@ -1,11 +1,11 @@
 /*
- * Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
+ *  Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,16 +14,14 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.di;
+package com.bobomee.android.gank.io.di.category;
 
 import com.bobomee.android.data.Repository;
 import com.bobomee.android.data.di.scope.PerActivity;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
-import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryPresenter;
-import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryView;
-import com.bobomee.android.htttp.bean.Results;
+import com.bobomee.android.gank.io.mvp.category.CategoryContract;
 import dagger.Module;
 import dagger.Provides;
 
@@ -40,13 +38,21 @@ import dagger.Provides;
     return new Category(repository, threadExecutor, postExecutionThread);
   }
 
-  private final CategoryView<Results, CategoryPresenter> mCategoryView;
-
-  CategoryModule(CategoryView<Results, CategoryPresenter> categoryView) {
-    mCategoryView = categoryView;
+  CategoryModule() {
   }
 
-  @Provides CategoryView<Results, CategoryPresenter> provideReposListView() {
-    return mCategoryView;
+  static CategoryModule builder() {
+    return new CategoryModule();
+  }
+
+  public CategoryModule setMeizhiView(CategoryContract.MeizhiView meizhiView) {
+    this.mMeizhiView = meizhiView;
+    return this;
+  }
+
+  CategoryContract.MeizhiView mMeizhiView;
+
+  @Provides CategoryContract.MeizhiView provideReposListView() {
+    return mMeizhiView;
   }
 }

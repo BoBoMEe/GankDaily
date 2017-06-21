@@ -26,13 +26,12 @@ import com.bobomee.android.common.util.ActivityUtils;
 import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.base.BaseActivity;
-import com.bobomee.android.gank.io.di.CategoryComponent;
-import com.bobomee.android.gank.io.mvp.category.CategoryListPresenter;
+import com.bobomee.android.gank.io.di.category.CategoryComponent;
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
 
-  @Inject CategoryListPresenter mCategoryListPresenter;
+  @Inject MeizhiListPresenter mCategoryListPresenter;
   @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +41,17 @@ public class MainActivity extends BaseActivity {
 
     showToolBarHome(R.drawable.ic_menu);
 
-    MainFragment lMainFragment =
-        (MainFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+    MeizhiFragment meizhiFragment =
+        (MeizhiFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
-    if (null == lMainFragment) {
-      lMainFragment = MainFragment.newInstance();
+    if (null == meizhiFragment) {
+      meizhiFragment = MeizhiFragment.newInstance();
 
-      ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), lMainFragment,
+      ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), meizhiFragment,
           R.id.contentFrame);
     }
 
-    CategoryComponent.Init.initialize(this, lMainFragment).inject(this);
+    CategoryComponent.Init.initialize(this, meizhiFragment).inject(this);
 
     mCategoryListPresenter.setParams(DomainConstants.福利, DomainConstants.PAGE_SIZE,
         DomainConstants.FIRST_PAGE);
