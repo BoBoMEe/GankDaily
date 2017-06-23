@@ -23,10 +23,13 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bobomee.android.common.util.ActivityUtils;
+import com.bobomee.android.data.di.Dagger2Application;
+import com.bobomee.android.data.di.internal.components.ApplicationComponent;
 import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.base.BaseActivity;
 import com.bobomee.android.gank.io.di.category.CategoryComponent;
+import com.bobomee.android.gank.io.di.category.CategoryModule;
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
@@ -51,7 +54,18 @@ public class MainActivity extends BaseActivity {
           R.id.contentFrame);
     }
 
-    CategoryComponent.Init.initialize(this, meizhiFragment).inject(this);
+    ApplicationComponent applicationComponent = Dagger2Application.get(this).getComponent();
+    CategoryComponent.Init.INSTANCE.setApplicationComponent(
+        applicationComponent);
+
+    CategoryModule.Builder categoryModuleBuilder = CategoryModule.newBuilder();
+    categoryModuleBuilder = categoryModuleBuilder.mMeizhiView(meizhiFragment);
+    CategoryModule categoryModule = categoryModuleBuilder.build();
+
+    CategoryComponent.Init.INSTANCE.setCategoryModule(categoryModule);
+
+    CategoryComponent categoryComponent = CategoryComponent.Init.INSTANCE.initialize();
+    categoryComponent.inject(this);
 
     mCategoryListPresenter.setParams(DomainConstants.福利, DomainConstants.PAGE_SIZE,
         DomainConstants.FIRST_PAGE);
@@ -67,4 +81,6 @@ public class MainActivity extends BaseActivity {
     }
     return super.onOptionsItemSelected(item);
   }
+
+
 }

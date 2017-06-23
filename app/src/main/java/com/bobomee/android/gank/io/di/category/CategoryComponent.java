@@ -16,10 +16,8 @@
 
 package com.bobomee.android.gank.io.di.category;
 
-import com.bobomee.android.data.di.Dagger2Application;
 import com.bobomee.android.data.di.internal.components.ApplicationComponent;
 import com.bobomee.android.data.di.scope.PerActivity;
-import com.bobomee.android.gank.io.mvp.category.CategoryContract.MeizhiView;
 import com.bobomee.android.gank.io.ui.MainActivity;
 import dagger.Component;
 
@@ -35,17 +33,25 @@ import dagger.Component;
 
   void inject(MainActivity activity);
 
-  class Init {
-    private Init() {
+  enum Init {
+    INSTANCE;
+
+    private ApplicationComponent mApplicationComponent;
+    private CategoryModule mCategoryModule;
+
+    public void setCategoryModule(CategoryModule categoryModule) {
+      mCategoryModule = categoryModule;
     }
 
-    public static CategoryComponent initialize(MainActivity activity,
-        MeizhiView categoryView) {
-      return DaggerCategoryComponent.builder()
-          .applicationComponent(Dagger2Application.get(activity).getComponent())
-          //.activityModule(new ActivityModule(activity))
-          .categoryModule(CategoryModule.builder().setMeizhiView(categoryView))
-          .build();
+    public void setApplicationComponent(ApplicationComponent applicationComponent) {
+      mApplicationComponent = applicationComponent;
     }
+
+    public CategoryComponent initialize() {
+      return DaggerCategoryComponent.builder().applicationComponent(mApplicationComponent)
+          //.activityModule(new ActivityModule(activity))
+          .categoryModule(mCategoryModule).build();
+    }
+
   }
 }

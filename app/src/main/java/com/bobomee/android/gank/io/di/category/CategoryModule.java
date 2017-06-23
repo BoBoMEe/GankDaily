@@ -31,28 +31,41 @@ import dagger.Provides;
  * @author bobomee.
  *         https://github.com/BoBoMEe
  */
-@Module class CategoryModule {
+@Module public class CategoryModule {
+
+  private CategoryModule(Builder builder) {
+    mMeizhiView = builder.mMeizhiView;
+  }
+
+  public static Builder newBuilder() {
+    return new Builder();
+  }
 
   @Provides @PerActivity Category provideCategory(Repository repository,
       ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
     return new Category(repository, threadExecutor, postExecutionThread);
   }
 
-  CategoryModule() {
-  }
 
-  static CategoryModule builder() {
-    return new CategoryModule();
-  }
-
-  public CategoryModule setMeizhiView(CategoryContract.MeizhiView meizhiView) {
-    this.mMeizhiView = meizhiView;
-    return this;
-  }
-
-  CategoryContract.MeizhiView mMeizhiView;
+ private CategoryContract.MeizhiView mMeizhiView;
 
   @Provides CategoryContract.MeizhiView provideReposListView() {
     return mMeizhiView;
+  }
+
+  public static final class Builder {
+    private CategoryContract.MeizhiView mMeizhiView;
+
+    private Builder() {
+    }
+
+    public Builder mMeizhiView(CategoryContract.MeizhiView val) {
+      mMeizhiView = val;
+      return this;
+    }
+
+    public CategoryModule build() {
+      return new CategoryModule(this);
+    }
   }
 }
