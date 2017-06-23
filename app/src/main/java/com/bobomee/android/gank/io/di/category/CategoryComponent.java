@@ -28,8 +28,8 @@ import dagger.Component;
  *         https://github.com/BoBoMEe
  */
 @PerActivity @Component(dependencies = { ApplicationComponent.class }, modules = {
-    /*ActivityModule.class,*/ CategoryModule.class
-}) public interface CategoryComponent /*extends ActivityComponent*/ {
+    CategoryModule.class
+}) public interface CategoryComponent {
 
   void inject(MainActivity activity);
 
@@ -48,9 +48,10 @@ import dagger.Component;
     }
 
     public CategoryComponent initialize() {
-      return DaggerCategoryComponent.builder().applicationComponent(mApplicationComponent)
-          //.activityModule(new ActivityModule(activity))
-          .categoryModule(mCategoryModule).build();
+      return DaggerCategoryComponent.builder()
+          .applicationComponent(mApplicationComponent)
+          .categoryModule(mCategoryModule)
+          .build();
     }
 
   }
