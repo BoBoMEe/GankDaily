@@ -20,6 +20,8 @@ import android.content.Context;
 import android.support.v7.app.AppCompatDelegate;
 import com.bobomee.android.common.app.BaseApplication;
 import com.bobomee.android.data.di.internal.components.ApplicationComponent;
+import com.bobomee.android.data.di.internal.modules.ApiModule;
+import com.bobomee.android.data.di.internal.modules.ApplicationModule;
 import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -48,8 +50,10 @@ public class Dagger2Application extends BaseApplication {
       return;
     }
     LeakCanary.install(this);
-    // Normal app init code...
-    mApplicationComponent = ApplicationComponent.Init.initialize(this);
+
+    ApplicationComponent.Init.INSTANCE.setApiModule(new ApiModule());
+    ApplicationComponent.Init.INSTANCE.setApplicationModule(new ApplicationModule(this));
+    mApplicationComponent  = ApplicationComponent.Init.INSTANCE.initialize();
     mApplicationComponent.inject(this);
 
     Stetho.initializeWithDefaults(this);

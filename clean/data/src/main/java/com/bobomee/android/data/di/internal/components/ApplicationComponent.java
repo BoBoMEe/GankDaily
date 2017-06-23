@@ -43,14 +43,23 @@ import javax.inject.Singleton;
 
   Repository cacheRepository();
 
-  class Init {
-    private Init() {
+  enum Init {
+    INSTANCE;
+    private ApiModule mApiModule;
+    private ApplicationModule mApplicationModule;
+
+    public void setApiModule(ApiModule apiModule) {
+      mApiModule = apiModule;
     }
 
-    public static ApplicationComponent initialize(Dagger2Application dagger2Application) {
+    public void setApplicationModule(ApplicationModule applicationModule) {
+      mApplicationModule = applicationModule;
+    }
+
+    public ApplicationComponent initialize() {
       return DaggerApplicationComponent.builder()
-          .applicationModule(new ApplicationModule(dagger2Application))
-          .apiModule(new ApiModule())
+          .applicationModule(mApplicationModule)
+          .apiModule(mApiModule)
           .build();
     }
   }
