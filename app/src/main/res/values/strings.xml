@@ -23,4 +23,8 @@
   <string name="category_title">Category</string>
   <string name="today_title">Toady</string>
   <string name="navigation_view_header_title">Gank.io</string>
+  <string name="light_mode">夜间模式</string>
+  <string name="action_share">分享</string>
+  <string name="action_save">保存</string>
+  <string name="picture_has_save_to">图片已保存至 %s 文件夹</string>
 </resources>

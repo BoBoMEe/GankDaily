@@ -22,6 +22,7 @@
       android:id="@+id/night"
       android:icon="@drawable/ic_brightness"
       android:orderInCategory="0"
+      android:title="@string/light_mode"
       app:showAsAction="ifRoom"
       />
 </menu>

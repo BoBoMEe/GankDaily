@@ -31,6 +31,8 @@ import butterknife.ButterKnife;
 import com.bobomee.android.common.util.UIUtil;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.htttp.util.HttpNetUtil;
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created on 2016/10/27.下午5:27.
@@ -71,6 +73,10 @@ public abstract class BaseActivity extends AppCompatActivity
     UIUtil.getMainThreadHandler().removeCallbacksAndMessages(null);
 
     HttpNetUtil.INSTANCE.removeNetWorkListener(this);
+
+    if (this.mCompositeSubscription != null) {
+      this.mCompositeSubscription.unsubscribe();
+    }
   }
 
   @Override public void setContentView(@LayoutRes int layoutResID) {
@@ -120,4 +126,24 @@ public abstract class BaseActivity extends AppCompatActivity
       // start load ,if not loaded
     }
   }
+
+  private CompositeSubscription mCompositeSubscription;
+
+  public CompositeSubscription getCompositeSubscription() {
+    if (this.mCompositeSubscription == null) {
+      this.mCompositeSubscription = new CompositeSubscription();
+    }
+
+    return this.mCompositeSubscription;
+  }
+
+
+  public void addSubscription(Subscription s) {
+    if (this.mCompositeSubscription == null) {
+      this.mCompositeSubscription = new CompositeSubscription();
+    }
+
+    this.mCompositeSubscription.add(s);
+  }
+
 }
