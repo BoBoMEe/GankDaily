@@ -16,7 +16,7 @@
 
 package com.bobomee.android.gank.io.mvp.query;
 
-import com.bobomee.android.common.mvp.BaseContract.BasePresenter;
+import com.bobomee.android.common.mvp.BaseContract.MvpPresenter;
 import com.bobomee.android.common.mvp.BaseContract.MvpView;
 
 /**
@@ -24,11 +24,11 @@ import com.bobomee.android.common.mvp.BaseContract.MvpView;
  * @since 2017/6/21
  */
 public interface QueryContract {
-  public interface QueryView<M, T extends BasePresenter> extends MvpView<T> {
+  public interface QueryView<M, T extends MvpPresenter> extends MvpView<T> {
 
   }
 
-  public interface QueryPresenter extends BasePresenter {
+  public interface QueryPresenter extends MvpPresenter {
     void setParams(String query, String category, Integer count, Integer page);
   }
 }

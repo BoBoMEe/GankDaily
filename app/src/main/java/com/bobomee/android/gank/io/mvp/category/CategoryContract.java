@@ -16,7 +16,7 @@
 
 package com.bobomee.android.gank.io.mvp.category;
 
-import com.bobomee.android.common.mvp.BaseContract.BasePresenter;
+import com.bobomee.android.common.mvp.BaseContract.MvpPresenter;
 import com.bobomee.android.common.mvp.BaseContract.MvpView;
 import com.bobomee.android.htttp.bean.Results;
 import java.util.List;
@@ -44,7 +44,7 @@ public interface CategoryContract {
    * the repos presenter
    */
   interface CategoryPresenter<V extends CategoryView>
-      extends BasePresenter<V> {
+      extends MvpPresenter<V> {
     void setParams(String category, int count, int page);
   }
 

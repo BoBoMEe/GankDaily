@@ -82,7 +82,7 @@ public class CategoryFragment<P extends CategoryPresenter> extends BaseFragment
 
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     super.onCreateOptionsMenu(menu, inflater);
-    inflater.inflate(R.menu.menu, menu);
+    inflater.inflate(R.menu.meizhi_menu, menu);
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {

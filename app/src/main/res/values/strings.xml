@@ -20,7 +20,7 @@
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
 
-  <string name="list_title">TO-DO List</string>
-  <string name="statistics_title">Statistics</string>
-  <string name="navigation_view_header_title">TO-DOs</string>
+  <string name="category_title">Category</string>
+  <string name="today_title">Toady</string>
+  <string name="navigation_view_header_title">Gank.io</string>
 </resources>

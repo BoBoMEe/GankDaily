@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class DayResults {
 
-  //all | 福利 | Android | iOS | 休息视频 | 前端 | 拓展资源 | App | 瞎推荐 |
-
   public List<Results> 福利;
   public List<Results> Android;
   public List<Results> iOS;
@@ -24,4 +22,19 @@ public class DayResults {
   public List<Results> App;
   public List<Results> 瞎推荐;
 
+  public enum DAY_CATEGORY {
+    ALL("all"), 福利("福利"), Android("Android"), //
+    iOS("iOS"), 休息视频("休息视频"), 前端("前端"), //
+    拓展资源("拓展资源"), App("App"), 瞎推荐("瞎推荐");//
+
+    private final String value;
+
+    DAY_CATEGORY(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+  }
 }

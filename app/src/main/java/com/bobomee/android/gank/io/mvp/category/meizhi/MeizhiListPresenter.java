@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.ui;
+package com.bobomee.android.gank.io.mvp.category.meizhi;
 
 import android.support.annotation.NonNull;
 import com.bobomee.android.data.repo.Category;
