@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.mvp.category.meizhi;
+package com.bobomee.android.gank.io.meizhi;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,13 +25,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import butterknife.BindView;
 import com.bobomee.android.gank.io.R;
-import com.bobomee.android.gank.io.adapter.MeizhiAdapter;
-import com.bobomee.android.gank.io.adapter.MeizhiItemViewBinder;
-import com.bobomee.android.gank.io.event.DataLoadFinishEvent;
-import com.bobomee.android.gank.io.mvp.category.CategoryContract.MeizhiPresenter;
-import com.bobomee.android.gank.io.mvp.category.CategoryContract.MeizhiView;
+import com.bobomee.android.gank.io.meizhi.adapter.MeizhiAdapter;
+import com.bobomee.android.gank.io.meizhi.adapter.MeizhiItemViewBinder;
+import com.bobomee.android.gank.io.meizhi.mvp.MeizhiContract;
+import com.bobomee.android.gank.io.meizhi.service.DataService;
 import com.bobomee.android.gank.io.mvp.category.CategoryFragment;
-import com.bobomee.android.gank.io.service.DataService;
 import com.bobomee.android.gank.io.util.FabUtil;
 import com.bobomee.android.gank.io.widget.WrapperStaggeredGridLayoutManager;
 import com.bobomee.android.htttp.bean.Results;
@@ -43,7 +41,8 @@ import org.greenrobot.eventbus.ThreadMode;
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public class MeizhiFragment extends CategoryFragment<MeizhiPresenter> implements MeizhiView {
+public class MeizhiFragment extends CategoryFragment<MeizhiContract.MeizhiPresenter> implements
+    MeizhiContract.MeizhiView {
   private MeizhiAdapter mMeizhiAdapter;
   @BindView(R.id.recycler) RecyclerView mRecycler;
   @BindView(R.id.swipelayout) SwipeRefreshLayout mSwipelayout;

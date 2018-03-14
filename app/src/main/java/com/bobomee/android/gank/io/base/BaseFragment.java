@@ -20,10 +20,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import com.bobomee.android.common.util.DayNightUtil;
+import com.bobomee.android.gank.io.R;
 
 /**
  * Project ID：400YF17050
@@ -67,5 +70,14 @@ public abstract class BaseFragment extends Fragment {
   @Override public void onDestroyView() {
     super.onDestroyView();
     if (null != mUnbinder) mUnbinder.unbind();
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.night:
+        DayNightUtil.switchDayNightMode(mBaseActivity);
+        break;
+    }
+    return super.onOptionsItemSelected(item);
   }
 }

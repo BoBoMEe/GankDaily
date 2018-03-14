@@ -15,11 +15,9 @@
  */
 package com.bobomee.android.htttp.api;
 
-import com.bobomee.android.htttp.bean.DayResults;
 import com.bobomee.android.htttp.bean.GankCategory;
 import com.bobomee.android.htttp.bean.GankDay;
 import com.bobomee.android.htttp.bean.GankQuery;
-import java.util.List;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -44,9 +42,4 @@ public interface RestApi {
 
   @GET(API_URL_CATEGORY_DATA) Observable<GankCategory> getCategoryData(
       @Path("category") String category, @Path("count") Integer count, @Path("page") Integer page);
-
-  public static Observable<List<DayResults.DAY_CATEGORY>> getDayCategory() {
-    DayResults.DAY_CATEGORY[] values = DayResults.DAY_CATEGORY.values();
-    return Observable.from(values).toList();
-  }
 }

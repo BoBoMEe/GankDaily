@@ -1,4 +1,4 @@
-package com.bobomee.android.gank.io.event;
+package com.bobomee.android.gank.io.meizhi;
 
 import com.bobomee.android.htttp.bean.Results;
 import java.util.List;

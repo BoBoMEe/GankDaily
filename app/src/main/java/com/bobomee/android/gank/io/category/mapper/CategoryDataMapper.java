@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.mapper;
+package com.bobomee.android.gank.io.category.mapper;
 
 import com.bobomee.android.data.di.scope.PerActivity;
 import com.bobomee.android.htttp.bean.GankCategory;

@@ -18,7 +18,7 @@ package com.bobomee.android.gank.io.mvp.main;
 
 import com.bobomee.android.common.mvp.BaseContract.MvpPresenter;
 import com.bobomee.android.common.mvp.BaseContract.MvpView;
-import com.bobomee.android.htttp.bean.DayResults;
+import com.bobomee.android.htttp.bean.GankDay;
 import java.util.List;
 
 /**
@@ -28,7 +28,6 @@ import java.util.List;
 public interface MainContract {
 
   interface MainView extends MvpView<MainPresenter> {
-    void setDatas(List<DayResults.DAY_CATEGORY> dayCategoryList);
   }
 
   interface MainPresenter extends MvpPresenter<MainView> {

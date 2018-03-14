@@ -32,10 +32,10 @@ import com.bobomee.android.data.di.internal.components.ApplicationComponent;
 import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.base.BaseActivity;
-import com.bobomee.android.gank.io.di.category.CategoryComponent;
-import com.bobomee.android.gank.io.di.category.CategoryModule;
-import com.bobomee.android.gank.io.mvp.category.meizhi.MeizhiFragment;
-import com.bobomee.android.gank.io.mvp.category.meizhi.MeizhiListPresenter;
+import com.bobomee.android.gank.io.category.di.CategoryComponent;
+import com.bobomee.android.gank.io.category.di.CategoryModule;
+import com.bobomee.android.gank.io.meizhi.MeizhiFragment;
+import com.bobomee.android.gank.io.meizhi.MeizhiListPresenter;
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity implements

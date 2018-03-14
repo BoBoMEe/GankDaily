@@ -32,7 +32,7 @@ import javax.inject.Singleton;
   private final RestApi mRestApi;
 
   @Inject RestService(Retrofit2Client retrofit2Client) {
-    mRestApi = retrofit2Client.getRetrofitBuilder().baseUrl(RestApi.API_GANK_URL)
+    mRestApi = retrofit2Client.getRetrofitBuilder().baseUrl(getBaseUrl())
         .build()
         .create(RestApi.class);
   }
@@ -41,4 +41,8 @@ import javax.inject.Singleton;
     return mRestApi;
   }
 
+
+  public String getBaseUrl(){
+    return RestApi.API_GANK_URL;
+  }
 }

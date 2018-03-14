@@ -14,13 +14,14 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.di.category;
+package com.bobomee.android.gank.io.category.di;
 
 import com.bobomee.android.data.Repository;
 import com.bobomee.android.data.di.scope.PerActivity;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
+import com.bobomee.android.gank.io.meizhi.mvp.MeizhiContract;
 import com.bobomee.android.gank.io.mvp.category.CategoryContract;
 import dagger.Module;
 import dagger.Provides;
@@ -47,19 +48,19 @@ import dagger.Provides;
   }
 
 
- private CategoryContract.MeizhiView mMeizhiView;
+ private MeizhiContract.MeizhiView mMeizhiView;
 
-  @Provides CategoryContract.MeizhiView provideReposListView() {
+  @Provides MeizhiContract.MeizhiView provideReposListView() {
     return mMeizhiView;
   }
 
   public static final class Builder {
-    private CategoryContract.MeizhiView mMeizhiView;
+    private MeizhiContract.MeizhiView mMeizhiView;
 
     private Builder() {
     }
 
-    public Builder mMeizhiView(CategoryContract.MeizhiView val) {
+    public Builder mMeizhiView(MeizhiContract.MeizhiView val) {
       mMeizhiView = val;
       return this;
     }

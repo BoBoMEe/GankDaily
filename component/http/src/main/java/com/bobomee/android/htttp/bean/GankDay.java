@@ -27,7 +27,7 @@ import java.util.List;
  *         https://github.com/BoBoMEe
  */
 
-public class GankDay extends BaseData<DayResults> implements Parcelable {
+public class GankDay extends BaseData<GankDay.DayResults> implements Parcelable {
 
   public List<String> category;
 
@@ -63,4 +63,32 @@ public class GankDay extends BaseData<DayResults> implements Parcelable {
       return new GankDay[size];
     }
   };
+
+  public static class DayResults {
+
+    public List<Results> 福利;
+    public List<Results> Android;
+    public List<Results> iOS;
+    public List<Results> 休息视频;
+    public List<Results> 前端;
+    public List<Results> 拓展资源;
+    public List<Results> App;
+    public List<Results> 瞎推荐;
+
+    public enum DAY_CATEGORY {
+      ALL("all"), 福利("福利"), Android("Android"), //
+      iOS("iOS"), 休息视频("休息视频"), 前端("前端"), //
+      拓展资源("拓展资源"), App("App"), 瞎推荐("瞎推荐");//
+
+      private final String value;
+
+      DAY_CATEGORY(String value) {
+        this.value = value;
+      }
+
+      public String getValue() {
+        return value;
+      }
+    }
+  }
 }

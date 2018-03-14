@@ -85,15 +85,6 @@ public class CategoryFragment<P extends CategoryPresenter> extends BaseFragment
     inflater.inflate(R.menu.meizhi_menu, menu);
   }
 
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.night:
-        DayNightUtil.switchDayNightMode(mBaseActivity);
-        break;
-    }
-    return super.onOptionsItemSelected(item);
-  }
-
   @Override public P getPresenter() {
     return mCategoryPresenter;
   }

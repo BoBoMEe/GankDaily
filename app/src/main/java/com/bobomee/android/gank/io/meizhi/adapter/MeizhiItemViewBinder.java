@@ -14,13 +14,14 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.adapter;
+package com.bobomee.android.gank.io.meizhi.adapter;
 
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bobomee.android.gank.io.R;
+import com.bobomee.android.gank.io.Holder;
 import com.bobomee.android.gank.io.ui.DetailImageActivity;
 import com.bobomee.android.gank.io.util.GlideUtil;
 import com.bobomee.android.gank.io.widget.ScaleImageView;

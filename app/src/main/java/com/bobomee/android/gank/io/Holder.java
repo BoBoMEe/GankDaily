@@ -14,28 +14,36 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.adapter;
+package com.bobomee.android.gank.io;
 
-import android.support.annotation.NonNull;
-import java.util.List;
-import me.drakeet.multitype.MultiTypeAdapter;
+import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.SparseArray;
+import android.view.View;
 
 /**
  * @author BoBoMEe
  * @since 2017/6/17
  */
-public class MeizhiAdapter extends MultiTypeAdapter {
+public abstract class Holder extends ViewHolder {
 
-  public void clear(){
-    List<?> items = getItems();
-    if (!items.isEmpty()){
-      items.clear();
-      notifyDataSetChanged();
+  private SparseArray<View> mViews;
+  private View mConvertView;
+
+  public Holder(View itemView) {
+    super(itemView);
+    mConvertView = itemView;
+    mViews = new SparseArray<View>();
+  }
+
+  public <T extends View> T getView(int viewId)
+  {
+    View view = mViews.get(viewId);
+    if (view == null)
+    {
+      view = mConvertView.findViewById(viewId);
+      mViews.put(viewId, view);
     }
+    return (T) view;
   }
 
-  @Override public void setItems(@NonNull List<?> items) {
-    super.setItems(items);
-    notifyDataSetChanged();
-  }
 }

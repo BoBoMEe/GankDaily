@@ -48,11 +48,4 @@ public interface CategoryContract {
     void setParams(String category, int count, int page);
   }
 
-  ///////////////
-  interface MeizhiView extends CategoryView<MeizhiPresenter> {
-    void setDatas(List<Results> datas);
-  }
-
-  interface MeizhiPresenter extends CategoryPresenter<MeizhiView> {
-  }
 }

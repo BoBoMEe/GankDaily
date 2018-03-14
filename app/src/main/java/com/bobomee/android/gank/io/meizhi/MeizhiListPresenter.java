@@ -14,13 +14,12 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.mvp.category.meizhi;
+package com.bobomee.android.gank.io.meizhi;
 
 import android.support.annotation.NonNull;
 import com.bobomee.android.data.repo.Category;
-import com.bobomee.android.gank.io.mapper.CategoryDataMapper;
-import com.bobomee.android.gank.io.mvp.category.CategoryContract.MeizhiPresenter;
-import com.bobomee.android.gank.io.mvp.category.CategoryContract.MeizhiView;
+import com.bobomee.android.gank.io.category.mapper.CategoryDataMapper;
+import com.bobomee.android.gank.io.meizhi.mvp.MeizhiContract;
 import com.bobomee.android.gank.io.mvp.category.CategoryListPresenter;
 import com.bobomee.android.htttp.bean.GankCategory;
 import javax.inject.Inject;
@@ -29,13 +28,13 @@ import javax.inject.Inject;
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public class MeizhiListPresenter extends CategoryListPresenter<MeizhiView>
-    implements MeizhiPresenter {
+public class MeizhiListPresenter extends CategoryListPresenter<MeizhiContract.MeizhiView>
+    implements MeizhiContract.MeizhiPresenter {
 
   private final CategoryDataMapper mCategoryDataMapper;
 
   @Inject MeizhiListPresenter(@NonNull Category category,
-      @NonNull MeizhiView meizhiView, @NonNull CategoryDataMapper categoryDataMapper) {
+      @NonNull MeizhiContract.MeizhiView meizhiView, @NonNull CategoryDataMapper categoryDataMapper) {
     super(category, meizhiView);
     mCategoryDataMapper = categoryDataMapper;
   }
@@ -44,7 +43,7 @@ public class MeizhiListPresenter extends CategoryListPresenter<MeizhiView>
     getView().setPresenter(this);
   }
 
-  @Override protected void doOnNext(GankCategory category, MeizhiView categoryView) {
+  @Override protected void doOnNext(GankCategory category, MeizhiContract.MeizhiView categoryView) {
     super.doOnNext(category, categoryView);
     categoryView.setDatas(mCategoryDataMapper.transform(category));
   }
