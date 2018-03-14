@@ -40,7 +40,7 @@ import org.greenrobot.eventbus.EventBus;
  * @see
  * @since 2016/12/22.汪波.
  */
-public class CategoryFragment<P extends CategoryPresenter> extends BaseFragment
+public abstract class CategoryFragment<P extends CategoryPresenter> extends BaseFragment
     implements CategoryView<P> {
 
   private P mCategoryPresenter;
@@ -73,16 +73,6 @@ public class CategoryFragment<P extends CategoryPresenter> extends BaseFragment
 
   @Override public void setPresenter(P presenter) {
     this.mCategoryPresenter = presenter;
-  }
-
-  @Override public View initFragmentView(LayoutInflater pInflater, ViewGroup pContainer,
-      Bundle pSavedInstanceState) {
-    return pInflater.inflate(R.layout.content_main, pContainer, false);
-  }
-
-  @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    super.onCreateOptionsMenu(menu, inflater);
-    inflater.inflate(R.menu.meizhi_menu, menu);
   }
 
   @Override public P getPresenter() {

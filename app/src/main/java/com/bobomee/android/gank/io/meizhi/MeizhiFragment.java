@@ -22,7 +22,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import butterknife.BindView;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.meizhi.adapter.MeizhiAdapter;
@@ -41,12 +45,17 @@ import org.greenrobot.eventbus.ThreadMode;
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public class MeizhiFragment extends CategoryFragment<MeizhiContract.MeizhiPresenter> implements
-    MeizhiContract.MeizhiView {
+public class MeizhiFragment extends CategoryFragment<MeizhiContract.MeizhiPresenter>
+    implements MeizhiContract.MeizhiView {
   private MeizhiAdapter mMeizhiAdapter;
   @BindView(R.id.recycler) RecyclerView mRecycler;
   @BindView(R.id.swipelayout) SwipeRefreshLayout mSwipelayout;
   FloatingActionButton mFab;
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+  }
 
   public static MeizhiFragment newInstance() {
     Bundle args = new Bundle();
@@ -96,5 +105,15 @@ public class MeizhiFragment extends CategoryFragment<MeizhiContract.MeizhiPresen
     if (null != datas && !datas.isEmpty()) {
       mMeizhiAdapter.setItems(datas);
     }
+  }
+
+  @Override public View initFragmentView(LayoutInflater pInflater, ViewGroup pContainer,
+      Bundle pSavedInstanceState) {
+    return pInflater.inflate(R.layout.content_main, pContainer, false);
+  }
+
+  @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    super.onCreateOptionsMenu(menu, inflater);
+    inflater.inflate(R.menu.meizhi_menu, menu);
   }
 }

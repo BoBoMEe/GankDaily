@@ -16,6 +16,8 @@
 
 package com.bobomee.android.gank.io.category.di;
 
+import android.content.Context;
+import com.bobomee.android.data.di.Dagger2Application;
 import com.bobomee.android.data.di.internal.components.ApplicationComponent;
 import com.bobomee.android.data.di.scope.PerActivity;
 import com.bobomee.android.gank.io.ui.MainActivity;
@@ -36,20 +38,17 @@ import dagger.Component;
   enum Init {
     INSTANCE;
 
-    private ApplicationComponent mApplicationComponent;
     private CategoryModule mCategoryModule;
 
     public void setCategoryModule(CategoryModule categoryModule) {
       mCategoryModule = categoryModule;
     }
 
-    public void setApplicationComponent(ApplicationComponent applicationComponent) {
-      mApplicationComponent = applicationComponent;
-    }
 
-    public CategoryComponent initialize() {
+    public CategoryComponent initialize(Context context) {
+      ApplicationComponent applicationComponent = Dagger2Application.get(context).getComponent();
       return DaggerCategoryComponent.builder()
-          .applicationComponent(mApplicationComponent)
+          .applicationComponent(applicationComponent)
           .categoryModule(mCategoryModule)
           .build();
     }

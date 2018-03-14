@@ -61,17 +61,13 @@ public class MainActivity extends BaseActivity implements
           R.id.contentFrame);
     }
 
-    ApplicationComponent applicationComponent = Dagger2Application.get(this).getComponent();
-    CategoryComponent.Init.INSTANCE.setApplicationComponent(
-        applicationComponent);
-
     CategoryModule.Builder categoryModuleBuilder = CategoryModule.newBuilder();
     categoryModuleBuilder = categoryModuleBuilder.mMeizhiView(meizhiFragment);
     CategoryModule categoryModule = categoryModuleBuilder.build();
 
     CategoryComponent.Init.INSTANCE.setCategoryModule(categoryModule);
 
-    CategoryComponent categoryComponent = CategoryComponent.Init.INSTANCE.initialize();
+    CategoryComponent categoryComponent = CategoryComponent.Init.INSTANCE.initialize(this);
     categoryComponent.inject(this);
 
     mCategoryListPresenter.setParams(DomainConstants.福利, DomainConstants.PAGE_SIZE,
