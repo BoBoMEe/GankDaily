@@ -94,7 +94,7 @@ dependencies {
   compile "com.bobomee.android:layout-api:${layoutVersion}"
   apt "com.bobomee.android:layout-compiler:${layoutVersion}"
   compile "me.drakeet.multitype:multitype:${multitypeVersion}"
-
+  compile 'com.github.markomilos:paginate:0.5.1'
 
   compile project(':clean:data')
 

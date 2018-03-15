@@ -15,6 +15,7 @@
  */
 package com.bobomee.android.data.di.internal.components;
 
+import android.app.Application;
 import android.content.Context;
 import com.bobomee.android.data.Repository;
 import com.bobomee.android.data.di.Dagger2Application;
@@ -45,21 +46,11 @@ import javax.inject.Singleton;
 
   enum Init {
     INSTANCE;
-    private ApiModule mApiModule;
-    private ApplicationModule mApplicationModule;
 
-    public void setApiModule(ApiModule apiModule) {
-      mApiModule = apiModule;
-    }
-
-    public void setApplicationModule(ApplicationModule applicationModule) {
-      mApplicationModule = applicationModule;
-    }
-
-    public ApplicationComponent initialize() {
+    public ApplicationComponent initialize(Application mApplication) {
       return DaggerApplicationComponent.builder()
-          .applicationModule(mApplicationModule)
-          .apiModule(mApiModule)
+          .applicationModule(new ApplicationModule(mApplication))
+          .apiModule(new ApiModule())
           .build();
     }
   }

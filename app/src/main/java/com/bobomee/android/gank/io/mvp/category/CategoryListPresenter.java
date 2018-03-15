@@ -18,6 +18,7 @@ package com.bobomee.android.gank.io.mvp.category;
 
 import android.support.annotation.NonNull;
 import com.bobomee.android.data.repo.Category;
+import com.bobomee.android.domain.interactor.DefaultSubscriber;
 import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryPresenter;
 import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryView;
 import com.bobomee.android.htttp.bean.GankCategory;
@@ -28,8 +29,7 @@ import rx.Subscriber;
  * Email nimengbo@gmail.com
  * github https://github.com/nimengbo
  */
-public class CategoryListPresenter<V extends CategoryView>
-    implements CategoryPresenter<V> {
+public class CategoryListPresenter<V extends CategoryView> implements CategoryPresenter<V> {
 
   private final Category mCategoryUseCase;
   private final V mCategoryView;
@@ -48,17 +48,10 @@ public class CategoryListPresenter<V extends CategoryView>
    */
   @Override public void subscribe(boolean update) {
     mCategoryUseCase.setParam(mCategory, mCount, mPage);
-    mCategoryUseCase.execute(new Subscriber<GankCategory>() {
-      @Override public void onCompleted() {
-
-      }
-
-      @Override public void onError(Throwable e) {
-
-      }
+    mCategoryUseCase.execute(new DefaultSubscriber<GankCategory>() {
 
       @Override public void onNext(GankCategory gankCategory) {
-        doOnNext(gankCategory,mCategoryView);
+        doOnNext(gankCategory, mCategoryView);
       }
     }, update);
   }
@@ -77,7 +70,7 @@ public class CategoryListPresenter<V extends CategoryView>
     this.mPage = page;
   }
 
-  protected void doOnNext(GankCategory category,V categoryView){
+  protected void doOnNext(GankCategory category, V categoryView) {
 
   }
 }

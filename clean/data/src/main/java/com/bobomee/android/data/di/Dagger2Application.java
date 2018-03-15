@@ -51,9 +51,7 @@ public class Dagger2Application extends BaseApplication {
     }
     LeakCanary.install(this);
 
-    ApplicationComponent.Init.INSTANCE.setApiModule(new ApiModule());
-    ApplicationComponent.Init.INSTANCE.setApplicationModule(new ApplicationModule(this));
-    mApplicationComponent  = ApplicationComponent.Init.INSTANCE.initialize();
+    mApplicationComponent  = ApplicationComponent.Init.INSTANCE.initialize(this);
     mApplicationComponent.inject(this);
 
     Stetho.initializeWithDefaults(this);
