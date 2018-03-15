@@ -28,30 +28,37 @@ import rx.Observable;
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public class Query extends UseCase<GankQuery> {
+public class Query extends UseCase<GankQuery, Query.Params> {
+
+  @Override protected Observable<GankQuery> buildUseCaseObservable(Params params, boolean update) {
+    return this.mRepository.getQueryData(params.mQuery, params.mCategory, params.mCount,
+        params.mPage, update).map(Reply::getData);
+  }
+
+  public static final class Params {
+
+    private String mQuery;
+    private String mCategory;
+    private Integer mCount;
+    private Integer mPage;
+
+    public Params(String query, String category, Integer count, Integer page) {
+      mQuery = query;
+      mCategory = category;
+      mCount = count;
+      mPage = page;
+    }
+
+    public static Params forParams(String mQuery, String mCategory, Integer mCount, Integer mPage) {
+      return new Params(mQuery, mCategory, mCount, mPage);
+    }
+  }
 
   private final Repository mRepository;
-
-  private String mQuery;
-  private String mCategory;
-  private Integer mCount;
-  private Integer mPage;
 
   protected Query(Repository reposRepository, ThreadExecutor threadExecutor,
       PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
     this.mRepository = reposRepository;
-  }
-
-  public void setParam(String query, Integer count, String category, Integer page) {
-    this.mQuery = query;
-    this.mCategory = category;
-    this.mCount = count;
-    this.mPage = page;
-  }
-
-  @Override protected Observable<GankQuery> buildUseCaseObservable(boolean update) {
-    return this.mRepository.getQueryData(mQuery, mCategory, mCount, mPage, update)
-        .map(Reply::getData);
   }
 }

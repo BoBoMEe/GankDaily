@@ -29,27 +29,36 @@ import rx.Observable;
  * This class is an implementation of {@link UseCase} that represents a use case for login and
  * retrieve a {@link GankCategory}.
  */
-public class Category extends UseCase<GankCategory> {
+public class Category extends UseCase<GankCategory, Category.Params> {
 
   private final Repository mRepository;
-  private String mCategory;
-  private Integer mCount;
-  private Integer mPage;
 
-  @Inject
-  public Category(Repository reposRepository, ThreadExecutor threadExecutor,
+  @Override
+  protected Observable<GankCategory> buildUseCaseObservable(Params params, boolean update) {
+    return this.mRepository.getCategoryData(params.mCategory, params.mCount, params.mPage, update)
+        .map(Reply::getData);
+  }
+
+  public static final class Params {
+
+    private String mCategory;
+    private Integer mCount;
+    private Integer mPage;
+
+    public Params(String category, Integer count, Integer page) {
+      this.mCategory = category;
+      this.mCount = count;
+      this.mPage = page;
+    }
+
+    public static Category.Params forParams(String category, Integer count, Integer page) {
+      return new Category.Params(category, count, page);
+    }
+  }
+
+  @Inject public Category(Repository reposRepository, ThreadExecutor threadExecutor,
       PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
     this.mRepository = reposRepository;
-  }
-
-  public void setParam(String category, Integer count, Integer page) {
-    this.mCategory = category;
-    this.mCount = count;
-    this.mPage = page;
-  }
-
-  @Override public Observable<GankCategory> buildUseCaseObservable(boolean update) {
-    return this.mRepository.getCategoryData(mCategory, mCount, mPage, update).map(Reply::getData);
   }
 }

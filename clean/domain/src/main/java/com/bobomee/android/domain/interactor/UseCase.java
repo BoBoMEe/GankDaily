@@ -31,7 +31,7 @@ import rx.subscriptions.Subscriptions;
  * By convention each UseCase implementation will return the result using a {@link rx.Subscriber}
  * that will execute its job in a background thread and will post the result in the UI thread.
  */
-public abstract class UseCase<T> {
+public abstract class UseCase<T,Params> {
 
     protected final ThreadExecutor threadExecutor;
     protected final PostExecutionThread postExecutionThread;
@@ -47,7 +47,7 @@ public abstract class UseCase<T> {
     /**
      * Builds an {@link rx.Observable} which will be used when executing the current {@link UseCase}.
      */
-    protected abstract Observable<T> buildUseCaseObservable(boolean update);
+    protected abstract Observable<T> buildUseCaseObservable(Params params,boolean update);
 
     /**
      * Executes the current use case.
@@ -55,8 +55,8 @@ public abstract class UseCase<T> {
      * @param UseCaseSubscriber The guy who will be listen to the observable build
      *                          with {@link #UseCase#buildUseCaseObservable(boolean)}.
      */
-    public void execute(Subscriber<T> UseCaseSubscriber,boolean update) {
-        subscription = buildUseCaseObservable(update)
+    public void execute(Subscriber<T> UseCaseSubscriber, Params params,boolean update) {
+        subscription = buildUseCaseObservable(params,update)
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .observeOn(postExecutionThread.getScheduler())
                 .subscribe(UseCaseSubscriber);

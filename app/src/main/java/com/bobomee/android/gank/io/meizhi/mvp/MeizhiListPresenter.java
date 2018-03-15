@@ -20,7 +20,6 @@ import android.support.annotation.NonNull;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.gank.io.category.mapper.CategoryDataMapper;
-import com.bobomee.android.gank.io.meizhi.mvp.MeizhiContract;
 import com.bobomee.android.gank.io.category.mvp.CategoryListPresenter;
 import com.bobomee.android.htttp.bean.GankCategory;
 import javax.inject.Inject;
@@ -42,7 +41,7 @@ public class MeizhiListPresenter extends CategoryListPresenter<MeizhiContract.Me
   }
 
   @Inject void setupListeners() {
-    setParams(DomainConstants.福利, DomainConstants.PAGE_SIZE, DomainConstants.FIRST_PAGE);
+    buildParams(DomainConstants.福利, DomainConstants.PAGE_SIZE, DomainConstants.FIRST_PAGE);
   }
 
   @Override protected void doOnNext(GankCategory category, MeizhiContract.MeizhiView categoryView) {

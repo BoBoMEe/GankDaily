@@ -19,6 +19,7 @@ package com.bobomee.android.gank.io.category.mvp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import com.bobomee.android.common.mvp.BaseContract;
 import com.bobomee.android.gank.io.base.BaseFragment;
 import org.greenrobot.eventbus.EventBus;
 
@@ -31,8 +32,8 @@ import org.greenrobot.eventbus.EventBus;
  * @see
  * @since 2016/12/22.汪波.
  */
-public abstract class CategoryFragment<P extends CategoryContract.CategoryPresenter> extends BaseFragment
-    implements CategoryContract.CategoryView<P> {
+public abstract class CategoryFragment<P extends BaseContract.MvpPresenter> extends BaseFragment
+    implements BaseContract.MvpView<P> {
 
   private P mCategoryPresenter;
   protected boolean mIsRequested = false;

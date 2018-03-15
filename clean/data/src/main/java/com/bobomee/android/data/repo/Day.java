@@ -28,26 +28,35 @@ import rx.Observable;
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public class Day extends UseCase<GankDay> {
+public class Day extends UseCase<GankDay, Day.Params> {
 
   private final Repository mRepository;
-  private Integer mYear;
-  private Integer mMonth;
-  private Integer mDay;
+
+  @Override protected Observable<GankDay> buildUseCaseObservable(Params params, boolean update) {
+    return this.mRepository.getGankDayData(params.mYear, params.mMonth, params.mDay, update)
+        .map(Reply::getData);
+  }
+
+  public static final class Params {
+
+    private Integer mYear;
+    private Integer mMonth;
+    private Integer mDay;
+
+    public Params(Integer year, Integer month, Integer day) {
+      this.mYear = year;
+      this.mMonth = month;
+      this.mDay = day;
+    }
+
+    public static Day.Params forParams(Integer year, Integer month, Integer day) {
+      return new Day.Params(year, month, day);
+    }
+  }
 
   protected Day(Repository reposRepository, ThreadExecutor threadExecutor,
       PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
     this.mRepository = reposRepository;
-  }
-
-  public void setParam(Integer year, Integer month, Integer day) {
-    this.mYear = year;
-    this.mMonth = month;
-    this.mDay = day;
-  }
-
-  @Override protected Observable<GankDay> buildUseCaseObservable(boolean update) {
-    return this.mRepository.getGankDayData(mYear, mMonth, mDay, update).map(Reply::getData);
   }
 }
