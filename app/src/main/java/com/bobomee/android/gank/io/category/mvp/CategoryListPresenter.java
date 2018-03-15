@@ -14,22 +14,20 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.mvp.category;
+package com.bobomee.android.gank.io.category.mvp;
 
 import android.support.annotation.NonNull;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.interactor.DefaultSubscriber;
-import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryPresenter;
-import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryView;
 import com.bobomee.android.htttp.bean.GankCategory;
-import rx.Subscriber;
 
 /**
  * Created by Abner on 16/6/16.
  * Email nimengbo@gmail.com
  * github https://github.com/nimengbo
  */
-public class CategoryListPresenter<V extends CategoryView> implements CategoryPresenter<V> {
+public class CategoryListPresenter<V extends CategoryContract.CategoryView> implements
+    CategoryContract.CategoryPresenter<V> {
 
   private final Category mCategoryUseCase;
   private final V mCategoryView;

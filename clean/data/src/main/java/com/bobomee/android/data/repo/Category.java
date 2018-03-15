@@ -22,6 +22,7 @@ import com.bobomee.android.domain.executor.PostExecutionThread;
 import com.bobomee.android.domain.executor.ThreadExecutor;
 import com.bobomee.android.domain.interactor.UseCase;
 import io.rx_cache.Reply;
+import javax.inject.Inject;
 import rx.Observable;
 
 /**
@@ -35,6 +36,7 @@ public class Category extends UseCase<GankCategory> {
   private Integer mCount;
   private Integer mPage;
 
+  @Inject
   public Category(Repository reposRepository, ThreadExecutor threadExecutor,
       PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);

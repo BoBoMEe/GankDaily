@@ -14,13 +14,14 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.meizhi;
+package com.bobomee.android.gank.io.meizhi.mvp;
 
 import android.support.annotation.NonNull;
 import com.bobomee.android.data.repo.Category;
+import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.gank.io.category.mapper.CategoryDataMapper;
 import com.bobomee.android.gank.io.meizhi.mvp.MeizhiContract;
-import com.bobomee.android.gank.io.mvp.category.CategoryListPresenter;
+import com.bobomee.android.gank.io.category.mvp.CategoryListPresenter;
 import com.bobomee.android.htttp.bean.GankCategory;
 import javax.inject.Inject;
 
@@ -34,13 +35,14 @@ public class MeizhiListPresenter extends CategoryListPresenter<MeizhiContract.Me
   private final CategoryDataMapper mCategoryDataMapper;
 
   @Inject MeizhiListPresenter(@NonNull Category category,
-      @NonNull MeizhiContract.MeizhiView meizhiView, @NonNull CategoryDataMapper categoryDataMapper) {
+      @NonNull MeizhiContract.MeizhiView meizhiView,
+      @NonNull CategoryDataMapper categoryDataMapper) {
     super(category, meizhiView);
     mCategoryDataMapper = categoryDataMapper;
   }
 
   @Inject void setupListeners() {
-    getView().setPresenter(this);
+    setParams(DomainConstants.福利, DomainConstants.PAGE_SIZE, DomainConstants.FIRST_PAGE);
   }
 
   @Override protected void doOnNext(GankCategory category, MeizhiContract.MeizhiView categoryView) {

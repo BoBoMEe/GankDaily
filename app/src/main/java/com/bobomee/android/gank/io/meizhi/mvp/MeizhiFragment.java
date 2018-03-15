@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.meizhi;
+package com.bobomee.android.gank.io.meizhi.mvp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,16 +28,19 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
+import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.gank.io.R;
+import com.bobomee.android.gank.io.meizhi.DataLoadFinishEvent;
 import com.bobomee.android.gank.io.meizhi.adapter.MeizhiAdapter;
 import com.bobomee.android.gank.io.meizhi.adapter.MeizhiItemViewBinder;
-import com.bobomee.android.gank.io.meizhi.mvp.MeizhiContract;
+import com.bobomee.android.gank.io.meizhi.di.MeizhiComponent;
 import com.bobomee.android.gank.io.meizhi.service.DataService;
-import com.bobomee.android.gank.io.mvp.category.CategoryFragment;
+import com.bobomee.android.gank.io.category.mvp.CategoryFragment;
 import com.bobomee.android.gank.io.util.FabUtil;
 import com.bobomee.android.gank.io.widget.WrapperStaggeredGridLayoutManager;
 import com.bobomee.android.htttp.bean.Results;
 import java.util.List;
+import javax.inject.Inject;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -51,10 +54,12 @@ public class MeizhiFragment extends CategoryFragment<MeizhiContract.MeizhiPresen
   @BindView(R.id.recycler) RecyclerView mRecycler;
   @BindView(R.id.swipelayout) SwipeRefreshLayout mSwipelayout;
   FloatingActionButton mFab;
+  @Inject MeizhiListPresenter mMeizhiListPresenter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
+    MeizhiComponent.Init.INSTANCE.initialize(mBaseActivity, this).inject(this);
+    setPresenter(mMeizhiListPresenter);
   }
 
   public static MeizhiFragment newInstance() {

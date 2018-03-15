@@ -27,21 +27,13 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bobomee.android.common.util.ActivityUtils;
-import com.bobomee.android.data.di.Dagger2Application;
-import com.bobomee.android.data.di.internal.components.ApplicationComponent;
-import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.base.BaseActivity;
-import com.bobomee.android.gank.io.category.di.CategoryComponent;
-import com.bobomee.android.gank.io.category.di.CategoryModule;
-import com.bobomee.android.gank.io.meizhi.MeizhiFragment;
-import com.bobomee.android.gank.io.meizhi.MeizhiListPresenter;
-import javax.inject.Inject;
+import com.bobomee.android.gank.io.meizhi.mvp.MeizhiFragment;
 
-public class MainActivity extends BaseActivity implements
-    NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity
+    implements NavigationView.OnNavigationItemSelectedListener {
 
-  @Inject MeizhiListPresenter mCategoryListPresenter;
   @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -61,18 +53,6 @@ public class MainActivity extends BaseActivity implements
           R.id.contentFrame);
     }
 
-    CategoryModule.Builder categoryModuleBuilder = CategoryModule.newBuilder();
-    categoryModuleBuilder = categoryModuleBuilder.mMeizhiView(meizhiFragment);
-    CategoryModule categoryModule = categoryModuleBuilder.build();
-
-    CategoryComponent.Init.INSTANCE.setCategoryModule(categoryModule);
-
-    CategoryComponent categoryComponent = CategoryComponent.Init.INSTANCE.initialize(this);
-    categoryComponent.inject(this);
-
-    mCategoryListPresenter.setParams(DomainConstants.福利, DomainConstants.PAGE_SIZE,
-        DomainConstants.FIRST_PAGE);
-
     setNavigationView();
   }
 
@@ -80,15 +60,15 @@ public class MainActivity extends BaseActivity implements
     /**设置MenuItem的字体颜色**/
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
-    Resources resource=(Resources)getBaseContext().getResources();
-    ColorStateList csl=(ColorStateList)resource.getColorStateList(R.color.navigation_menu_item_color);
+    Resources resource = (Resources) getBaseContext().getResources();
+    ColorStateList csl =
+        (ColorStateList) resource.getColorStateList(R.color.navigation_menu_item_color);
     navigationView.setItemTextColor(csl);
     /**设置MenuItem默认选中项**/
     navigationView.getMenu().getItem(0).setChecked(true);
   }
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
         // Open the navigation drawer when the home icon is selected from the toolbar.

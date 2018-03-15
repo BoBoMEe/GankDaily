@@ -14,22 +14,38 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.mvp.day;
+package com.bobomee.android.gank.io.category.mvp;
 
 import com.bobomee.android.common.mvp.BaseContract.MvpPresenter;
 import com.bobomee.android.common.mvp.BaseContract.MvpView;
+import com.bobomee.android.htttp.bean.Results;
+import java.util.List;
 
 /**
- * @author BoBoMEe
- * @since 2017/6/21
+ * Project ID：400YF17050
+ * Resume:     <br/>
+ *
+ * @author 汪波
+ * @version 1.0
+ * @see
+ * @since 2017/2/22.汪波.
  */
-public interface DayContract {
+public interface CategoryContract {
 
-  public interface DayView<M, T extends MvpPresenter> extends MvpView<T> {
-
+  /**
+   * Created by Abner on 16/6/16.
+   * Email nimengbo@gmail.com
+   * github https://github.com/nimengbo
+   */
+  interface CategoryView<P extends CategoryPresenter> extends MvpView<P> {
   }
 
-  public interface DayPresenter extends MvpPresenter {
-    void setParams(Integer year, Integer month, Integer day);
+  /**
+   * the repos presenter
+   */
+  interface CategoryPresenter<V extends CategoryView>
+      extends MvpPresenter<V> {
+    void setParams(String category, int count, int page);
   }
+
 }

@@ -1,6 +1,6 @@
 package com.bobomee.android.gank.io.meizhi.mvp;
 
-import com.bobomee.android.gank.io.mvp.category.CategoryContract;
+import com.bobomee.android.gank.io.category.mvp.CategoryContract;
 import com.bobomee.android.htttp.bean.Results;
 import java.util.List;
 

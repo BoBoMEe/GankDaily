@@ -14,21 +14,12 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.mvp.category;
+package com.bobomee.android.gank.io.category.mvp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import com.bobomee.android.common.util.DayNightUtil;
-import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.base.BaseFragment;
-import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryPresenter;
-import com.bobomee.android.gank.io.mvp.category.CategoryContract.CategoryView;
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -40,8 +31,8 @@ import org.greenrobot.eventbus.EventBus;
  * @see
  * @since 2016/12/22.汪波.
  */
-public abstract class CategoryFragment<P extends CategoryPresenter> extends BaseFragment
-    implements CategoryView<P> {
+public abstract class CategoryFragment<P extends CategoryContract.CategoryPresenter> extends BaseFragment
+    implements CategoryContract.CategoryView<P> {
 
   private P mCategoryPresenter;
   protected boolean mIsRequested = false;
