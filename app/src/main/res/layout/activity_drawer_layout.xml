@@ -20,49 +20,57 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="start">
+    tools:openDrawer="start"
+    >
 
-    <LinearLayout
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <include
+        layout="@layout/common_layout_appbar"
+        />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        >
 
-        <include
-            layout="@layout/common_layout_appbar"
-            />
+      <android.support.v4.view.ViewPager
+          android:id="@+id/pager"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          />
 
-        <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/coordinatorLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <FrameLayout
-                android:id="@+id/contentFrame"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/fab_margin"
-                app:fabSize="normal"
-                app:layout_anchor="@id/contentFrame"
-                app:layout_anchorGravity="bottom|right|end"
-                app:srcCompat="@drawable/ic_arrow_upward_black_24dp"
-                />
-        </android.support.design.widget.CoordinatorLayout>
+      <android.support.design.widget.FloatingActionButton
+          android:id="@+id/fab"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|end"
+          android:layout_margin="@dimen/fab_margin"
+          app:fabSize="normal"
+          app:layout_anchor="@id/pager"
+          app:layout_anchorGravity="bottom|right|end"
+          app:srcCompat="@drawable/ic_arrow_upward_black_24dp"
+          />
+    </android.support.design.widget.CoordinatorLayout>
 
-    </LinearLayout>
+  </LinearLayout>
 
-    <!-- Navigation Drawer -->
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_actions" />
+  <!-- Navigation Drawer -->
+  <android.support.design.widget.NavigationView
+      android:id="@+id/nav_view"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_gravity="start"
+      android:fitsSystemWindows="true"
+      app:headerLayout="@layout/nav_header"
+      app:menu="@menu/drawer_actions"
+      />
 
 </android.support.v4.widget.DrawerLayout>

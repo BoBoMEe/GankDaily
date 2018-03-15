@@ -27,13 +27,13 @@ import com.bobomee.android.htttp.bean.GankCategory;
  * Email nimengbo@gmail.com
  * github https://github.com/nimengbo
  */
-public class CategoryListPresenter<V extends BaseContract.MvpView>
+public class CategoryPresenter<V extends BaseContract.MvpView>
     implements BaseContract.MvpPresenter<V> {
 
   private final Category mCategoryUseCase;
   private final V mCategoryView;
 
-  public CategoryListPresenter(@NonNull Category category, @NonNull V categoryView) {
+  public CategoryPresenter(@NonNull Category category, @NonNull V categoryView) {
     mCategoryUseCase = category;
     this.mCategoryView = categoryView;
   }

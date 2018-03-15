@@ -28,7 +28,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
-import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.meizhi.DataLoadFinishEvent;
 import com.bobomee.android.gank.io.meizhi.adapter.MeizhiAdapter;
@@ -54,7 +53,7 @@ public class MeizhiFragment extends CategoryFragment<MeizhiContract.MeizhiPresen
   @BindView(R.id.recycler) RecyclerView mRecycler;
   @BindView(R.id.swipelayout) SwipeRefreshLayout mSwipelayout;
   FloatingActionButton mFab;
-  @Inject MeizhiListPresenter mMeizhiListPresenter;
+  @Inject MeizhiPresenter mMeizhiListPresenter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

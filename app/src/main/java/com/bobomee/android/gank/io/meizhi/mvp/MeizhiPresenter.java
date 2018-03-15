@@ -20,7 +20,7 @@ import android.support.annotation.NonNull;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.gank.io.category.mapper.CategoryDataMapper;
-import com.bobomee.android.gank.io.category.mvp.CategoryListPresenter;
+import com.bobomee.android.gank.io.category.mvp.CategoryPresenter;
 import com.bobomee.android.htttp.bean.GankCategory;
 import javax.inject.Inject;
 
@@ -28,12 +28,12 @@ import javax.inject.Inject;
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public class MeizhiListPresenter extends CategoryListPresenter<MeizhiContract.MeizhiView>
+public class MeizhiPresenter extends CategoryPresenter<MeizhiContract.MeizhiView>
     implements MeizhiContract.MeizhiPresenter {
 
   private final CategoryDataMapper mCategoryDataMapper;
 
-  @Inject MeizhiListPresenter(@NonNull Category category,
+  @Inject MeizhiPresenter(@NonNull Category category,
       @NonNull MeizhiContract.MeizhiView meizhiView,
       @NonNull CategoryDataMapper categoryDataMapper) {
     super(category, meizhiView);
