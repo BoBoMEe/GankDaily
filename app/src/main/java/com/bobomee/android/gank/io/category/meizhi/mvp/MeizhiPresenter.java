@@ -14,13 +14,13 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.meizhi.mvp;
+package com.bobomee.android.gank.io.category.meizhi.mvp;
 
 import android.support.annotation.NonNull;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.gank.io.category.mapper.CategoryDataMapper;
-import com.bobomee.android.gank.io.category.mvp.CategoryPresenter;
+import com.bobomee.android.gank.io.category.mvp.MvpPresenter;
 import com.bobomee.android.htttp.bean.GankCategory;
 import javax.inject.Inject;
 
@@ -28,23 +28,28 @@ import javax.inject.Inject;
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public class MeizhiPresenter extends CategoryPresenter<MeizhiContract.MeizhiView>
-    implements MeizhiContract.MeizhiPresenter {
+public class MeizhiPresenter
+    extends MvpPresenter<MeizhiContract.IMeizhiView, Category, Category.Params,GankCategory>
+    implements MeizhiContract.IMeizhiPresenter {
 
   private final CategoryDataMapper mCategoryDataMapper;
 
   @Inject MeizhiPresenter(@NonNull Category category,
-      @NonNull MeizhiContract.MeizhiView meizhiView,
+      @NonNull MeizhiContract.IMeizhiView meizhiView,
       @NonNull CategoryDataMapper categoryDataMapper) {
     super(category, meizhiView);
     mCategoryDataMapper = categoryDataMapper;
   }
 
   @Inject void setupListeners() {
-    buildParams(DomainConstants.福利, DomainConstants.PAGE_SIZE, DomainConstants.FIRST_PAGE);
+    Category.Params params =
+        Category.Params.forParams(DomainConstants.福利, DomainConstants.PAGE_SIZE,
+            DomainConstants.FIRST_PAGE);
+    buildParams(params);
   }
 
-  @Override protected void doOnNext(GankCategory category, MeizhiContract.MeizhiView categoryView) {
+  @Override
+  protected void doOnNext(GankCategory category, MeizhiContract.IMeizhiView categoryView) {
     super.doOnNext(category, categoryView);
     categoryView.setDatas(mCategoryDataMapper.transform(category));
   }

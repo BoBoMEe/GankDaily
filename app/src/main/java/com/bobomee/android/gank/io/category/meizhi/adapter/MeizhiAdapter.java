@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.meizhi.adapter;
+package com.bobomee.android.gank.io.category.meizhi.adapter;
 
 import android.support.annotation.NonNull;
 import java.util.List;

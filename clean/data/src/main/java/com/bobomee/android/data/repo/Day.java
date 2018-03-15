@@ -22,6 +22,7 @@ import com.bobomee.android.domain.executor.ThreadExecutor;
 import com.bobomee.android.domain.interactor.UseCase;
 import com.bobomee.android.htttp.bean.GankDay;
 import io.rx_cache.Reply;
+import javax.inject.Inject;
 import rx.Observable;
 
 /**
@@ -54,7 +55,7 @@ public class Day extends UseCase<GankDay, Day.Params> {
     }
   }
 
-  protected Day(Repository reposRepository, ThreadExecutor threadExecutor,
+  @Inject public Day(Repository reposRepository, ThreadExecutor threadExecutor,
       PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
     this.mRepository = reposRepository;

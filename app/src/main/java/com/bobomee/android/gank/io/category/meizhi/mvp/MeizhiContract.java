@@ -1,4 +1,4 @@
-package com.bobomee.android.gank.io.meizhi.mvp;
+package com.bobomee.android.gank.io.category.meizhi.mvp;
 
 import com.bobomee.android.common.mvp.BaseContract;
 import com.bobomee.android.htttp.bean.Results;
@@ -10,10 +10,11 @@ import java.util.List;
  */
 
 public interface MeizhiContract {
-  interface MeizhiView extends BaseContract.MvpView<MeizhiPresenter> {
+  interface IMeizhiView extends BaseContract.MvpView<IMeizhiPresenter> {
     void setDatas(List<Results> datas);
   }
 
-  interface MeizhiPresenter extends BaseContract.MvpPresenter<MeizhiView> {
+  interface IMeizhiPresenter extends BaseContract.MvpPresenter<IMeizhiView> {
+
   }
 }

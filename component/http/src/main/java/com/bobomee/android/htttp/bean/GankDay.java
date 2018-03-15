@@ -29,6 +29,10 @@ import java.util.List;
 
 public class GankDay extends BaseData<GankDay.DayResults> implements Parcelable {
 
+  @Override public String toString() {
+    return "GankDay{" + "category=" + category + '}';
+  }
+
   public List<String> category;
 
   public List<String> getCategory() {
@@ -89,6 +93,27 @@ public class GankDay extends BaseData<GankDay.DayResults> implements Parcelable 
       public String getValue() {
         return value;
       }
+    }
+
+    @Override public String toString() {
+      return "DayResults{"
+          + "福利="
+          + 福利
+          + ", Android="
+          + Android
+          + ", iOS="
+          + iOS
+          + ", 休息视频="
+          + 休息视频
+          + ", 前端="
+          + 前端
+          + ", 拓展资源="
+          + 拓展资源
+          + ", App="
+          + App
+          + ", 瞎推荐="
+          + 瞎推荐
+          + '}';
     }
   }
 }

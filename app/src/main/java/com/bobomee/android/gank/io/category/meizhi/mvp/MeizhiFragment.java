@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.meizhi.mvp;
+package com.bobomee.android.gank.io.category.meizhi.mvp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,12 +29,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import com.bobomee.android.gank.io.R;
-import com.bobomee.android.gank.io.meizhi.DataLoadFinishEvent;
-import com.bobomee.android.gank.io.meizhi.adapter.MeizhiAdapter;
-import com.bobomee.android.gank.io.meizhi.adapter.MeizhiItemViewBinder;
-import com.bobomee.android.gank.io.meizhi.di.MeizhiComponent;
-import com.bobomee.android.gank.io.meizhi.service.DataService;
-import com.bobomee.android.gank.io.category.mvp.CategoryFragment;
+import com.bobomee.android.gank.io.category.meizhi.DataLoadFinishEvent;
+import com.bobomee.android.gank.io.category.meizhi.adapter.MeizhiAdapter;
+import com.bobomee.android.gank.io.category.meizhi.adapter.MeizhiItemViewBinder;
+import com.bobomee.android.gank.io.category.meizhi.di.MeizhiComponent;
+import com.bobomee.android.gank.io.category.meizhi.service.DataService;
+import com.bobomee.android.gank.io.category.mvp.MvpFragment;
 import com.bobomee.android.gank.io.util.FabUtil;
 import com.bobomee.android.gank.io.widget.WrapperStaggeredGridLayoutManager;
 import com.bobomee.android.htttp.bean.Results;
@@ -47,8 +47,8 @@ import org.greenrobot.eventbus.ThreadMode;
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public class MeizhiFragment extends CategoryFragment<MeizhiContract.MeizhiPresenter>
-    implements MeizhiContract.MeizhiView {
+public class MeizhiFragment extends MvpFragment<MeizhiContract.IMeizhiPresenter>
+    implements MeizhiContract.IMeizhiView {
   private MeizhiAdapter mMeizhiAdapter;
   @BindView(R.id.recycler) RecyclerView mRecycler;
   @BindView(R.id.swipelayout) SwipeRefreshLayout mSwipelayout;
@@ -113,11 +113,15 @@ public class MeizhiFragment extends CategoryFragment<MeizhiContract.MeizhiPresen
 
   @Override public View initFragmentView(LayoutInflater pInflater, ViewGroup pContainer,
       Bundle pSavedInstanceState) {
-    return pInflater.inflate(R.layout.content_main, pContainer, false);
+    return pInflater.inflate(R.layout.content_meizhi, pContainer, false);
   }
 
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     super.onCreateOptionsMenu(menu, inflater);
     inflater.inflate(R.menu.meizhi_menu, menu);
+  }
+
+  @Override protected boolean isRegisterEventBus() {
+    return true;
   }
 }

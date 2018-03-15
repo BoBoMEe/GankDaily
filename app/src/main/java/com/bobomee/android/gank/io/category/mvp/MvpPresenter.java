@@ -18,57 +18,56 @@ package com.bobomee.android.gank.io.category.mvp;
 
 import android.support.annotation.NonNull;
 import com.bobomee.android.common.mvp.BaseContract;
-import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.interactor.DefaultSubscriber;
-import com.bobomee.android.htttp.bean.GankCategory;
+import com.bobomee.android.domain.interactor.UseCase;
 
 /**
  * Created by Abner on 16/6/16.
  * Email nimengbo@gmail.com
  * github https://github.com/nimengbo
  */
-public class CategoryPresenter<V extends BaseContract.MvpView>
+public class MvpPresenter<V extends BaseContract.MvpView, U extends UseCase, Params, Result>
     implements BaseContract.MvpPresenter<V> {
 
-  private final Category mCategoryUseCase;
-  private final V mCategoryView;
+  private final U mUseCase;
+  private final V mMvpView;
 
-  public CategoryPresenter(@NonNull Category category, @NonNull V categoryView) {
-    mCategoryUseCase = category;
-    this.mCategoryView = categoryView;
+  public MvpPresenter(@NonNull U useCase, @NonNull V mvpView) {
+    mUseCase = useCase;
+    this.mMvpView = mvpView;
   }
 
   /**
    * Initializes the presenter by start retrieving the user
    */
   @Override public void subscribe(boolean update) {
-    mCategoryUseCase.execute(new DefaultSubscriber<GankCategory>() {
+    mUseCase.execute(new DefaultSubscriber<Result>() {
 
-      @Override public void onNext(GankCategory gankCategory) {
-        doOnNext(gankCategory, mCategoryView);
+      @Override public void onNext(Result result) {
+        doOnNext(result, mMvpView);
       }
     }, params(), update);
   }
 
   @Override public void unsubscribe() {
-    mCategoryUseCase.unsubscribe();
+    mUseCase.unsubscribe();
   }
 
   @Override public V getView() {
-    return mCategoryView;
+    return mMvpView;
   }
 
-  private Category.Params mParams;
+  private Params mParams;
 
-  public void buildParams(String category, int count, int page) {
-    mParams = Category.Params.forParams(category, count, page);
+  public void buildParams(Params params) {
+    mParams = params;
   }
 
-  private Category.Params params() {
+  private Params params() {
     return mParams;
   }
 
-  protected void doOnNext(GankCategory category, V categoryView) {
+  protected void doOnNext(Result result, V mvpView) {
 
   }
 }

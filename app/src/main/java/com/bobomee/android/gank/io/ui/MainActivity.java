@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity
       }
 
       @Override public int getCount() {
-        return 1;
+        return 2;
       }
     });
 

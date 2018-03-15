@@ -1,36 +1,35 @@
-package com.bobomee.android.gank.io.meizhi.di;
+package com.bobomee.android.gank.io.day.di;
 
 import android.app.Activity;
-import android.content.Context;
 import com.bobomee.android.data.di.Dagger2Application;
 import com.bobomee.android.data.di.internal.components.ActivityComponent;
 import com.bobomee.android.data.di.internal.components.ApplicationComponent;
 import com.bobomee.android.data.di.internal.modules.ActivityModule;
 import com.bobomee.android.data.di.scope.PerActivity;
-import com.bobomee.android.gank.io.meizhi.mvp.MeizhiContract;
-import com.bobomee.android.gank.io.meizhi.mvp.MeizhiFragment;
+import com.bobomee.android.gank.io.day.mvp.DayContract;
+import com.bobomee.android.gank.io.day.mvp.DayFragment;
 import dagger.Component;
 
 /**
  * @author BoBoMEe
- * @since 2018/3/15
+ * @since 2018/3/16
  */
 
 @PerActivity @Component(dependencies = ApplicationComponent.class, modules = {
-    MeizhiModule.class, ActivityModule.class
-}) public interface MeizhiComponent extends ActivityComponent {
+    DayModule.class, ActivityModule.class
+}) public interface DayComponent extends ActivityComponent {
 
-  void inject(MeizhiFragment meizhiFragment);
+  void inject(DayFragment dayFragment);
 
   enum Init {
     INSTANCE;
 
-    public MeizhiComponent initialize(Activity activity, MeizhiContract.MeizhiView meizhiView) {
+    public DayComponent initialize(Activity activity, DayContract.IDayView dayView) {
       ApplicationComponent applicationComponent = Dagger2Application.get(activity).getComponent();
-      return DaggerMeizhiComponent.builder()
+      return DaggerDayComponent.builder()
           .applicationComponent(applicationComponent)
           .activityModule(new ActivityModule(activity))
-          .meizhiModule(new MeizhiModule(meizhiView))
+          .dayModule(new DayModule(dayView))
           .build();
     }
 

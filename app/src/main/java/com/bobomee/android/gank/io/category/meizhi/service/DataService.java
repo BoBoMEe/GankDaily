@@ -14,14 +14,14 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.gank.io.meizhi.service;
+package com.bobomee.android.gank.io.category.meizhi.service;
 
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Parcelable;
-import com.bobomee.android.gank.io.meizhi.DataLoadFinishEvent;
+import com.bobomee.android.gank.io.category.meizhi.DataLoadFinishEvent;
 import com.bobomee.android.gank.io.util.GlideUtil;
 import com.bobomee.android.htttp.bean.Results;
 import java.util.ArrayList;

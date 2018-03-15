@@ -32,7 +32,7 @@ import org.greenrobot.eventbus.EventBus;
  * @see
  * @since 2016/12/22.汪波.
  */
-public abstract class CategoryFragment<P extends BaseContract.MvpPresenter> extends BaseFragment
+public abstract class MvpFragment<P extends BaseContract.MvpPresenter> extends BaseFragment
     implements BaseContract.MvpView<P> {
 
   private P mCategoryPresenter;
@@ -40,12 +40,16 @@ public abstract class CategoryFragment<P extends BaseContract.MvpPresenter> exte
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    EventBus.getDefault().register(this);
+    if (isRegisterEventBus() && !EventBus.getDefault().isRegistered(this)) {
+      EventBus.getDefault().register(this);
+    }
   }
 
   @Override public void onDestroy() {
     super.onDestroy();
-    EventBus.getDefault().unregister(this);
+    if (EventBus.getDefault().isRegistered(this)) {
+      EventBus.getDefault().unregister(this);
+    }
   }
 
   @Override public void onResume() {
@@ -69,5 +73,9 @@ public abstract class CategoryFragment<P extends BaseContract.MvpPresenter> exte
 
   @Override public P getPresenter() {
     return mCategoryPresenter;
+  }
+
+  protected boolean isRegisterEventBus() {
+    return false;
   }
 }

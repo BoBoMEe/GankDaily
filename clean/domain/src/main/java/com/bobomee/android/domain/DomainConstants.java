@@ -50,4 +50,10 @@ public class DomainConstants {
   public static final String 瞎推荐 = "瞎推荐";
 
 
+
+  public static final Integer Y = 2018;
+  public static final Integer M = 3;
+  public static final Integer D = 16;
+
+
 }
