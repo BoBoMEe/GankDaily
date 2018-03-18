@@ -20,6 +20,7 @@ import com.bobomee.android.htttp.okhttp.interceptor.OfflineCacheControlIntercept
 import com.bobomee.android.htttp.okhttp.interceptor.UserAgentInterceptor;
 import com.bobomee.android.htttp.util.CacheUtil;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.zhy.http.okhttp.log.LoggerInterceptor;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -46,6 +47,8 @@ public class okHttp {
   okHttp() {
 
     okHttpClient = new OkHttpClient.Builder()
+
+        .addInterceptor(new LoggerInterceptor("gank.io",true))
 
         //添加UA
         .addInterceptor(new UserAgentInterceptor(UserAgentInterceptor.UAHelper.INSTANCE.getUserAgent()))

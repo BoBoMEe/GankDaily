@@ -16,12 +16,8 @@
 
 package com.bobomee.android.gank.io.category.mvp;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
 import com.bobomee.android.common.mvp.BaseContract;
 import com.bobomee.android.gank.io.base.BaseFragment;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Project ID：400YF17050
@@ -38,20 +34,6 @@ public abstract class MvpFragment<P extends BaseContract.MvpPresenter> extends B
   private P mCategoryPresenter;
   protected boolean mIsRequested = false;
 
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (isRegisterEventBus() && !EventBus.getDefault().isRegistered(this)) {
-      EventBus.getDefault().register(this);
-    }
-  }
-
-  @Override public void onDestroy() {
-    super.onDestroy();
-    if (EventBus.getDefault().isRegistered(this)) {
-      EventBus.getDefault().unregister(this);
-    }
-  }
-
   @Override public void onResume() {
     super.onResume();
     mCategoryPresenter.subscribe(!mIsRequested);
@@ -62,20 +44,11 @@ public abstract class MvpFragment<P extends BaseContract.MvpPresenter> extends B
     mCategoryPresenter.unsubscribe();
   }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    setHasOptionsMenu(true);
-  }
-
   @Override public void setPresenter(P presenter) {
     this.mCategoryPresenter = presenter;
   }
 
   @Override public P getPresenter() {
     return mCategoryPresenter;
-  }
-
-  protected boolean isRegisterEventBus() {
-    return false;
   }
 }

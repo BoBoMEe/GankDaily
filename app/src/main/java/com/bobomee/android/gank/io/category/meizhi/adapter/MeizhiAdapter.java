@@ -17,25 +17,37 @@
 package com.bobomee.android.gank.io.category.meizhi.adapter;
 
 import android.support.annotation.NonNull;
+import com.bobomee.android.gank.io.base.adapter.LoadMoreAdapter;
 import java.util.List;
-import me.drakeet.multitype.MultiTypeAdapter;
+import me.drakeet.multitype.TypePool;
 
 /**
  * @author BoBoMEe
  * @since 2017/6/17
  */
-public class MeizhiAdapter extends MultiTypeAdapter {
+public class MeizhiAdapter extends LoadMoreAdapter {
 
-  public void clear(){
+  public MeizhiAdapter() {
+    super();
+  }
+
+  public MeizhiAdapter(@NonNull List<?> items) {
+    super(items);
+  }
+
+  public MeizhiAdapter(@NonNull List<?> items, int initialCapacity) {
+    super(items, initialCapacity);
+  }
+
+  public MeizhiAdapter(@NonNull List<?> items, @NonNull TypePool pool) {
+    super(items, pool);
+  }
+
+  public void clear() {
     List<?> items = getItems();
-    if (!items.isEmpty()){
+    if (!items.isEmpty()) {
       items.clear();
       notifyDataSetChanged();
     }
-  }
-
-  @Override public void setItems(@NonNull List<?> items) {
-    super.setItems(items);
-    notifyDataSetChanged();
   }
 }

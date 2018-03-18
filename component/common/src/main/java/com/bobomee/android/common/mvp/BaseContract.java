@@ -27,8 +27,6 @@ public interface BaseContract {
     void subscribe(boolean update);
 
     void unsubscribe();
-
-    V getView();
   }
 
   /**

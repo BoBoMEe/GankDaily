@@ -14,4 +14,8 @@
  *  limitations under the License.
  */
 
-include ':app', ':component:common', 'component:http', ':clean:domain', ':clean:data'
+include ':app', ':component:customerviews',
+    ':component:common',
+    ':component:http',
+    ':clean:domain',
+    ':clean:data'

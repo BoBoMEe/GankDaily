@@ -19,27 +19,25 @@ package com.bobomee.android.gank.io.category.meizhi.mvp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
 import com.bobomee.android.gank.io.R;
+import com.bobomee.android.gank.io.base.BaseRecyclerFragment;
 import com.bobomee.android.gank.io.category.meizhi.DataLoadFinishEvent;
 import com.bobomee.android.gank.io.category.meizhi.adapter.MeizhiAdapter;
 import com.bobomee.android.gank.io.category.meizhi.adapter.MeizhiItemViewBinder;
 import com.bobomee.android.gank.io.category.meizhi.di.MeizhiComponent;
 import com.bobomee.android.gank.io.category.meizhi.service.DataService;
-import com.bobomee.android.gank.io.category.mvp.MvpFragment;
 import com.bobomee.android.gank.io.util.FabUtil;
 import com.bobomee.android.gank.io.widget.WrapperStaggeredGridLayoutManager;
 import com.bobomee.android.htttp.bean.Results;
 import java.util.List;
 import javax.inject.Inject;
+import me.drakeet.multitype.Items;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -47,13 +45,12 @@ import org.greenrobot.eventbus.ThreadMode;
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public class MeizhiFragment extends MvpFragment<MeizhiContract.IMeizhiPresenter>
+public class MeizhiFragment extends BaseRecyclerFragment<MeizhiContract.IMeizhiPresenter>
     implements MeizhiContract.IMeizhiView {
   private MeizhiAdapter mMeizhiAdapter;
-  @BindView(R.id.recycler) RecyclerView mRecycler;
-  @BindView(R.id.swipelayout) SwipeRefreshLayout mSwipelayout;
   FloatingActionButton mFab;
   @Inject MeizhiPresenter mMeizhiListPresenter;
+  private Items mItems;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -61,11 +58,21 @@ public class MeizhiFragment extends MvpFragment<MeizhiContract.IMeizhiPresenter>
     setPresenter(mMeizhiListPresenter);
   }
 
+  @Override protected void loadData(boolean clear) {
+    mMeizhiListPresenter.subscribe(clear);
+  }
+
   public static MeizhiFragment newInstance() {
     Bundle args = new Bundle();
     MeizhiFragment fragment = new MeizhiFragment();
     fragment.setArguments(args);
     return fragment;
+  }
+
+  @Override public void onResume() {
+    mSwipelayout.setRefreshing(true);
+    super.onResume();
+    notifyLoadingStarted();
   }
 
   @Override public void setDatas(List<Results> datas) {
@@ -76,12 +83,14 @@ public class MeizhiFragment extends MvpFragment<MeizhiContract.IMeizhiPresenter>
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    setHasOptionsMenu(true);
     setViews();
     setListeners();
   }
 
   private void setListeners() {
-    mMeizhiAdapter = new MeizhiAdapter();
+    mItems = new Items();
+    mMeizhiAdapter = new MeizhiAdapter(mItems);
     mMeizhiAdapter.register(Results.class, new MeizhiItemViewBinder());
     mRecycler.setAdapter(mMeizhiAdapter);
 
@@ -107,8 +116,25 @@ public class MeizhiFragment extends MvpFragment<MeizhiContract.IMeizhiPresenter>
   public void dataEvent(DataLoadFinishEvent dataLoadFinishEvent) {
     List<Results> datas = dataLoadFinishEvent.getDatas();
     if (null != datas && !datas.isEmpty()) {
+
+      Items tempItems = isClear ? new Items() : new Items(mItems);
+      tempItems.addAll(datas);
+      mItems = tempItems;
+
       mMeizhiAdapter.setItems(datas);
+      mMeizhiAdapter.notifyDataSetChanged();
     }
+    notifyLoadingFinished();
+    setRefresh(false);
+    setEnd(datas == null || datas.isEmpty());
+  }
+
+  @Override protected boolean onInterceptLoadMore() {
+    if (!isLoading()) {
+      mMeizhiListPresenter.addPage();
+      loadData(false);
+    }
+    return true;
   }
 
   @Override public View initFragmentView(LayoutInflater pInflater, ViewGroup pContainer,

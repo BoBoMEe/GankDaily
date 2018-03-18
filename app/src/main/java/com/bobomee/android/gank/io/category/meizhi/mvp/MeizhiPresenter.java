@@ -29,10 +29,11 @@ import javax.inject.Inject;
  * @since 2017/6/21
  */
 public class MeizhiPresenter
-    extends MvpPresenter<MeizhiContract.IMeizhiView, Category, Category.Params,GankCategory>
+    extends MvpPresenter<MeizhiContract.IMeizhiView, Category, Category.Params, GankCategory>
     implements MeizhiContract.IMeizhiPresenter {
 
   private final CategoryDataMapper mCategoryDataMapper;
+  private int curPage = DomainConstants.FIRST_PAGE;
 
   @Inject MeizhiPresenter(@NonNull Category category,
       @NonNull MeizhiContract.IMeizhiView meizhiView,
@@ -42,10 +43,18 @@ public class MeizhiPresenter
   }
 
   @Inject void setupListeners() {
+    updatparams();
+  }
+
+  private void updatparams() {
     Category.Params params =
-        Category.Params.forParams(DomainConstants.福利, DomainConstants.PAGE_SIZE,
-            DomainConstants.FIRST_PAGE);
+        Category.Params.forParams(DomainConstants.福利, DomainConstants.PAGE_SIZE, curPage);
     buildParams(params);
+  }
+
+  public void addPage() {
+    ++curPage;
+    updatparams();
   }
 
   @Override

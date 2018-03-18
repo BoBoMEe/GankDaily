@@ -79,7 +79,6 @@ dependencies {
   compile "com.google.dagger:dagger:${dagger2Version}"
   apt "com.jakewharton:butterknife-compiler:${butterknifeCompilerVersion}"
   apt "com.google.dagger:dagger-compiler:${dagger2Version}"
-
   provided "javax.annotation:jsr250-api:${jsr250Version}"
   provided "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}"
   androidTestCompile "com.android.support.test:runner:${androidTesVersion}"
@@ -88,16 +87,12 @@ dependencies {
   testCompile "junit:junit:${junitVersion}"
   testCompile "org.mockito:mockito-core:${mockitoVersion}"
   testCompile "org.robolectric:robolectric:${robolectricVersion}"
-
   compile "com.github.chrisbanes:PhotoView:${photoviewVersion}"
   compile "com.bobomee.android:recyclerviewhelper:${recyclerVersion}"
   compile "com.bobomee.android:layout-api:${layoutVersion}"
   apt "com.bobomee.android:layout-compiler:${layoutVersion}"
-  compile "me.drakeet.multitype:multitype:${multitypeVersion}"
-  compile 'com.github.markomilos:paginate:0.5.1'
-
   compile project(':clean:data')
-
+  compile project(':component:customerviews')
 }
 
 

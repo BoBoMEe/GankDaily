@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.bobomee.android.common.util.DayNightUtil;
 import com.bobomee.android.gank.io.R;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Project ID：400YF17050
@@ -46,6 +47,9 @@ public abstract class BaseFragment extends Fragment {
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mBaseActivity = (BaseActivity) getActivity();
+    if (isRegisterEventBus() && !EventBus.getDefault().isRegistered(this)) {
+      EventBus.getDefault().register(this);
+    }
   }
 
   @Nullable @Override
@@ -79,5 +83,16 @@ public abstract class BaseFragment extends Fragment {
         break;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  protected boolean isRegisterEventBus() {
+    return false;
+  }
+
+  @Override public void onDestroy() {
+    super.onDestroy();
+    if (isRegisterEventBus()&&EventBus.getDefault().isRegistered(this)) {
+      EventBus.getDefault().unregister(this);
+    }
   }
 }

@@ -46,15 +46,11 @@ public class MvpPresenter<V extends BaseContract.MvpView, U extends UseCase, Par
       @Override public void onNext(Result result) {
         doOnNext(result, mMvpView);
       }
-    }, params(), update);
+    }, params(),update);
   }
 
   @Override public void unsubscribe() {
     mUseCase.unsubscribe();
-  }
-
-  @Override public V getView() {
-    return mMvpView;
   }
 
   private Params mParams;
