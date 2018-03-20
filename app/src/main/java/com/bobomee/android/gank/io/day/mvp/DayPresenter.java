@@ -3,7 +3,7 @@ package com.bobomee.android.gank.io.day.mvp;
 import android.support.annotation.NonNull;
 import com.bobomee.android.data.repo.Day;
 import com.bobomee.android.domain.DomainConstants;
-import com.bobomee.android.gank.io.category.mvp.MvpPresenter;
+import com.bobomee.android.gank.io.base.MvpPresenter;
 import com.bobomee.android.htttp.bean.GankDay;
 import javax.inject.Inject;
 

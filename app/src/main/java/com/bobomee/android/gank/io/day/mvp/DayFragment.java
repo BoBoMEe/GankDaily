@@ -9,7 +9,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import com.bobomee.android.common.util.ToastUtil;
 import com.bobomee.android.gank.io.R;
-import com.bobomee.android.gank.io.category.mvp.MvpFragment;
+import com.bobomee.android.gank.io.base.MvpFragment;
 import com.bobomee.android.gank.io.day.di.DayComponent;
 import com.bobomee.android.htttp.bean.GankDay;
 import javax.inject.Inject;

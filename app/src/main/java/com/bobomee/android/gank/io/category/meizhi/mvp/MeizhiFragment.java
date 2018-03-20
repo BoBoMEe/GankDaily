@@ -30,8 +30,9 @@ import com.bobomee.android.gank.io.base.BaseRecyclerFragment;
 import com.bobomee.android.gank.io.category.meizhi.DataLoadFinishEvent;
 import com.bobomee.android.gank.io.category.meizhi.adapter.MeizhiAdapter;
 import com.bobomee.android.gank.io.category.meizhi.adapter.MeizhiItemViewBinder;
-import com.bobomee.android.gank.io.category.meizhi.di.MeizhiComponent;
+import com.bobomee.android.gank.io.category.meizhi.di.CategoryComponent;
 import com.bobomee.android.gank.io.category.meizhi.service.DataService;
+import com.bobomee.android.gank.io.category.mvp.CategoryContract;
 import com.bobomee.android.gank.io.util.FabUtil;
 import com.bobomee.android.gank.io.widget.WrapperStaggeredGridLayoutManager;
 import com.bobomee.android.htttp.bean.Results;
@@ -45,8 +46,8 @@ import org.greenrobot.eventbus.ThreadMode;
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public class MeizhiFragment extends BaseRecyclerFragment<MeizhiContract.IMeizhiPresenter>
-    implements MeizhiContract.IMeizhiView {
+public class MeizhiFragment extends BaseRecyclerFragment<CategoryContract.ICategoryPresenter>
+    implements CategoryContract.ICategoryView {
   private MeizhiAdapter mMeizhiAdapter;
   FloatingActionButton mFab;
   @Inject MeizhiPresenter mMeizhiListPresenter;
@@ -54,7 +55,7 @@ public class MeizhiFragment extends BaseRecyclerFragment<MeizhiContract.IMeizhiP
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    MeizhiComponent.Init.INSTANCE.initialize(mBaseActivity, this).inject(this);
+    CategoryComponent.Init.INSTANCE.initialize(mBaseActivity, this).inject(this);
     setPresenter(mMeizhiListPresenter);
   }
 

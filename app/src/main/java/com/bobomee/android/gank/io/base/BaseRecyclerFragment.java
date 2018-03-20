@@ -30,7 +30,6 @@ import com.bobomee.android.common.mvp.BaseContract;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.base.adapter.LoadMoreDelegate;
 import com.bobomee.android.gank.io.base.adapter.SwipeRefreshDelegate;
-import com.bobomee.android.gank.io.category.mvp.MvpFragment;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**

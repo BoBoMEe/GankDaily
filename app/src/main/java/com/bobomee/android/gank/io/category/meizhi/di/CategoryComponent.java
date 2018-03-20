@@ -6,7 +6,7 @@ import com.bobomee.android.data.di.internal.components.ActivityComponent;
 import com.bobomee.android.data.di.internal.components.ApplicationComponent;
 import com.bobomee.android.data.di.internal.modules.ActivityModule;
 import com.bobomee.android.data.di.scope.PerActivity;
-import com.bobomee.android.gank.io.category.meizhi.mvp.MeizhiContract;
+import com.bobomee.android.gank.io.category.mvp.CategoryContract;
 import com.bobomee.android.gank.io.category.meizhi.mvp.MeizhiFragment;
 import dagger.Component;
 
@@ -16,20 +16,21 @@ import dagger.Component;
  */
 
 @PerActivity @Component(dependencies = ApplicationComponent.class, modules = {
-    MeizhiModule.class, ActivityModule.class
-}) public interface MeizhiComponent extends ActivityComponent {
+    CategoryModule.class, ActivityModule.class
+}) public interface CategoryComponent extends ActivityComponent {
 
   void inject(MeizhiFragment meizhiFragment);
+
 
   enum Init {
     INSTANCE;
 
-    public MeizhiComponent initialize(Activity activity, MeizhiContract.IMeizhiView meizhiView) {
+    public CategoryComponent initialize(Activity activity, CategoryContract.ICategoryView categoryView) {
       ApplicationComponent applicationComponent = Dagger2Application.get(activity).getComponent();
-      return DaggerMeizhiComponent.builder()
+      return DaggerCategoryComponent.builder()
           .applicationComponent(applicationComponent)
           .activityModule(new ActivityModule(activity))
-          .meizhiModule(new MeizhiModule(meizhiView))
+          .categoryModule(new CategoryModule(categoryView))
           .build();
     }
 
