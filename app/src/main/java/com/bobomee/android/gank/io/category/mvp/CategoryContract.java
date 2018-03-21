@@ -28,11 +28,11 @@ import java.util.List;
  */
 
 public interface CategoryContract {
-  interface ICategoryView extends BaseContract.MvpView<ICategoryPresenter> {
+  interface ICategoryView extends BaseContract.IMvpView<ICategoryPresenter> {
     void setDatas(List<Results> datas);
   }
 
-  interface ICategoryPresenter extends BaseContract.MvpPresenter<ICategoryView> {
+  interface ICategoryPresenter extends BaseContract.IMvpPresenter<ICategoryView> {
 
   }
 }

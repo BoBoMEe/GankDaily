@@ -29,8 +29,8 @@ import com.bobomee.android.common.mvp.BaseContract;
  * @see
  * @since 2016/12/22.汪波.
  */
-public abstract class MvpFragment<P extends BaseContract.MvpPresenter> extends BaseFragment
-    implements BaseContract.MvpView<P> {
+public abstract class MvpFragment<P extends BaseContract.IMvpPresenter> extends BaseFragment
+    implements BaseContract.IMvpView<P> {
 
   private P mCategoryPresenter;
   protected boolean mIsRequested = false;

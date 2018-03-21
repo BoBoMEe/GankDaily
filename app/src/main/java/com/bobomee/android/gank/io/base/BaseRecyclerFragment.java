@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 2018/3/19
  */
 
-public abstract class BaseRecyclerFragment<P extends BaseContract.MvpPresenter>
+public abstract class BaseRecyclerFragment<P extends BaseContract.IMvpPresenter>
     extends MvpFragment<P>
     implements SwipeRefreshDelegate.OnSwipeRefreshListener, LoadMoreDelegate.LoadMoreSubject {
 

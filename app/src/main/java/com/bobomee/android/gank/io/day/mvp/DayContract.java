@@ -10,11 +10,11 @@ import com.bobomee.android.htttp.bean.GankDay;
 
 public interface DayContract {
 
-  interface IDayView extends BaseContract.MvpView<IDayPresenter> {
+  interface IDayView extends BaseContract.IMvpView<IDayPresenter> {
     void setDatas(GankDay results);
   }
 
-  interface IDayPresenter extends BaseContract.MvpPresenter<IDayView> {
+  interface IDayPresenter extends BaseContract.IMvpPresenter<IDayView> {
 
   }
 }

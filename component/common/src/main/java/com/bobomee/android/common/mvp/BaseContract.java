@@ -22,7 +22,7 @@ package com.bobomee.android.common.mvp;
 
 public interface BaseContract {
 
-  public interface MvpPresenter<V> {
+  public interface IMvpPresenter<V> {
 
     void subscribe(boolean update);
 
@@ -35,7 +35,7 @@ public interface BaseContract {
    * @author bobomee.
    */
 
-  public interface MvpView<P> {
+  public interface IMvpView<P> {
 
     void setPresenter(P presenter);
 

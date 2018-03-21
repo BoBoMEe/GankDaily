@@ -28,8 +28,8 @@ import com.bobomee.android.domain.interactor.UseCase;
  * Email nimengbo@gmail.com
  * github https://github.com/nimengbo
  */
-public class MvpPresenter<V extends BaseContract.MvpView, U extends UseCase, Params, Result>
-    implements BaseContract.MvpPresenter<V> {
+public class MvpPresenter<V extends BaseContract.IMvpView, U extends UseCase, Params, Result>
+    implements BaseContract.IMvpPresenter<V> {
 
   private final U mUseCase;
   private final V mMvpView;
