@@ -1,7 +1,7 @@
-package com.bobomee.android.gank.io.category.meizhi.di;
+package com.bobomee.android.gank.io.category.ui.di;
 
 import com.bobomee.android.data.di.scope.PerActivity;
-import com.bobomee.android.gank.io.category.mvp.CategoryContract;
+import com.bobomee.android.gank.io.category.ui.CategoryContract;
 import dagger.Module;
 import dagger.Provides;
 

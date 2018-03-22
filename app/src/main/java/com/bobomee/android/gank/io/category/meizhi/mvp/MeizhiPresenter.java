@@ -20,8 +20,8 @@ import android.support.annotation.NonNull;
 import com.bobomee.android.data.repo.Category;
 import com.bobomee.android.domain.DomainConstants;
 import com.bobomee.android.gank.io.category.mapper.CategoryDataMapper;
-import com.bobomee.android.gank.io.base.MvpPresenter;
-import com.bobomee.android.gank.io.category.mvp.CategoryContract;
+import com.bobomee.android.gank.io.category.ui.CategoryContract;
+import com.bobomee.android.gank.io.category.ui.CategoryPresenter;
 import com.bobomee.android.htttp.bean.GankCategory;
 import javax.inject.Inject;
 
@@ -29,12 +29,9 @@ import javax.inject.Inject;
  * @author BoBoMEe
  * @since 2017/6/21
  */
-public class MeizhiPresenter
-    extends MvpPresenter<CategoryContract.ICategoryView, Category, Category.Params, GankCategory>
-    implements CategoryContract.ICategoryPresenter {
+public class MeizhiPresenter extends CategoryPresenter {
 
   private final CategoryDataMapper mCategoryDataMapper;
-  private int curPage = DomainConstants.FIRST_PAGE;
 
   @Inject MeizhiPresenter(@NonNull Category category,
       @NonNull CategoryContract.ICategoryView meizhiView,
@@ -48,20 +45,10 @@ public class MeizhiPresenter
     updatparams();
   }
 
-  private void updatparams() {
+  public void updatparams() {
     Category.Params params =
         Category.Params.forParams(DomainConstants.福利, DomainConstants.PAGE_SIZE, curPage);
     buildParams(params);
-  }
-
-  public void addPage() {
-    ++curPage;
-    updatparams();
-  }
-
-  public void resetPage(){
-    curPage =0;
-    updatparams();
   }
 
   @Override

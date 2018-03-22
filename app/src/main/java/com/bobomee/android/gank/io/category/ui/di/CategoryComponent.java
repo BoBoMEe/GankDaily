@@ -1,4 +1,4 @@
-package com.bobomee.android.gank.io.category.meizhi.di;
+package com.bobomee.android.gank.io.category.ui.di;
 
 import android.app.Activity;
 import com.bobomee.android.data.di.Dagger2Application;
@@ -6,8 +6,8 @@ import com.bobomee.android.data.di.internal.components.ActivityComponent;
 import com.bobomee.android.data.di.internal.components.ApplicationComponent;
 import com.bobomee.android.data.di.internal.modules.ActivityModule;
 import com.bobomee.android.data.di.scope.PerActivity;
-import com.bobomee.android.gank.io.category.mvp.CategoryContract;
 import com.bobomee.android.gank.io.category.meizhi.mvp.MeizhiFragment;
+import com.bobomee.android.gank.io.category.ui.CategoryContract;
 import dagger.Component;
 
 /**
@@ -20,7 +20,6 @@ import dagger.Component;
 }) public interface CategoryComponent extends ActivityComponent {
 
   void inject(MeizhiFragment meizhiFragment);
-
 
   enum Init {
     INSTANCE;

@@ -16,7 +16,7 @@
  *
  */
 
-package com.bobomee.android.gank.io.category.mvp;
+package com.bobomee.android.gank.io.category.ui;
 
 import com.bobomee.android.common.mvp.BaseContract;
 import com.bobomee.android.htttp.bean.Results;
@@ -34,5 +34,8 @@ public interface CategoryContract {
 
   interface ICategoryPresenter extends BaseContract.IMvpPresenter<ICategoryView> {
 
+    void addPage();
+
+    void resetPage();
   }
 }

@@ -1,8 +1,7 @@
 package com.bobomee.android.gank.io.ui.adapter;
 
-import android.support.v4.app.Fragment;
 import com.bobomee.android.gank.io.category.meizhi.mvp.MeizhiFragment;
-import com.bobomee.android.gank.io.day.mvp.DayFragment;
+import com.bobomee.android.gank.io.category.ui.CategoryFragment;
 
 /**
  * @author BoBoMEe
@@ -11,14 +10,14 @@ import com.bobomee.android.gank.io.day.mvp.DayFragment;
 
 public class CategoryFragmentFactory {
 
-  public static Fragment getInstance(int pos) {
-    Fragment result = new Fragment();
+  public static CategoryFragment getInstance(int pos) {
+    CategoryFragment result = new CategoryFragment();
     switch (pos) {
       case 0:
         result = MeizhiFragment.newInstance();
         break;
       case 1:
-        result = DayFragment.newInstance();
+        //result = DayFragment.newInstance();
         break;
     }
     return result;
