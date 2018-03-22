@@ -49,25 +49,24 @@ public abstract class BaseRecyclerFragment<P extends BaseContract.IMvpPresenter>
 
   private AtomicInteger loadingCount;
   private boolean isEnd;
-  protected  boolean isClear;
+  protected boolean isClear = true;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    refreshDelegate = new SwipeRefreshDelegate(mSwipelayout, this);
-    loadMoreDelegate = new LoadMoreDelegate(this);
+
     loadingCount = new AtomicInteger(0);
   }
 
-  @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
-    View root = super.onCreateView(inflater, container, savedInstanceState);
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    refreshDelegate = new SwipeRefreshDelegate(mSwipelayout, this);
+    loadMoreDelegate = new LoadMoreDelegate(this);
     loadMoreDelegate.attach(mRecycler);
-    refreshDelegate.attach(root);
-    return root;
+    refreshDelegate.attach(view);
   }
 
-  protected void loadData(boolean clear){
-   isClear = clear;
+  protected void loadData(boolean clear) {
+    isClear = clear;
   }
 
   protected boolean onInterceptLoadMore() {
@@ -79,7 +78,13 @@ public abstract class BaseRecyclerFragment<P extends BaseContract.IMvpPresenter>
   }
 
   @Override public void onSwipeRefresh() {
-    loadData(true);
+    if (!onInterceptRefresh()) {
+      loadData(true);
+    }
+  }
+
+  protected boolean onInterceptRefresh() {
+    return false;
   }
 
   @Override public View initFragmentView(LayoutInflater pInflater, ViewGroup pContainer,

@@ -58,6 +58,11 @@ public class MeizhiPresenter
     updatparams();
   }
 
+  public void resetPage(){
+    curPage =0;
+    updatparams();
+  }
+
   @Override
   protected void doOnNext(GankCategory category, CategoryContract.ICategoryView categoryView) {
     super.doOnNext(category, categoryView);
