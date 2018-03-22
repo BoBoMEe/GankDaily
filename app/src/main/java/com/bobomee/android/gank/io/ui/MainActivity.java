@@ -31,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.base.BaseActivity;
-import com.bobomee.android.gank.io.ui.adapter.MainFragmentFactory;
+import com.bobomee.android.gank.io.ui.adapter.CategoryFragmentFactory;
 
 public class MainActivity extends BaseActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity
 
     pager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
       @Override public Fragment getItem(int position) {
-        return MainFragmentFactory.getInstance(position);
+        return CategoryFragmentFactory.getInstance(position);
       }
 
       @Override public int getCount() {

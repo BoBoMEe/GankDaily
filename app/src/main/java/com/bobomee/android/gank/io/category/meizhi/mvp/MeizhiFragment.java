@@ -19,7 +19,7 @@ package com.bobomee.android.gank.io.category.meizhi.mvp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,7 +33,6 @@ import com.bobomee.android.gank.io.category.meizhi.adapter.MeizhiItemViewBinder;
 import com.bobomee.android.gank.io.category.meizhi.di.CategoryComponent;
 import com.bobomee.android.gank.io.category.mvp.CategoryContract;
 import com.bobomee.android.gank.io.util.FabUtil;
-import com.bobomee.android.gank.io.widget.WrapperStaggeredGridLayoutManager;
 import com.bobomee.android.htttp.bean.Results;
 import java.util.List;
 import javax.inject.Inject;
@@ -53,7 +52,6 @@ public class MeizhiFragment extends BaseRecyclerFragment<CategoryContract.ICateg
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     CategoryComponent.Init.INSTANCE.initialize(mBaseActivity, this).inject(this);
-    setPresenter(mMeizhiListPresenter);
   }
 
   @Override protected void loadData(boolean clear) {
@@ -68,16 +66,10 @@ public class MeizhiFragment extends BaseRecyclerFragment<CategoryContract.ICateg
     return fragment;
   }
 
-  @Override public void onResume() {
-    mSwipelayout.setRefreshing(true);
-    super.onResume();
-    notifyLoadingStarted();
-  }
-
   @Override public void setDatas(List<Results> datas) {
-    mIsRequested = true;
-    mSwipelayout.setRefreshing(false);
+    setRequested(true);
     dataEvent(datas);
+    notifyLoadingFinished();
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -101,21 +93,15 @@ public class MeizhiFragment extends BaseRecyclerFragment<CategoryContract.ICateg
 
     mFab.setOnClickListener(v -> mRecycler.smoothScrollToPosition(0));
 
-    mRecycler.setLayoutManager(
-        new WrapperStaggeredGridLayoutManager(4, OrientationHelper.VERTICAL) {
-          @Override
-          public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-            try {
-              super.onLayoutChildren(recycler, state);
-            } catch (IndexOutOfBoundsException e) {
-              e.printStackTrace();
-            }
-          }
-        });
-
-    mSwipelayout.setOnRefreshListener(() -> {
-      mMeizhiAdapter.clear();
-      getPresenter().subscribe(true);
+    mRecycler.setLayoutManager(new LinearLayoutManager(mBaseActivity) {
+      @Override
+      public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+        try {
+          super.onLayoutChildren(recycler, state);
+        } catch (IndexOutOfBoundsException e) {
+          e.printStackTrace();
+        }
+      }
     });
   }
 
@@ -133,9 +119,8 @@ public class MeizhiFragment extends BaseRecyclerFragment<CategoryContract.ICateg
         mMeizhiAdapter.notifyItemRangeInserted(mItems.size() - datas.size(), datas.size());
       }
     }
-    notifyLoadingFinished();
-    setRefresh(false);
     setEnd(datas == null || datas.isEmpty());
+    setRefresh(false);
   }
 
   @Override protected boolean onInterceptLoadMore() {

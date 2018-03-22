@@ -9,7 +9,7 @@ import com.bobomee.android.gank.io.day.mvp.DayFragment;
  * @since 2018/3/16
  */
 
-public class MainFragmentFactory {
+public class CategoryFragmentFactory {
 
   public static Fragment getInstance(int pos) {
     Fragment result = new Fragment();

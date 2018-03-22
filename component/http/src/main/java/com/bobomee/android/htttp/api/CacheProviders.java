@@ -20,8 +20,8 @@ import com.bobomee.android.htttp.bean.GankCategory;
 import com.bobomee.android.htttp.bean.GankDay;
 import com.bobomee.android.htttp.bean.GankQuery;
 import io.rx_cache.DynamicKey;
+import io.rx_cache.DynamicKeyGroup;
 import io.rx_cache.EvictDynamicKey;
-import io.rx_cache.EvictProvider;
 import io.rx_cache.Reply;
 import rx.Observable;
 
@@ -35,11 +35,11 @@ import rx.Observable;
 public interface CacheProviders {
 
   Observable<Reply<GankQuery>> getQueryData(Observable<GankQuery> queryObservable,
-      DynamicKey query, EvictDynamicKey queryUpdate);
+      DynamicKeyGroup query, EvictDynamicKey queryUpdate);
 
   Observable<Reply<GankDay>> getGankDayData(Observable<GankDay> dayObservable, DynamicKey day,
-      EvictProvider dayUpdate);
+      EvictDynamicKey dayUpdate);
 
   Observable<Reply<GankCategory>> getCategoryData(Observable<GankCategory> categoryObservable,
-      EvictProvider categoryUpdate);
+      DynamicKeyGroup day,EvictDynamicKey categoryUpdate);
 }

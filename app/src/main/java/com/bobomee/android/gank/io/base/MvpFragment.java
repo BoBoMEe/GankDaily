@@ -40,6 +40,10 @@ public abstract class MvpFragment<P extends BaseContract.IMvpPresenter> extends 
     mCategoryPresenter.subscribe(!mIsRequested);
   }
 
+  public void setRequested(boolean requested) {
+    mIsRequested = requested;
+  }
+
   @Override public void onDestroyView() {
     super.onDestroyView();
     mCategoryPresenter.unsubscribe();

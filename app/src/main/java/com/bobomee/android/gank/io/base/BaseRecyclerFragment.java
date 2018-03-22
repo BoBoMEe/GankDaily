@@ -67,6 +67,7 @@ public abstract class BaseRecyclerFragment<P extends BaseContract.IMvpPresenter>
 
   protected void loadData(boolean clear) {
     isClear = clear;
+    notifyLoadingStarted();
   }
 
   protected boolean onInterceptLoadMore() {

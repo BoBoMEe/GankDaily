@@ -41,6 +41,7 @@ public class MeizhiPresenter
       @NonNull CategoryDataMapper categoryDataMapper) {
     super(category, meizhiView);
     mCategoryDataMapper = categoryDataMapper;
+    meizhiView.setPresenter(this);
   }
 
   @Inject void setupListeners() {

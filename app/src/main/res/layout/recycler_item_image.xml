@@ -20,13 +20,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
+    android:layout_margin="15dp"
     app:cardUseCompatPadding="true"
     android:layout_height="wrap_content">
 
   <com.bobomee.android.gank.io.widget.ScaleImageView
       android:id="@+id/image"
       android:layout_width="match_parent"
-
       android:layout_height="wrap_content"
       android:adjustViewBounds="true" />
 
