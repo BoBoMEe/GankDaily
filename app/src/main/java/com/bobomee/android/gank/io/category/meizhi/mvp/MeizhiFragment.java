@@ -26,21 +26,13 @@ import android.view.ViewGroup;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.category.meizhi.adapter.MeizhiItemViewBinder;
 import com.bobomee.android.gank.io.category.ui.CategoryFragment;
-import com.bobomee.android.gank.io.category.ui.di.CategoryComponent;
 import com.bobomee.android.htttp.bean.Results;
-import javax.inject.Inject;
 
 /**
  * @author BoBoMEe
  * @since 2017/6/21
  */
 public class MeizhiFragment extends CategoryFragment {
-  @Inject MeizhiPresenter mMeizhiListPresenter;
-
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    CategoryComponent.Init.INSTANCE.initialize(mBaseActivity, this).inject(this);
-  }
 
   public static MeizhiFragment newInstance() {
     Bundle args = new Bundle();

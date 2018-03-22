@@ -26,9 +26,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.base.BaseRecyclerFragment;
+import com.bobomee.android.gank.io.category.meizhi.mvp.MeizhiPresenter;
+import com.bobomee.android.gank.io.category.ui.di.CategoryComponent;
 import com.bobomee.android.gank.io.util.FabUtil;
 import com.bobomee.android.htttp.bean.Results;
 import java.util.List;
+import javax.inject.Inject;
 import me.drakeet.multitype.Items;
 
 /**
@@ -42,12 +45,16 @@ public class CategoryFragment extends BaseRecyclerFragment<CategoryContract.ICat
   FloatingActionButton mFab;
   private Items mItems;
 
+  @Inject MeizhiPresenter mMeizhiPresenter;
+
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    CategoryComponent.Init.INSTANCE.initialize(mBaseActivity, this).inject(this);
   }
 
   @Override protected void loadData(boolean clear) {
     super.loadData(clear);
+    notifyLoadingStarted();
     getPresenter().subscribe(clear);
   }
 

@@ -37,6 +37,7 @@ public abstract class CategoryPresenter
   public CategoryPresenter(@NonNull Category useCase,
       @NonNull CategoryContract.ICategoryView mvpView) {
     super(useCase, mvpView);
+    mvpView.setPresenter(this);
   }
 
   public void addPage() {
