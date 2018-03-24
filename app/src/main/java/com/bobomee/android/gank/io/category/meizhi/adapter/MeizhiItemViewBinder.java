@@ -18,10 +18,10 @@ package com.bobomee.android.gank.io.category.meizhi.adapter;
 
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import com.bobomee.android.gank.io.R;
+import android.widget.TextView;
 import com.bobomee.android.gank.io.Holder;
+import com.bobomee.android.gank.io.R;
 import com.bobomee.android.gank.io.ui.DetailImageActivity;
 import com.bobomee.android.gank.io.util.GlideUtil;
 import com.bobomee.android.gank.io.widget.ScaleImageView;
@@ -32,32 +32,21 @@ import me.drakeet.multitype.ItemViewBinder;
  * @author BoBoMEe
  * @since 2017/6/17
  */
-public class MeizhiItemViewBinder extends ItemViewBinder<Results, MeizhiItemViewBinder.ViewHolder> {
+public class MeizhiItemViewBinder extends ItemViewBinder<Results, Holder> {
 
-  @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
-      @NonNull ViewGroup parent) {
-    return ViewHolder.create(inflater, parent, R.layout.recycler_item_image);
+  @NonNull @Override
+  protected Holder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+    return Holder.create(inflater, parent, R.layout.recycler_item_image);
   }
 
-  @Override
-  protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull Results meizhiItem) {
+  @Override protected void onBindViewHolder(@NonNull Holder holder, @NonNull Results meizhiItem) {
 
     ScaleImageView view = holder.getView(R.id.image);
-
     view.setInitSize(meizhiItem.width, meizhiItem.height);
     GlideUtil.load(view.getContext(), meizhiItem.url, view);
     view.setOnClickListener(v -> DetailImageActivity.start(v.getContext(), meizhiItem));
-  }
 
-  static class ViewHolder extends Holder {
-    ViewHolder(View itemView) {
-      super(itemView);
-    }
-
-    static ViewHolder create(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent,
-        int layoutId) {
-      View root = inflater.inflate(layoutId, parent, false);
-      return new ViewHolder(root);
-    }
+    TextView publishedAt = holder.getView(R.id.publishedAt);
+    publishedAt.setText(meizhiItem.publishedAt);
   }
 }

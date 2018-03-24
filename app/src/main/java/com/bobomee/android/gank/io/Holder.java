@@ -16,9 +16,12 @@
 
 package com.bobomee.android.gank.io;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * @author BoBoMEe
@@ -35,15 +38,19 @@ public abstract class Holder extends ViewHolder {
     mViews = new SparseArray<View>();
   }
 
-  public <T extends View> T getView(int viewId)
-  {
+  public <T extends View> T getView(int viewId) {
     View view = mViews.get(viewId);
-    if (view == null)
-    {
+    if (view == null) {
       view = mConvertView.findViewById(viewId);
       mViews.put(viewId, view);
     }
     return (T) view;
   }
 
+  public static Holder create(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent,
+      int layoutId) {
+    View root = inflater.inflate(layoutId, parent, false);
+    return new Holder(root) {
+    };
+  }
 }

@@ -1,19 +1,17 @@
 /*
+ * Copyright 2016 drakeet. https://github.com/drakeet
  *
- *  * Copyright (C) 2016.  BoBoMEe(wbwjx115@gmail.com)
- *  *
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  *
- *  *      http://www.apache.org/licenses/LICENSE-2.0
- *  *
- *  *  Unless required by applicable law or agreed to in writing, software
- *  *  distributed under the License is distributed on an "AS IS" BASIS,
- *  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  *  See the License for the specific language governing permissions and
- *  *  limitations under the License.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package me.drakeet.multitype;
@@ -34,8 +32,7 @@ public abstract class ItemViewBinder<T, VH extends ViewHolder> {
   /* internal */ MultiTypeAdapter adapter;
 
 
-  protected abstract @NonNull VH onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull
-      ViewGroup parent);
+  protected abstract @NonNull VH onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent);
 
   /**
    * Called by MultiTypeAdapter to display the data with its view holder. This method should
@@ -81,8 +78,7 @@ public abstract class ItemViewBinder<T, VH extends ViewHolder> {
    * update.
    * @since v2.5.0
    */
-  protected void onBindViewHolder(@NonNull VH holder, @NonNull T item, @NonNull
-      List<Object> payloads) {
+  protected void onBindViewHolder(@NonNull VH holder, @NonNull T item, @NonNull List<Object> payloads) {
     onBindViewHolder(holder, item);
   }
 
@@ -206,7 +202,7 @@ public abstract class ItemViewBinder<T, VH extends ViewHolder> {
    *
    * <p>This can be used as a reasonable signal that the view is about to be seen
    * by the user. If the {@link ItemViewBinder} previously freed any resources in
-   * {@link #onViewDetachedFromWindow(ViewHolder) onViewDetachedFromWindow}
+   * {@link #onViewDetachedFromWindow(RecyclerView.ViewHolder) onViewDetachedFromWindow}
    * those resources should be restored here.</p>
    *
    * @param holder Holder of the view being attached
